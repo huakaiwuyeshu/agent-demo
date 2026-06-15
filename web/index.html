@@ -767,6 +767,7 @@
               <button class="scenario-btn" type="button" data-scenario="complete" role="tab">complete</button>
               <button class="scenario-btn" type="button" data-scenario="callback" role="tab">callback</button>
               <button class="scenario-btn" type="button" data-scenario="secret" role="tab">secret</button>
+              <button class="scenario-btn" type="button" data-scenario="other" role="tab">other</button>
             </div>
           </div>
 
@@ -1379,6 +1380,396 @@
       window.clearTimeout(inputTimer);
       inputTimer = window.setTimeout(() => render(), 220);
     });
+
+    scenarios.other = "今天北京天气怎么样？顺便帮我推荐一家餐厅";
+
+    const intentCatalog = {
+      signature_debug: {
+        label: "签名失败排查",
+        keywords: [
+          { word: "签名", weight: 3 },
+          { word: "验签", weight: 3 },
+          { word: "SIGN_INVALID", weight: 5 },
+          { word: "sign_invalid", weight: 5 },
+          { word: "鉴权", weight: 2 },
+          { word: "sign", weight: 1 }
+        ]
+      },
+      callback_debug: {
+        label: "回调异常排查",
+        keywords: [
+          { word: "回调", weight: 4 },
+          { word: "callback", weight: 4 },
+          { word: "CALLBACK_TIMEOUT", weight: 5 },
+          { word: "没有收到", weight: 2 },
+          { word: "超时", weight: 2 }
+        ]
+      },
+      api_field_qa: {
+        label: "API 字段问答",
+        keywords: [
+          { word: "字段", weight: 3 },
+          { word: "什么意思", weight: 3 },
+          { word: "含义", weight: 2 },
+          { word: "枚举", weight: 2 },
+          { word: "错误码", weight: 2 },
+          { word: "参数", weight: 1 }
+        ]
+      },
+      credential_request: {
+        label: "凭证相关请求",
+        keywords: [
+          { word: "appid", weight: 2 },
+          { word: "appsecret", weight: 5 },
+          { word: "凭证", weight: 3 },
+          { word: "密钥", weight: 3 },
+          { word: "secret", weight: 3 }
+        ]
+      },
+      api_onboarding: {
+        label: "新 API 接入",
+        keywords: [
+          { word: "接入", weight: 3 },
+          { word: "联调", weight: 3 },
+          { word: "开通接口", weight: 4 },
+          { word: "申请接口", weight: 4 },
+          { word: "上线", weight: 2 }
+        ]
+      },
+      volume_analysis: {
+        label: "单量分析",
+        keywords: [
+          { word: "单量", weight: 4 },
+          { word: "成功率", weight: 4 },
+          { word: "失败率", weight: 4 },
+          { word: "近7天", weight: 2 },
+          { word: "趋势", weight: 2 },
+          { word: "周报", weight: 2 }
+        ]
+      }
+    };
+
+    const scopeSignals = [
+      "api", "接口", "接入", "联调", "appid", "appsecret", "签名", "验签",
+      "回调", "callback", "错误码", "字段", "参数", "单量", "成功率", "失败率",
+      "订单", "order_id", "timestamp", "SIGN_INVALID"
+    ];
+
+    function evaluateInputGate(message) {
+      const normalized = message.trim();
+      const lower = normalized.toLowerCase();
+      const scopeHits = scopeSignals.filter((signal) => lower.includes(signal.toLowerCase()));
+      const scores = Object.entries(intentCatalog).map(([intent, config]) => {
+        const matched = config.keywords
+          .filter((item) => lower.includes(item.word.toLowerCase()))
+          .map((item) => ({ keyword: item.word, weight: item.weight }));
+        return {
+          intent,
+          label: config.label,
+          score: matched.reduce((sum, item) => sum + item.weight, 0),
+          matched
+        };
+      }).sort((a, b) => b.score - a.score);
+
+      const best = scores[0];
+      const second = scores[1];
+      const hasPath = /(?:^|[\s，,])((?:\/[A-Za-z0-9_-]+){2,})/.test(normalized);
+      const hasErrorCode = /(?:错误码|error_code)\s*[=:：]\s*([A-Z0-9_\-]+)/i.test(normalized);
+      const strongBusinessSignal = scopeHits.length > 0 || hasPath || hasErrorCode;
+      const isInScope = strongBusinessSignal && best && best.score >= 2;
+
+      return {
+        is_in_scope: isInScope,
+        scope_hits: scopeHits,
+        scores,
+        selected_intent: isInScope ? best.intent : "unknown",
+        selected_label: isInScope ? best.label : "未识别任务",
+        confidence: isInScope ? Math.min(0.98, 0.45 + best.score * 0.08) : 0.18,
+        decision_reason: isInScope
+          ? `命中 ${best.matched.map((item) => item.keyword).join(" / ")}，${second && second.score > 0 ? `领先第二候选 ${second.intent} ${best.score - second.score} 分` : "无强竞争意图"}`
+          : scopeHits.length
+            ? "有少量业务词，但没有达到任何意图阈值"
+            : "没有命中当前 API 接入 Agent 的业务范围信号"
+      };
+    }
+
+    function detectTask(message) {
+      const gate = evaluateInputGate(message);
+      return {
+        task_type: gate.selected_intent,
+        reason: gate.decision_reason,
+        hits: Object.fromEntries(gate.scores.map((item) => [item.intent, item.score])),
+        gate
+      };
+    }
+
+    function extractTask(message) {
+      const intent = detectTask(message);
+      const fields = {
+        api_path: firstMatch(/(?:^|[\s，,])((?:\/[A-Za-z0-9_-]+){2,})/, message),
+        appid: firstMatch(/(?:appid|app_id)\s*[=:：]\s*([A-Za-z0-9_\-]+)/i, message),
+        raw_sign_string: firstMatch(/(?:签名前字符串|签名原文|raw_sign_string)\s*[=:：]?\s*([^，。\n]+)/i, message),
+        error_code: firstMatch(/(?:错误码|error_code)\s*[=:：]\s*([A-Z0-9_\-]+)/i, message),
+        request_time: firstMatch(/(20\d{2}[-/]\d{1,2}[-/]\d{1,2}\s+\d{1,2}:\d{2}(?::\d{2})?)/, message),
+        callback_url: firstMatch(/(https:\/\/[A-Za-z0-9_\-./?=&%]+)/i, message),
+        order_id: firstMatch(/(?:order_id|订单号)\s*[=:：]\s*([A-Za-z0-9_\-]+)/i, message),
+        trigger_action: firstMatch(/(?:触发动作|action)\s*[=:：]\s*([^，。\n]+)/i, message),
+        field_name: detectFieldName(message)
+      };
+
+      const security_flags = [];
+      if (/appsecret\s*[=:：]\s*\S+/i.test(message)) {
+        security_flags.push("contains_appsecret");
+      } else if (message.toLowerCase().includes("appsecret")) {
+        security_flags.push("mentions_appsecret");
+      }
+
+      const extraction = [
+        { field: "api_path", rule: "匹配空格或逗号后的 /open/xxx 路径", value: fields.api_path },
+        { field: "appid", rule: "匹配 appid=xxx", value: fields.appid },
+        { field: "error_code", rule: "匹配 错误码=XXX", value: fields.error_code },
+        { field: "request_time", rule: "匹配 yyyy-mm-dd hh:mm:ss", value: fields.request_time },
+        { field: "raw_sign_string", rule: "匹配 签名前字符串 后面的内容", value: fields.raw_sign_string },
+        { field: "callback_url", rule: "匹配 https:// 回调地址", value: fields.callback_url },
+        { field: "order_id", rule: "匹配 订单号=xxx 或 order_id=xxx", value: fields.order_id },
+        { field: "trigger_action", rule: "匹配 触发动作=xxx", value: fields.trigger_action },
+        { field: "field_name", rule: "在问题中寻找常见字段名", value: fields.field_name }
+      ];
+
+      return {
+        task_type: intent.task_type,
+        confidence: intent.gate.confidence,
+        reason: intent.reason,
+        input_gate: intent.gate,
+        intent_hits: intent.hits,
+        fields,
+        extraction,
+        security_flags,
+        raw_message: message
+      };
+    }
+
+    function validate(draft) {
+      if (!draft.input_gate.is_in_scope) {
+        return {
+          status: "out_of_scope",
+          missing_fields: [],
+          blocked_reasons: [],
+          message: "不属于当前 API 接入 Agent 的业务范围。"
+        };
+      }
+      if (draft.security_flags.includes("contains_appsecret")) {
+        return {
+          status: "blocked",
+          missing_fields: [],
+          blocked_reasons: ["输入中包含 appsecret，不能进入普通模型上下文或普通日志。"]
+        };
+      }
+      const needs = requiredFields[draft.task_type] || [];
+      const missing = needs.filter((field) => !draft.fields[field]);
+      return missing.length
+        ? { status: "needs_clarification", missing_fields: missing, blocked_reasons: [] }
+        : { status: "executable", missing_fields: [], blocked_reasons: [] };
+    }
+
+    function clarify(draft, validation) {
+      if (validation.status === "out_of_scope") {
+        return "这句话不属于当前 API 接入 Agent 的有效输入。\n当前 Agent 只处理：签名失败、回调异常、字段/错误码问答、凭证请求、新 API 接入、单量分析。\n你可以换成类似“/open/order/create 签名失败，错误码=SIGN_INVALID”的问题。";
+      }
+      if (validation.status === "blocked") {
+        return `这个请求触发了安全边界：${validation.blocked_reasons.join("；")}`;
+      }
+      return `我已识别为「${taskLabel(draft.task_type)}」，但还缺少阻塞信息：${validation.missing_fields.map(label).join("、")}。\n请补充这些信息后我再继续排查。不要发送 appsecret、密钥或完整敏感凭证。`;
+    }
+
+    function runVersion(versionId, message) {
+      const draft = extractTask(message);
+      const validation = validate(draft);
+      const docs = validation.status === "out_of_scope" ? [] : searchDocs(draft);
+      const tools = validation.status === "executable" ? runTools(draft) : [];
+      const skill = skills[draft.task_type];
+      const trace = [];
+      let steps = [];
+      let terminalTitle = "运行输出";
+      let finalOutput = "";
+
+      if (versionId === "v0") {
+        steps = ["Input", "LLM", "Answer"];
+        trace.push(card("黑盒调用", "系统没有任务类型、字段、状态、工具和安全边界，只把整段输入交给模型。"));
+        trace.push(card("返回结果", "输出是一段通用建议，不能说明依据，也不能判断输入是否归当前 Agent 管。"));
+        finalOutput = validation.status === "out_of_scope" ? "我可以尝试回答，但这一版不会判断业务边界，所以容易把无关问题也接进来。" : directAnswer(draft);
+        terminalTitle = "普通问答输出";
+      }
+
+      if (versionId === "v1") {
+        steps = ["Scope", "Intent", "字段抽取", "Validity"];
+        trace.push(card("1. Scope Gate：先判断归不归我管", `业务范围命中：${draft.input_gate.scope_hits.join("、") || "无"}\nis_in_scope=${draft.input_gate.is_in_scope}\n原因：${draft.input_gate.decision_reason}`));
+        trace.push(card("2. Intent Scoring：再给候选意图打分", draft.input_gate.scores.map((item) => `${item.intent}: ${item.score} 分；命中：${item.matched.map((m) => `${m.keyword}(+${m.weight})`).join("、") || "无"}`).join("\n")));
+        trace.push(card("3. Field Extraction：字段从哪里来", draft.extraction.map((item) => `${label(item.field)}：${item.value ? "命中 " + item.value : "未命中"}；规则：${item.rule}`).join("\n")));
+        trace.push(card("4. Validity：当前输入状态", `validity=${validation.status}\n${validation.status === "out_of_scope" ? "处理方式：拒绝进入业务链路，提示用户换成 API 接入相关问题。" : validation.status === "needs_clarification" ? `处理方式：追问缺失字段 ${validation.missing_fields.map(label).join("、")}` : validation.status === "blocked" ? "处理方式：触发安全边界并阻断。" : "处理方式：允许进入后续 Skill / RAG / Tool。"}`));
+        finalOutput = pretty({
+          is_in_scope: draft.input_gate.is_in_scope,
+          intent: draft.task_type,
+          confidence: draft.confidence,
+          evidence: draft.input_gate.scores[0]?.matched.map((item) => item.keyword) || [],
+          validity: validation.status,
+          missing_fields: validation.missing_fields,
+          security_flags: draft.security_flags,
+          fields: compactFields(draft.fields)
+        });
+        terminalTitle = "Input Gate 输出";
+      }
+
+      if (versionId === "v2") {
+        steps = ["Scope", "抽取", "Schema", validation.status === "executable" ? "放行" : "追问/阻断"];
+        trace.push(card("Scope 结果", draft.input_gate.is_in_scope ? `属于当前 Agent：${draft.task_type}` : "不属于当前 API 接入 Agent。"));
+        trace.push(card("Schema 必填字段", `${taskLabel(draft.task_type)} 需要：${(requiredFields[draft.task_type] || []).map(label).join("、") || "无"}`));
+        trace.push(card("Validator 结果", `status=${validation.status}\nmissing=${validation.missing_fields.map(label).join("、") || "无"}\nblocked=${validation.blocked_reasons.join("；") || "无"}`));
+        finalOutput = validation.status === "executable" ? "字段已满足最小执行条件，可以进入下一步。" : clarify(draft, validation);
+        terminalTitle = "Schema 校验结果";
+      }
+
+      if (versionId === "v3") {
+        steps = ["Scope", "校验", "Skill Router", "SOP"];
+        trace.push(card("Skill Router", validation.status === "out_of_scope" ? "范围外输入不会进入 Skill Router。" : skill ? `task_type=${draft.task_type} -> ${skill}` : "没有命中 Skill，需要人工分流或补充 Skill。"));
+        trace.push(card("SOP 加载策略", "先确认输入属于当前 Agent，再按 task_type 渐进式加载 Skill。"));
+        finalOutput = validation.status === "executable"
+          ? `已命中 ${skill}。\n下一步会按业务 SOP 排查，而不是让模型临场发挥。`
+          : clarify(draft, validation);
+        terminalTitle = "Skill 路由结果";
+      }
+
+      if (versionId === "v4") {
+        steps = ["Scope", "校验", "检索", "依据回答"];
+        trace.push(card("检索前置条件", validation.status === "out_of_scope" ? "范围外输入不进入业务知识库检索。" : `按 ${draft.task_type} 选择检索关键词。`));
+        trace.push(card("命中文档", docs.length ? docs.map((line, index) => `${index + 1}. ${line}`).join("\n") : "当前没有进入检索，或文档未找到依据。"));
+        finalOutput = validation.status === "executable"
+          ? `依据文档：\n${docs.map((line) => "- " + line).join("\n") || "- 未找到依据"}`
+          : clarify(draft, validation);
+        terminalTitle = "RAG 检索结果";
+      }
+
+      if (versionId === "v5") {
+        steps = ["Scope", "校验", "工具调用", "工具结果"];
+        trace.push(card("工具调用条件", validation.status === "executable" ? "字段齐全，允许调用工具。" : "范围外、字段不齐或被阻断时，不调用工具。"));
+        trace.push(card("工具结果", tools.length ? formatTools(tools) : "无工具调用。"));
+        finalOutput = validation.status === "executable" ? summarizeTools(tools) : clarify(draft, validation);
+        terminalTitle = "工具调用结果";
+      }
+
+      if (versionId === "v6") {
+        steps = ["Observe", "Think", "Act", "Observe", "Answer"];
+        trace.push(card("Observe", `收到输入：${message}`));
+        trace.push(card("Think", `Scope=${draft.input_gate.is_in_scope}；Intent=${draft.task_type}；Validity=${validation.status}。`));
+        trace.push(card("Act", validation.status === "executable" ? "查文档、调 Skill、必要时调工具。" : "范围外、信息不足或触发边界时，选择拒绝/追问/阻断。"));
+        trace.push(card("Observe", validation.status === "executable" ? formatTools(tools) : clarify(draft, validation)));
+        finalOutput = validation.status === "executable" ? summarizeTools(tools) : clarify(draft, validation);
+        terminalTitle = "Agent Loop";
+      }
+
+      if (versionId === "v7") {
+        steps = ["输入脱敏", "Task State", "Guardrail", "Audit", "Answer"];
+        const masked = maskSensitive(message);
+        const taskState = validation.status === "out_of_scope" ? "rejected" : validation.status === "blocked" ? "blocked" : validation.status === "needs_clarification" ? "waiting_for_user" : "finished";
+        trace.push(card("安全预处理", `普通日志中的输入摘要：${masked}`));
+        trace.push(card("Task State", `task_type=${draft.task_type}\nstatus=${taskState}\npending_fields=${validation.missing_fields.map(label).join("、") || "无"}`));
+        trace.push(card("Audit", `记录：scope_result、intent_scores、validation_result${validation.status === "executable" ? "、tools_called、task_finished" : ""}\n敏感信息：脱敏后记录。`));
+        finalOutput = validation.status === "executable"
+          ? `${summarizeTools(tools)}\n\n本次排查只记录脱敏摘要和工具状态，不记录 appsecret。`
+          : clarify(draft, validation);
+        terminalTitle = "状态与审计";
+      }
+
+      return {
+        draft,
+        validation,
+        steps,
+        trace,
+        finalOutput,
+        terminalTitle,
+        status: statusLabel(versionId, validation),
+        guard: draft.security_flags.includes("contains_appsecret") ? "Blocked" : versionId === "v7" ? "Strict" : versionId === "v0" ? "Off" : "On"
+      };
+    }
+
+    function statusLabel(versionId, validation) {
+      if (versionId === "v0") return "Loose";
+      if (versionId === "v1") return validation.status === "out_of_scope" ? "Out" : "Draft";
+      if (validation.status === "out_of_scope") return "Out";
+      if (validation.status === "blocked") return "Blocked";
+      if (validation.status === "needs_clarification") return "Need Info";
+      return "Executable";
+    }
+
+    function render(options = { showToast: false }) {
+      const version = versions.find((item) => item.id === state.version);
+      const message = messageInput.value;
+      const run = runVersion(version.id, message);
+      renderVersionButtons();
+
+      scenarioButtons.forEach((button) => {
+        button.setAttribute("aria-selected", String(button.dataset.scenario === state.scenario));
+      });
+
+      versionName.textContent = `${version.id.toUpperCase()} · ${version.name}`;
+      versionSummary.textContent = version.summary;
+      commandText.textContent = `python app.py --version ${version.id} --message "${message.slice(0, 24)}${message.length > 24 ? "..." : ""}"`;
+
+      document.getElementById("metricLevel").textContent = version.id.toUpperCase();
+      document.getElementById("metricTask").textContent = run.draft.task_type;
+      document.getElementById("metricTaskNote").textContent = run.draft.input_gate.is_in_scope ? run.draft.reason : "范围外输入，不进入业务链路";
+      document.getElementById("metricStatus").textContent = run.status;
+      const statusNote = document.getElementById("metricStatusNote");
+      statusNote.textContent = run.validation.status === "out_of_scope"
+        ? "不是有效业务输入"
+        : run.validation.missing_fields.length
+          ? `缺：${run.validation.missing_fields.map(label).join("、")}`
+          : run.validation.status === "blocked" ? "已阻断" : "可继续";
+      statusNote.className = run.validation.status === "blocked" || run.validation.status === "out_of_scope" ? "bad" : run.validation.status === "needs_clarification" ? "warn" : "good";
+      document.getElementById("metricGuard").textContent = run.guard;
+      const guardNote = document.getElementById("metricGuardNote");
+      guardNote.textContent = run.draft.security_flags.length ? run.draft.security_flags.join("、") : "未发现敏感字段";
+      guardNote.className = run.draft.security_flags.includes("contains_appsecret") ? "bad" : "warn";
+
+      pipeline.innerHTML = run.steps.map((step, index) => {
+        const cls = pipeClass(run, index);
+        return `
+          <div class="pipe-step ${cls}">
+            <strong>${escapeHtml(step)}</strong>
+            <span>${escapeHtml(pipeCaption(run, step))}</span>
+          </div>
+        `;
+      }).join("");
+
+      traceGrid.innerHTML = run.trace.map((item) => `
+        <section class="trace-card">
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${highlight(item.body).replaceAll("\n", "<br>")}</p>
+        </section>
+      `).join("");
+
+      terminalTitle.textContent = run.terminalTitle;
+      terminalMeta.textContent = `status: ${run.status.toLowerCase()}`;
+      terminalOutput.innerHTML = highlight(run.finalOutput);
+
+      if (options.showToast) showToast("已根据当前输入重新运行");
+    }
+
+    function pipeClass(run, index) {
+      if (run.validation.status === "blocked" || run.validation.status === "out_of_scope") return index >= 1 ? "blocked" : "info";
+      if (run.validation.status === "needs_clarification" && index >= 2) return "warn";
+      return index === 0 ? "info" : "active";
+    }
+
+    function pipeCaption(run, step) {
+      if (step === "Scope") return run.draft.input_gate.is_in_scope ? "属于当前 Agent" : "范围外";
+      if (step.includes("意图") || step === "Intent" || step === "Think") return run.draft.reason;
+      if (step.includes("字段") || step === "抽取") return `已抽取 ${Object.keys(compactFields(run.draft.fields)).length} 个字段`;
+      if (step.includes("Schema") || step === "校验" || step === "Validity") return run.validation.status;
+      if (step.includes("工具") || step === "Act") return run.validation.status === "executable" ? "允许执行" : "停止执行";
+      if (step.includes("Guard") || step.includes("脱敏")) return run.draft.security_flags.length ? run.draft.security_flags.join("、") : "无敏感字段";
+      return "写回运行状态";
+    }
 
     messageInput.value = scenarios.complete;
     renderVersionButtons();
