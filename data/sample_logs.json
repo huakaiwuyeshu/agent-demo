@@ -1,0 +1,16 @@
+[
+  {
+    "appid": "app_demo_001",
+    "api_path": "/open/order/create",
+    "request_time": "2026-06-15 10:20:00",
+    "error_code": "SIGN_INVALID",
+    "log_summary": "签名校验失败；服务端按 amount,order_id,timestamp 顺序重建签名前字符串。"
+  },
+  {
+    "appid": "app_demo_002",
+    "api_path": "/open/order/renew",
+    "request_time": "2026-06-15 11:05:00",
+    "error_code": "CALLBACK_TIMEOUT",
+    "log_summary": "回调地址连续三次未返回 2xx。"
+  }
+]

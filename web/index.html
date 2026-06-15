@@ -1,0 +1,1388 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>API 接入 Agent 动态演进台</title>
+  <meta name="description" content="API 接入 Agent 多版本能力演进动态演示页" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #070a0d;
+      --surface: #101418;
+      --surface-2: #151b21;
+      --ink: #f5f7fa;
+      --muted: #aeb8c4;
+      --quiet: #7f8b99;
+      --line: #2a3440;
+      --line-strong: #405062;
+      --accent: #22c55e;
+      --cyan: #38bdf8;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --shadow: 0 24px 70px rgba(0, 0, 0, 0.36);
+      --radius: 8px;
+      --header-h: 72px;
+      --sidebar-w: 292px;
+      --mono: "Fira Code", ui-monospace, SFMono-Regular, Consolas, monospace;
+      --sans: "Fira Sans", Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+      color-scheme: dark;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      min-width: 320px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100dvh;
+      background:
+        linear-gradient(180deg, rgba(34, 197, 94, 0.08), transparent 34rem),
+        linear-gradient(90deg, rgba(56, 189, 248, 0.08), transparent 44rem),
+        var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      line-height: 1.5;
+    }
+
+    button,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      min-height: 44px;
+      border: 0;
+      color: inherit;
+      cursor: pointer;
+      touch-action: manipulation;
+    }
+
+    button:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid rgba(56, 189, 248, 0.72);
+      outline-offset: 2px;
+    }
+
+    .app-shell {
+      min-height: 100dvh;
+      display: grid;
+      grid-template-rows: var(--header-h) 1fr;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 0 24px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7, 10, 13, 0.9);
+      backdrop-filter: blur(16px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 42px;
+      height: 42px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid rgba(34, 197, 94, 0.48);
+      border-radius: var(--radius);
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.18), rgba(56, 189, 248, 0.12));
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .brand p {
+      margin: 2px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex: 0 0 auto;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      min-height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(16, 20, 24, 0.9);
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 5px rgba(34, 197, 94, 0.12);
+    }
+
+    .primary-btn,
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 44px;
+      padding: 0 14px;
+      border-radius: var(--radius);
+      transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
+      white-space: nowrap;
+    }
+
+    .primary-btn {
+      background: var(--accent);
+      color: #041108;
+      font-weight: 700;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      background: #35d875;
+    }
+
+    .ghost-btn {
+      border: 1px solid var(--line);
+      background: rgba(16, 20, 24, 0.86);
+      color: var(--ink);
+    }
+
+    .ghost-btn:hover {
+      border-color: var(--line-strong);
+      background: var(--surface-2);
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+      min-height: calc(100dvh - var(--header-h));
+      min-width: 0;
+    }
+
+    .sidebar {
+      min-width: 0;
+      border-right: 1px solid var(--line);
+      background: rgba(10, 13, 17, 0.82);
+      padding: 20px 16px;
+    }
+
+    .version-list {
+      display: grid;
+      gap: 8px;
+      margin-top: 14px;
+      max-width: 100%;
+      min-width: 0;
+    }
+
+    .version-btn {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 46px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      min-height: 64px;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      background: transparent;
+      text-align: left;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .version-btn:hover {
+      background: rgba(255,255,255,0.04);
+    }
+
+    .version-btn[aria-selected="true"] {
+      border-color: rgba(34, 197, 94, 0.5);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .version-index {
+      width: 42px;
+      height: 42px;
+      display: inline-grid;
+      place-items: center;
+      border-radius: var(--radius);
+      border: 1px solid var(--line);
+      color: var(--cyan);
+      font: 700 14px/1 var(--mono);
+      background: var(--surface);
+    }
+
+    .version-btn[aria-selected="true"] .version-index {
+      border-color: rgba(34, 197, 94, 0.55);
+      color: var(--accent);
+    }
+
+    .version-title {
+      min-width: 0;
+    }
+
+    .version-title strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .version-title span {
+      display: block;
+      color: var(--quiet);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .version-badge {
+      min-width: 38px;
+      padding: 3px 7px;
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.05);
+      font: 600 11px/1.3 var(--mono);
+      text-align: center;
+    }
+
+    .main {
+      min-width: 0;
+      padding: 24px;
+    }
+
+    .overview {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .metric {
+      min-height: 106px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.015));
+    }
+
+    .metric span {
+      display: block;
+      color: var(--quiet);
+      font-size: 12px;
+    }
+
+    .metric strong {
+      display: block;
+      margin-top: 10px;
+      font: 700 28px/1 var(--mono);
+      letter-spacing: 0;
+    }
+
+    .metric small {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .good { color: var(--accent); }
+    .warn { color: var(--amber); }
+    .info { color: var(--cyan); }
+    .bad { color: var(--red); }
+
+    .workspace {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 20, 24, 0.84);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .workspace-head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      align-items: center;
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(21, 27, 33, 0.72);
+    }
+
+    .workspace-head h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .workspace-head p {
+      margin: 6px 0 0;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .scenario-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .scenario-btn {
+      min-height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 13px;
+      transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+    }
+
+    .scenario-btn:hover,
+    .scenario-btn[aria-selected="true"] {
+      border-color: rgba(56, 189, 248, 0.55);
+      background: rgba(56, 189, 248, 0.12);
+      color: var(--ink);
+    }
+
+    .workspace-body {
+      display: grid;
+      gap: 18px;
+      padding: 18px;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(190px, 320px);
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .field-label {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 124px;
+      resize: vertical;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: #0b0f13;
+      line-height: 1.55;
+    }
+
+    .run-box {
+      display: grid;
+      gap: 10px;
+      align-content: end;
+    }
+
+    .command {
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--muted);
+      background: #0b0f13;
+      font: 500 12px/1.4 var(--mono);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .hint {
+      margin: 0;
+      color: var(--quiet);
+      font-size: 12px;
+    }
+
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .pipe-step {
+      min-height: 78px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.03);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pipe-step::before {
+      content: "";
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 3px;
+      background: var(--quiet);
+    }
+
+    .pipe-step.active::before { background: var(--accent); }
+    .pipe-step.warn::before { background: var(--amber); }
+    .pipe-step.blocked::before { background: var(--red); }
+    .pipe-step.info::before { background: var(--cyan); }
+
+    .pipe-step strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .pipe-step span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .trace-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .trace-card {
+      min-height: 128px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.025);
+    }
+
+    .trace-card h3 {
+      margin: 0 0 8px;
+      font-size: 14px;
+      letter-spacing: 0;
+    }
+
+    .trace-card p,
+    .trace-card li {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .trace-card p {
+      margin: 0;
+    }
+
+    .trace-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .terminal {
+      min-height: 342px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #080b0e;
+      overflow: hidden;
+    }
+
+    .terminal-head {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      min-height: 44px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      background: #0d1115;
+      font-size: 12px;
+    }
+
+    .terminal-code {
+      margin: 0;
+      padding: 16px;
+      min-height: 298px;
+      overflow: auto;
+      color: #d9e5ef;
+      font: 500 13px/1.65 var(--mono);
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 0 8px;
+      border-radius: 999px;
+      font: 600 11px/1 var(--mono);
+      color: #c9f7d7;
+      background: rgba(34, 197, 94, 0.14);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    .tag.warn {
+      color: #ffe0a6;
+      background: rgba(245, 158, 11, 0.14);
+      border-color: rgba(245, 158, 11, 0.3);
+    }
+
+    .tag.bad {
+      color: #ffd0d0;
+      background: rgba(239, 68, 68, 0.15);
+      border-color: rgba(239, 68, 68, 0.35);
+    }
+
+    .token-green { color: var(--accent); }
+    .token-cyan { color: var(--cyan); }
+    .token-amber { color: var(--amber); }
+    .token-red { color: var(--red); }
+    .token-muted { color: var(--quiet); }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 40;
+      transform: translateY(16px);
+      opacity: 0;
+      pointer-events: none;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: min(420px, calc(100vw - 32px));
+      padding: 12px 14px;
+      border: 1px solid rgba(34, 197, 94, 0.45);
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: rgba(16, 20, 24, 0.96);
+      box-shadow: var(--shadow);
+      transition: opacity 180ms ease, transform 180ms ease;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+      stroke: currentColor;
+      fill: none;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      flex: 0 0 auto;
+    }
+
+    @media (max-width: 1100px) {
+      .overview {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 860px) {
+      :root {
+        --header-h: auto;
+        --sidebar-w: 1fr;
+      }
+
+      .topbar {
+        position: static;
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 16px;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        padding: 14px;
+      }
+
+      .version-list {
+        grid-auto-flow: column;
+        grid-auto-columns: minmax(228px, 1fr);
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 6px;
+      }
+
+      .main {
+        padding: 16px;
+      }
+
+      .workspace-head,
+      .input-row,
+      .trace-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .pipeline {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 560px) {
+      .brand h1 {
+        white-space: normal;
+      }
+
+      .overview,
+      .pipeline {
+        grid-template-columns: 1fr;
+      }
+
+      .terminal-code {
+        font-size: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/><path d="M17 13l3 3-3 3"/><path d="M14 16h6"/></svg>
+        </div>
+        <div>
+          <h1>API 接入 Agent 动态演进台</h1>
+          <p>输入会真实参与识别、校验、路由、检索和工具检查</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span class="pill"><span class="status-dot" aria-hidden="true"></span>Live Demo</span>
+        <button class="ghost-btn" id="copyCommand" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          <span>复制命令</span>
+        </button>
+        <button class="primary-btn" id="runCurrent" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 14 9-14 9V3z"/></svg>
+          <span>运行当前输入</span>
+        </button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar" aria-label="版本导航">
+        <span class="pill">Version Route</span>
+        <div class="version-list" role="tablist" aria-label="Agent 版本"></div>
+      </aside>
+
+      <main class="main" id="main">
+        <section class="overview" aria-label="运行指标">
+          <div class="metric">
+            <span>当前版本</span>
+            <strong id="metricLevel">V1</strong>
+            <small class="info">能力演进阶段</small>
+          </div>
+          <div class="metric">
+            <span>识别任务</span>
+            <strong id="metricTask">signature_debug</strong>
+            <small id="metricTaskNote">由输入动态识别</small>
+          </div>
+          <div class="metric">
+            <span>执行状态</span>
+            <strong id="metricStatus">Draft</strong>
+            <small id="metricStatusNote" class="good">结构化草稿</small>
+          </div>
+          <div class="metric">
+            <span>安全边界</span>
+            <strong id="metricGuard">Basic</strong>
+            <small id="metricGuardNote" class="warn">检测敏感字段</small>
+          </div>
+        </section>
+
+        <section class="workspace">
+          <div class="workspace-head">
+            <div>
+              <h2 id="versionName">V1 · 任务识别</h2>
+              <p id="versionSummary">把自然语言转成 task_type 和字段草稿，并展示每个字段是怎么来的。</p>
+            </div>
+            <div class="scenario-tabs" role="tablist" aria-label="示例输入">
+              <button class="scenario-btn" type="button" data-scenario="brief" role="tab">brief</button>
+              <button class="scenario-btn" type="button" data-scenario="complete" role="tab">complete</button>
+              <button class="scenario-btn" type="button" data-scenario="callback" role="tab">callback</button>
+              <button class="scenario-btn" type="button" data-scenario="secret" role="tab">secret</button>
+            </div>
+          </div>
+
+          <div class="workspace-body">
+            <div class="input-row">
+              <label>
+                <span class="field-label">用户输入</span>
+                <textarea id="messageInput" spellcheck="false"></textarea>
+              </label>
+              <div class="run-box">
+                <span class="field-label">CLI 对应入口</span>
+                <div class="command" id="commandText">python app.py --version v1 --message "..."</div>
+                <p class="hint">页面内会直接用当前文本跑一遍简化版 Agent，不再使用固定假结果。</p>
+              </div>
+            </div>
+
+            <div class="pipeline" id="pipeline" aria-label="执行链路"></div>
+            <div class="trace-grid" id="traceGrid" aria-label="中间过程"></div>
+
+            <div class="terminal" aria-live="polite">
+              <div class="terminal-head">
+                <span id="terminalTitle">结构化输出</span>
+                <span id="terminalMeta">status: draft</span>
+              </div>
+              <pre class="terminal-code" id="terminalOutput"></pre>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>
+    <span>已更新</span>
+  </div>
+
+  <script>
+    const scenarios = {
+      brief: "你们接口一直签名失败，帮忙看下",
+      complete: "你们 /open/order/create 接口一直签名失败，appid=app_demo_001，错误码=SIGN_INVALID，请求时间=2026-06-15 10:20:00，签名前字符串 order_id=O1001&timestamp=1781490000&amount=10，帮忙看下",
+      callback: "客户说没有收到回调，订单号=O20260615001，回调地址=https://demo.example.com/callback，触发动作=支付成功，请求时间=2026-06-15 11:05:00",
+      secret: "你们 /open/order/create 接口签名失败，appid=app_demo_001，appsecret=demo-secret-123，帮忙看下"
+    };
+
+    const versions = [
+      { id: "v0", name: "普通问答", short: "Chat", summary: "直接回答，不做结构化识别。" },
+      { id: "v1", name: "任务识别", short: "Parse", summary: "展示自然语言如何转成 task_type 和字段草稿。" },
+      { id: "v2", name: "Schema 校验", short: "Check", summary: "代码判断缺哪些字段，只追问阻塞项。" },
+      { id: "v3", name: "Skill 路由", short: "Skill", summary: "根据任务类型命中对应业务 SOP。" },
+      { id: "v4", name: "文档检索", short: "RAG", summary: "先查 API 文档和错误码说明，再回答。" },
+      { id: "v5", name: "工具调用", short: "Tool", summary: "字段满足后调用确定性检查工具。" },
+      { id: "v6", name: "Agent Loop", short: "Loop", summary: "Observe、Think、Act、Observe、Answer 形成闭环。" },
+      { id: "v7", name: "状态与审计", short: "Audit", summary: "加入 Task State、Audit、脱敏和人工闸门。" }
+    ];
+
+    const requiredFields = {
+      signature_debug: ["api_path", "appid", "raw_sign_string", "error_code", "request_time"],
+      callback_debug: ["callback_url", "order_id", "trigger_action", "request_time"],
+      api_field_qa: ["field_name"],
+      credential_request: ["appid"],
+      unknown: []
+    };
+
+    const fieldLabels = {
+      api_path: "接口路径",
+      appid: "appid",
+      raw_sign_string: "签名前原始字符串",
+      error_code: "错误码",
+      request_time: "请求时间",
+      callback_url: "回调地址",
+      order_id: "订单号",
+      trigger_action: "触发动作",
+      field_name: "字段名",
+      task_type: "任务类型"
+    };
+
+    const skills = {
+      signature_debug: "signature_debug/SKILL.md",
+      callback_debug: "callback_debug/SKILL.md",
+      api_field_qa: "api_field_qa/SKILL.md",
+      credential_request: "human_review_gate",
+      unknown: null
+    };
+
+    const apiDocs = [
+      "签名规则：所有参与签名的业务参数必须先按参数名的字母序升序排列，再用 key=value 形式拼接。",
+      "签名前字符串必须使用 UTF-8 编码。",
+      "签名前不要把参数值做 URL 编码。需要 URL 编码的字段，应在签名完成后再编码传输。",
+      "SIGN_INVALID：签名校验失败，建议检查参数排序、编码方式、timestamp 是否过期、appid 与环境是否匹配。",
+      "回调地址必须是服务端可访问的 HTTPS 地址。",
+      "如果没有收到回调，应优先确认回调地址、订单号、触发动作、回调响应状态码和服务端日志。",
+      "appsecret 只允许在安全凭证系统中查看、重置或发放，不允许进入普通对话或普通日志。"
+    ];
+
+    const sampleLogs = [
+      {
+        appid: "app_demo_001",
+        api_path: "/open/order/create",
+        request_time: "2026-06-15 10:20:00",
+        error_code: "SIGN_INVALID",
+        log_summary: "服务端按 amount,order_id,timestamp 顺序重建签名前字符串。"
+      }
+    ];
+
+    const state = {
+      version: "v1",
+      scenario: "complete"
+    };
+
+    const versionList = document.querySelector(".version-list");
+    const scenarioButtons = [...document.querySelectorAll(".scenario-btn")];
+    const messageInput = document.getElementById("messageInput");
+    const versionName = document.getElementById("versionName");
+    const versionSummary = document.getElementById("versionSummary");
+    const terminalOutput = document.getElementById("terminalOutput");
+    const terminalMeta = document.getElementById("terminalMeta");
+    const terminalTitle = document.getElementById("terminalTitle");
+    const pipeline = document.getElementById("pipeline");
+    const traceGrid = document.getElementById("traceGrid");
+    const commandText = document.getElementById("commandText");
+    const toast = document.getElementById("toast");
+
+    function detectTask(message) {
+      const lowered = message.toLowerCase();
+      const hits = {
+        signature_debug: hitCount(message, ["签名", "验签", "SIGN_INVALID", "sign_invalid", "鉴权"]),
+        callback_debug: hitCount(message, ["回调", "callback", "CALLBACK_TIMEOUT", "没有收到"]),
+        api_field_qa: hitCount(message, ["字段", "什么意思", "含义", "枚举"]),
+        credential_request: hitCount(message, ["appid", "appsecret", "凭证", "密钥"])
+      };
+
+      let task_type = "unknown";
+      let reason = "没有命中已知业务关键词";
+      if (hits.signature_debug > 0) {
+        task_type = "signature_debug";
+        reason = "命中签名/验签/SIGN_INVALID 关键词";
+      } else if (hits.callback_debug > 0) {
+        task_type = "callback_debug";
+        reason = "命中回调/callback/没有收到关键词";
+      } else if (hits.api_field_qa > 0) {
+        task_type = "api_field_qa";
+        reason = "命中字段/含义类关键词";
+      } else if (lowered.includes("appid") && lowered.includes("appsecret")) {
+        task_type = "credential_request";
+        reason = "同时提到 appid 和 appsecret，归入凭证相关请求";
+      }
+
+      return { task_type, reason, hits };
+    }
+
+    function hitCount(text, keywords) {
+      return keywords.reduce((sum, keyword) => sum + (text.toLowerCase().includes(keyword.toLowerCase()) ? 1 : 0), 0);
+    }
+
+    function firstMatch(pattern, text) {
+      const match = text.match(pattern);
+      return match ? match[1].trim() : null;
+    }
+
+    function extractTask(message) {
+      const intent = detectTask(message);
+      const fields = {
+        api_path: firstMatch(/(?:^|[\s，,])((?:\/[A-Za-z0-9_-]+){2,})/, message),
+        appid: firstMatch(/(?:appid|app_id)\s*[=:：]\s*([A-Za-z0-9_\-]+)/i, message),
+        raw_sign_string: firstMatch(/(?:签名前字符串|签名原文|raw_sign_string)\s*[=:：]?\s*([^，。\n]+)/i, message),
+        error_code: firstMatch(/(?:错误码|error_code)\s*[=:：]\s*([A-Z0-9_\-]+)/i, message),
+        request_time: firstMatch(/(20\d{2}[-/]\d{1,2}[-/]\d{1,2}\s+\d{1,2}:\d{2}(?::\d{2})?)/, message),
+        callback_url: firstMatch(/(https:\/\/[A-Za-z0-9_\-./?=&%]+)/i, message),
+        order_id: firstMatch(/(?:order_id|订单号)\s*[=:：]\s*([A-Za-z0-9_\-]+)/i, message),
+        trigger_action: firstMatch(/(?:触发动作|action)\s*[=:：]\s*([^，。\n]+)/i, message),
+        field_name: detectFieldName(message)
+      };
+
+      const security_flags = [];
+      if (/appsecret\s*[=:：]\s*\S+/i.test(message)) {
+        security_flags.push("contains_appsecret");
+      } else if (message.toLowerCase().includes("appsecret")) {
+        security_flags.push("mentions_appsecret");
+      }
+
+      const extraction = [
+        { field: "api_path", rule: "正则 /(\\/path)/", value: fields.api_path },
+        { field: "appid", rule: "匹配 appid=xxx", value: fields.appid },
+        { field: "error_code", rule: "匹配 错误码=XXX", value: fields.error_code },
+        { field: "request_time", rule: "匹配 yyyy-mm-dd hh:mm:ss", value: fields.request_time },
+        { field: "raw_sign_string", rule: "匹配 签名前字符串 后面的内容", value: fields.raw_sign_string },
+        { field: "callback_url", rule: "匹配 https:// 回调地址", value: fields.callback_url },
+        { field: "order_id", rule: "匹配 订单号=xxx 或 order_id=xxx", value: fields.order_id },
+        { field: "trigger_action", rule: "匹配 触发动作=xxx", value: fields.trigger_action },
+        { field: "field_name", rule: "在问题中寻找常见字段名", value: fields.field_name }
+      ];
+
+      return {
+        task_type: intent.task_type,
+        confidence: intent.task_type === "unknown" ? 0.32 : 0.86,
+        reason: intent.reason,
+        intent_hits: intent.hits,
+        fields,
+        extraction,
+        security_flags,
+        raw_message: message
+      };
+    }
+
+    function detectFieldName(message) {
+      const lower = message.toLowerCase();
+      for (const field of ["appid", "order_id", "timestamp", "sign", "appsecret"]) {
+        if (lower.includes(field)) return field;
+      }
+      return null;
+    }
+
+    function validate(draft) {
+      if (draft.security_flags.includes("contains_appsecret")) {
+        return {
+          status: "blocked",
+          missing_fields: [],
+          blocked_reasons: ["输入中包含 appsecret，不能进入普通模型上下文或普通日志。"]
+        };
+      }
+      if (draft.task_type === "unknown") {
+        return { status: "needs_clarification", missing_fields: ["task_type"], blocked_reasons: [] };
+      }
+      const missing = requiredFields[draft.task_type].filter((field) => !draft.fields[field]);
+      return missing.length
+        ? { status: "needs_clarification", missing_fields: missing, blocked_reasons: [] }
+        : { status: "executable", missing_fields: [], blocked_reasons: [] };
+    }
+
+    function clarify(draft, validation) {
+      if (validation.status === "blocked") {
+        return `这个请求触发了安全边界：${validation.blocked_reasons.join("；")}`;
+      }
+      if (validation.missing_fields.includes("task_type")) {
+        return "我还不能判断这是哪类 API 接入问题。请补充：问题类型、相关接口、错误现象或错误码。";
+      }
+      return `我已识别为「${taskLabel(draft.task_type)}」，但还缺少阻塞信息：${validation.missing_fields.map(label).join("、")}。\n请补充这些信息后我再继续排查。不要发送 appsecret、密钥或完整敏感凭证。`;
+    }
+
+    function taskLabel(taskType) {
+      return {
+        signature_debug: "签名失败排查",
+        callback_debug: "回调异常排查",
+        api_field_qa: "API 字段问答",
+        credential_request: "凭证相关请求",
+        unknown: "未识别任务"
+      }[taskType] || taskType;
+    }
+
+    function label(field) {
+      return fieldLabels[field] || field;
+    }
+
+    function searchDocs(draft) {
+      const keywords = {
+        signature_debug: ["签名", "SIGN_INVALID", "排序", "UTF-8", "timestamp", "appsecret"],
+        callback_debug: ["回调", "HTTPS", "订单号", "触发动作"],
+        api_field_qa: ["字段", "appid", "order_id", "timestamp", "sign"],
+        credential_request: ["appsecret", "凭证", "安全"],
+        unknown: []
+      }[draft.task_type];
+      return apiDocs.filter((line) => keywords.some((keyword) => line.toLowerCase().includes(keyword.toLowerCase()))).slice(0, 5);
+    }
+
+    function parseSignParams(raw) {
+      if (!raw) return [];
+      return raw.split("&").map((part) => {
+        const [name, ...rest] = part.split("=");
+        return { name: (name || "").trim(), value: rest.join("=").trim() };
+      }).filter((item) => item.name);
+    }
+
+    function runTools(draft) {
+      if (draft.task_type !== "signature_debug") {
+        return [{ name: "tool_router", status: "skipped", detail: "当前页面只实现签名排查工具；其他任务停在 Skill / RAG 层。" }];
+      }
+      const params = parseSignParams(draft.fields.raw_sign_string);
+      const names = params.map((item) => item.name);
+      const expected = [...names].sort();
+      const orderStatus = names.length === 0 ? "skipped" : arraysEqual(names, expected) ? "pass" : "fail";
+      const log = sampleLogs.find((item) => item.appid === draft.fields.appid && item.api_path === draft.fields.api_path && item.request_time === draft.fields.request_time);
+      return [
+        {
+          name: "check_signature_order",
+          status: orderStatus,
+          detail: names.length ? `当前顺序：${names.join(", ")}；期望顺序：${expected.join(", ")}` : "没有拿到可解析的签名前字符串。"
+        },
+        {
+          name: "check_timestamp_present",
+          status: names.includes("timestamp") ? "pass" : "fail",
+          detail: names.includes("timestamp") ? "签名前字符串中包含 timestamp。" : "签名前字符串缺少 timestamp。"
+        },
+        {
+          name: "search_error_code",
+          status: draft.fields.error_code ? "pass" : "skipped",
+          detail: draft.fields.error_code ? `${draft.fields.error_code}：签名校验失败，检查参数排序、编码、timestamp 和 appid 环境。` : "缺少错误码。"
+        },
+        {
+          name: "query_sandbox_log",
+          status: log ? "pass" : "warn",
+          detail: log ? log.log_summary : "示例日志中没有匹配记录。"
+        }
+      ];
+    }
+
+    function arraysEqual(a, b) {
+      return a.length === b.length && a.every((value, index) => value === b[index]);
+    }
+
+    function directAnswer(draft) {
+      if (draft.task_type === "callback_debug") {
+        return "可以先确认回调地址是否可访问、订单是否触发了回调、服务端是否发起请求、第三方是否返回 2xx。";
+      }
+      if (draft.task_type === "api_field_qa") {
+        return "可以先查 API 文档里的字段说明，再回答字段含义。";
+      }
+      return "可以先从常见原因排查：参数排序是否正确、签名前字符串是否一致、编码是否为 UTF-8、timestamp 是否过期、appid 是否和环境匹配。";
+    }
+
+    function runVersion(versionId, message) {
+      const draft = extractTask(message);
+      const validation = validate(draft);
+      const docs = searchDocs(draft);
+      const tools = validation.status === "executable" ? runTools(draft) : [];
+      const skill = skills[draft.task_type];
+      const trace = [];
+      let steps = [];
+      let terminalTitle = "运行输出";
+      let finalOutput = "";
+
+      if (versionId === "v0") {
+        steps = ["Input", "LLM", "Answer"];
+        trace.push(card("黑盒调用", "系统没有任务类型、字段、状态、工具和安全边界，只把整段输入交给模型。"));
+        trace.push(card("返回结果", "输出是一段通用建议，不能说明依据，也不能判断缺字段。"));
+        finalOutput = directAnswer(draft);
+        terminalTitle = "普通问答输出";
+      }
+
+      if (versionId === "v1") {
+        steps = ["输入", "意图判断", "字段抽取", "结构化草稿"];
+        trace.push(card("1. 意图判断怎么做", `先用轻量规则给任务类型打分：\n${formatHits(draft.intent_hits)}\n最终选择：${draft.task_type}，原因：${draft.reason}`));
+        trace.push(card("2. 字段抽取怎么做", draft.extraction.map((item) => `${label(item.field)}：${item.value ? "命中 " + item.value : "未命中"}；规则：${item.rule}`).join("\n")));
+        trace.push(card("3. 为什么只是草稿", "V1 只负责把自然语言转成结构化对象，不判断能不能执行；执行资格交给 V2 的 Schema Validator。"));
+        finalOutput = pretty({
+          task_type: draft.task_type,
+          confidence: draft.confidence,
+          reason: draft.reason,
+          fields: compactFields(draft.fields),
+          security_flags: draft.security_flags
+        });
+        terminalTitle = "结构化草稿";
+      }
+
+      if (versionId === "v2") {
+        steps = ["输入", "抽取", "Schema", validation.status === "executable" ? "放行" : "追问/阻断"];
+        trace.push(card("Schema 必填字段", `${taskLabel(draft.task_type)} 需要：${(requiredFields[draft.task_type] || []).map(label).join("、") || "无"}`));
+        trace.push(card("Validator 结果", `status=${validation.status}\nmissing=${validation.missing_fields.map(label).join("、") || "无"}\nblocked=${validation.blocked_reasons.join("；") || "无"}`));
+        finalOutput = validation.status === "executable" ? "字段已满足最小执行条件，可以进入下一步。" : clarify(draft, validation);
+        terminalTitle = "Schema 校验结果";
+      }
+
+      if (versionId === "v3") {
+        steps = ["输入", "校验", "Skill Router", "SOP"];
+        trace.push(card("Skill Router", skill ? `task_type=${draft.task_type} -> ${skill}` : "没有命中 Skill，需要人工分流或补充 Skill。"));
+        trace.push(card("SOP 加载策略", "先让模型看到 Skill 名称和简介；只有命中后才加载完整排查 SOP，避免上下文膨胀。"));
+        finalOutput = validation.status === "executable"
+          ? `已命中 ${skill}。\n下一步会按业务 SOP 排查，而不是让模型临场发挥。`
+          : clarify(draft, validation);
+        terminalTitle = "Skill 路由结果";
+      }
+
+      if (versionId === "v4") {
+        steps = ["输入", "校验", "检索", "依据回答"];
+        trace.push(card("检索关键词", `按任务类型选择关键词：${draft.task_type}`));
+        trace.push(card("命中文档", docs.length ? docs.map((line, index) => `${index + 1}. ${line}`).join("\n") : "当前文档未找到依据。"));
+        finalOutput = validation.status === "executable"
+          ? `依据文档：\n${docs.map((line) => "- " + line).join("\n") || "- 未找到依据"}`
+          : clarify(draft, validation);
+        terminalTitle = "RAG 检索结果";
+      }
+
+      if (versionId === "v5") {
+        steps = ["输入", "校验", "工具调用", "工具结果"];
+        trace.push(card("工具调用条件", validation.status === "executable" ? "字段齐全，允许调用工具。" : "字段不齐或被阻断，不调用工具。"));
+        trace.push(card("工具结果", tools.length ? formatTools(tools) : "无工具调用。"));
+        finalOutput = validation.status === "executable" ? summarizeTools(tools) : clarify(draft, validation);
+        terminalTitle = "工具调用结果";
+      }
+
+      if (versionId === "v6") {
+        steps = ["Observe", "Think", "Act", "Observe", "Answer"];
+        trace.push(card("Observe", `收到输入：${message}`));
+        trace.push(card("Think", `识别为 ${draft.task_type}；校验状态 ${validation.status}。`));
+        trace.push(card("Act", validation.status === "executable" ? "查文档、调 Skill、必要时调工具。" : "信息不足或触发边界，选择追问/阻断。"));
+        trace.push(card("Observe", validation.status === "executable" ? formatTools(tools) : clarify(draft, validation)));
+        finalOutput = validation.status === "executable" ? summarizeTools(tools) : clarify(draft, validation);
+        terminalTitle = "Agent Loop";
+      }
+
+      if (versionId === "v7") {
+        steps = ["输入脱敏", "Task State", "Guardrail", "Audit", "Answer"];
+        const masked = maskSensitive(message);
+        const taskState = validation.status === "blocked" ? "blocked" : validation.status === "needs_clarification" ? "waiting_for_user" : "finished";
+        trace.push(card("安全预处理", `普通日志中的输入摘要：${masked}`));
+        trace.push(card("Task State", `task_type=${draft.task_type}\nstatus=${taskState}\npending_fields=${validation.missing_fields.map(label).join("、") || "无"}`));
+        trace.push(card("Audit", `记录：task_identified、validation_result${validation.status === "executable" ? "、tools_called、task_finished" : ""}\n敏感信息：脱敏后记录。`));
+        finalOutput = validation.status === "executable"
+          ? `${summarizeTools(tools)}\n\n本次排查只记录脱敏摘要和工具状态，不记录 appsecret。`
+          : clarify(draft, validation);
+        terminalTitle = "状态与审计";
+      }
+
+      return {
+        draft,
+        validation,
+        steps,
+        trace,
+        finalOutput,
+        terminalTitle,
+        status: statusLabel(versionId, validation),
+        guard: draft.security_flags.includes("contains_appsecret") ? "Blocked" : versionId === "v7" ? "Strict" : versionId === "v0" ? "Off" : "On"
+      };
+    }
+
+    function statusLabel(versionId, validation) {
+      if (versionId === "v0") return "Loose";
+      if (versionId === "v1") return "Draft";
+      if (validation.status === "blocked") return "Blocked";
+      if (validation.status === "needs_clarification") return "Need Info";
+      return "Executable";
+    }
+
+    function card(title, body) {
+      return { title, body };
+    }
+
+    function compactFields(fields) {
+      return Object.fromEntries(Object.entries(fields).filter(([, value]) => value));
+    }
+
+    function pretty(value) {
+      return JSON.stringify(value, null, 2);
+    }
+
+    function formatHits(hits) {
+      return Object.entries(hits)
+        .map(([key, value]) => `${key}: ${value}`)
+        .join("\n");
+    }
+
+    function formatTools(results) {
+      return results.map((item) => `${item.name}: ${item.status}。${item.detail}`).join("\n");
+    }
+
+    function summarizeTools(results) {
+      if (results.length && results.every((item) => item.status === "skipped")) {
+        return results.map((item) => item.detail).join("\n");
+      }
+      const order = results.find((item) => item.name === "check_signature_order");
+      if (order && order.status === "fail") {
+        return `结论：签名前参数排序错误。\n${order.detail}\n请按期望顺序重建签名前字符串后重新生成 sign。`;
+      }
+      const failed = results.find((item) => item.status === "fail");
+      if (failed) return `结论：工具发现问题。\n${failed.detail}`;
+      const warn = results.find((item) => item.status === "warn");
+      if (warn) return `没有发现确定性失败，但存在告警：${warn.detail}`;
+      return "工具检查未发现明确异常。下一步建议比对客户端和服务端签名前字符串。";
+    }
+
+    function maskSensitive(text) {
+      return text.replace(/(appsecret\s*[=:：]\s*)\S+/ig, "$1***MASKED***");
+    }
+
+    function escapeHtml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function highlight(text) {
+      return escapeHtml(text)
+        .replace(/(blocked|fail|Blocked|appsecret=\*\*\*MASKED\*\*\*|触发了安全边界)/g, '<span class="token-red">$1</span>')
+        .replace(/(needs_clarification|Need Info|缺少|追问|warn|告警)/g, '<span class="token-amber">$1</span>')
+        .replace(/(executable|Executable|pass|结论|命中|字段已满足|finished)/g, '<span class="token-green">$1</span>')
+        .replace(/(Observe|Think|Act|Answer|Task State|Audit|Schema|Skill|Tool|RAG|Validator|Guardrail)/g, '<span class="token-cyan">$1</span>');
+    }
+
+    function renderVersionButtons() {
+      versionList.innerHTML = versions.map((item) => `
+        <button class="version-btn" type="button" role="tab" aria-selected="${item.id === state.version}" data-version="${item.id}">
+          <span class="version-index">${item.id.toUpperCase()}</span>
+          <span class="version-title">
+            <strong>${item.name}</strong>
+            <span>${item.summary}</span>
+          </span>
+          <span class="version-badge">${item.short}</span>
+        </button>
+      `).join("");
+    }
+
+    function render(options = { showToast: false }) {
+      const version = versions.find((item) => item.id === state.version);
+      const message = messageInput.value;
+      const run = runVersion(version.id, message);
+      renderVersionButtons();
+
+      scenarioButtons.forEach((button) => {
+        button.setAttribute("aria-selected", String(button.dataset.scenario === state.scenario));
+      });
+
+      versionName.textContent = `${version.id.toUpperCase()} · ${version.name}`;
+      versionSummary.textContent = version.summary;
+      commandText.textContent = `python app.py --version ${version.id} --message "${message.slice(0, 24)}${message.length > 24 ? "..." : ""}"`;
+
+      document.getElementById("metricLevel").textContent = version.id.toUpperCase();
+      document.getElementById("metricTask").textContent = run.draft.task_type;
+      document.getElementById("metricTaskNote").textContent = run.draft.reason;
+      document.getElementById("metricStatus").textContent = run.status;
+      document.getElementById("metricStatusNote").textContent = run.validation.missing_fields.length
+        ? `缺：${run.validation.missing_fields.map(label).join("、")}`
+        : run.validation.status === "blocked" ? "已阻断" : "可继续";
+      document.getElementById("metricStatusNote").className = run.validation.status === "blocked" ? "bad" : run.validation.status === "needs_clarification" ? "warn" : "good";
+      document.getElementById("metricGuard").textContent = run.guard;
+      document.getElementById("metricGuardNote").textContent = run.draft.security_flags.length ? run.draft.security_flags.join("、") : "未发现敏感字段";
+      document.getElementById("metricGuardNote").className = run.draft.security_flags.includes("contains_appsecret") ? "bad" : "warn";
+
+      pipeline.innerHTML = run.steps.map((step, index) => {
+        const cls = pipeClass(run, index);
+        return `
+          <div class="pipe-step ${cls}">
+            <strong>${escapeHtml(step)}</strong>
+            <span>${escapeHtml(pipeCaption(run, step))}</span>
+          </div>
+        `;
+      }).join("");
+
+      traceGrid.innerHTML = run.trace.map((item) => `
+        <section class="trace-card">
+          <h3>${escapeHtml(item.title)}</h3>
+          <p>${highlight(item.body).replaceAll("\n", "<br>")}</p>
+        </section>
+      `).join("");
+
+      terminalTitle.textContent = run.terminalTitle;
+      terminalMeta.textContent = `status: ${run.status.toLowerCase()}`;
+      terminalOutput.innerHTML = highlight(run.finalOutput);
+
+      if (options.showToast) showToast("已根据当前输入重新运行");
+    }
+
+    function pipeClass(run, index) {
+      if (run.validation.status === "blocked" && index >= 2) return "blocked";
+      if (run.validation.status === "needs_clarification" && index >= 2) return "warn";
+      return index === 0 ? "info" : "active";
+    }
+
+    function pipeCaption(run, step) {
+      if (step.includes("意图") || step === "Think") return run.draft.reason;
+      if (step.includes("字段") || step === "抽取") return `已抽取 ${Object.keys(compactFields(run.draft.fields)).length} 个字段`;
+      if (step.includes("Schema") || step === "校验") return run.validation.status;
+      if (step.includes("工具") || step === "Act") return run.validation.status === "executable" ? "允许执行" : "停止执行";
+      if (step.includes("Guard") || step.includes("脱敏")) return run.draft.security_flags.length ? run.draft.security_flags.join("、") : "无敏感字段";
+      return "写回运行状态";
+    }
+
+    function showToast(message) {
+      toast.querySelector("span").textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    versionList.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-version]");
+      if (!button) return;
+      state.version = button.dataset.version;
+      render({ showToast: true });
+    });
+
+    scenarioButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        state.scenario = button.dataset.scenario;
+        messageInput.value = scenarios[state.scenario];
+        render({ showToast: true });
+      });
+    });
+
+    document.getElementById("runCurrent").addEventListener("click", () => {
+      render({ showToast: true });
+    });
+
+    document.getElementById("copyCommand").addEventListener("click", async () => {
+      const command = commandText.textContent;
+      try {
+        await navigator.clipboard.writeText(command);
+        showToast("命令已复制");
+      } catch {
+        showToast(command);
+      }
+    });
+
+    let inputTimer;
+    messageInput.addEventListener("input", () => {
+      state.scenario = "custom";
+      scenarioButtons.forEach((button) => button.setAttribute("aria-selected", "false"));
+      window.clearTimeout(inputTimer);
+      inputTimer = window.setTimeout(() => render(), 220);
+    });
+
+    messageInput.value = scenarios.complete;
+    renderVersionButtons();
+    render();
+  </script>
+</body>
+</html>
