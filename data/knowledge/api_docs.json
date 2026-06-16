@@ -1,0 +1,72 @@
+[
+  {
+    "id": "auth-signature-default",
+    "category": "auth",
+    "title": "默认 API 签名规则",
+    "content": "接口调用前需要鉴权。除 sign 外所有请求参数按 ASCII 升序排序，拼接为 字段名=字段值，并用 & 连接；使用 hash_hmac/HMAC-SHA1 计算签名后转 base64，作为 sign 提交。timestamp 为秒级 Unix 时间戳。",
+    "source": "wiki/concepts/api-auth-signature.md"
+  },
+  {
+    "id": "auth-signature-status",
+    "category": "auth",
+    "title": "签名相关状态码",
+    "content": "常见状态码：1 表示成功，0 表示错误提示，-1 表示签名错误，-100 表示系统内部异常。",
+    "source": "wiki/concepts/api-auth-signature.md"
+  },
+  {
+    "id": "integration-process",
+    "category": "integration",
+    "title": "API 对接流程",
+    "content": "商务确认合作意向后，产品确认合作方式、接入平台、端游/手游、客户端形态、支付和客服问题；再确认开通游戏、上号方式和货架数据方案；合作方提供注册手机号、移动端包名和 SHA-1 签名；生成 appid/appsecret；SDK 包和 PHP 后台鉴权配置并行上线。",
+    "source": "wiki/concepts/api-integration-process.md"
+  },
+  {
+    "id": "shelf-sharing-core",
+    "category": "shelf-sharing",
+    "title": "货架共享核心接口",
+    "content": "货架共享常见接口包括 /api/platformXYZ/hao/searchFilter、/api/platformXYZ/hao/search、/api/platformXYZ/hao/info、/api/platformXYZ/hao/detailInfo、/api/platformXYZ/order/placeOrder、/api/platformXYZ/order/relet、/api/platformXYZ/order/info、/api/platformXYZ/ts/getType、/api/platformXYZ/ts/add。",
+    "source": "wiki/concepts/shelf-api.md"
+  },
+  {
+    "id": "shelf-management-core",
+    "category": "shelf-management",
+    "title": "货架管理核心接口",
+    "content": "货架管理常见接口包括 /shanghu/[platformXYZ]/v1/onRentHao、offRentHao、batchOnRentHao、batchOffRentHao、delHao，以及 /v2/hideHaoByIds、addBlackUser、getHaoChangeList、searchAccount 和 /v3/rentOutOrderList。",
+    "source": "wiki/concepts/shelf-api.md"
+  },
+  {
+    "id": "callback-retry",
+    "category": "callback",
+    "title": "回调与重试规则",
+    "content": "投诉和货架状态、价格、段位、标题等状态变更会回调。回调接口存在 2 次重试机制；不需要约定响应格式，按 HTTP 状态码判断，超时或 500 会重试，返回 200 不重试。",
+    "source": "wiki/concepts/callback-retry.md"
+  },
+  {
+    "id": "new-renewal",
+    "category": "renewal",
+    "title": "新续租规则",
+    "content": "新续租新增接口，老续租暂时保留。新续租单是新订单，有独立订单号和解锁码；系列续租单解锁码通用；进入续租时间后自动过渡，无需重新登录。投诉中、已有未开始续租单、被拉黑、与不可租时间冲突等会导致不允许续租或续租失败。",
+    "source": "wiki/concepts/new-renewal.md"
+  },
+  {
+    "id": "standard-number-pool",
+    "category": "number-pool",
+    "title": "三方标准号池规则",
+    "content": "标准号池从大号池筛选符合要求的货架，只推送待租状态、非高危、无押金且上号方式匹配的货架；每半小时同步一次。三单连续撤单或七天状态无变化的货架会进入剔除逻辑。",
+    "source": "wiki/concepts/standard-number-pool.md"
+  },
+  {
+    "id": "sdk-login",
+    "category": "sdk",
+    "title": "SDK 上号接入",
+    "content": "安卓 SDK 自带混淆规则，三方订单和租号玩官方订单不是同一体系，解锁码不能共用，需要通过 API 下单获取订单信息和解锁码。PC 端游 SDK 需要 Windows 签名，并通过 zhplatform.dll 的 ExchangeCallBack 接收通知。",
+    "source": "wiki/concepts/sdk-login.md"
+  },
+  {
+    "id": "defense-api",
+    "category": "defense",
+    "title": "防御检测接口",
+    "content": "防御接口用于三方平台在下单、上号前接入风控能力。检测接口包括 /api/platformXYZ/defense/detect，回调接口包括 /api/platformXYZ/defense/callback；调用时至少存在一种检测类型，否则无实际作用。",
+    "source": "wiki/concepts/defense-api.md"
+  }
+]

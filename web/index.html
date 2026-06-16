@@ -805,6 +805,7 @@
     <span>已更新</span>
   </div>
 
+  <script src="knowledge.js"></script>
   <script>
     const scenarios = {
       brief: "你们接口一直签名失败，帮忙看下",
@@ -853,15 +854,16 @@
       unknown: null
     };
 
-    const apiDocs = [
-      "签名规则：所有参与签名的业务参数必须先按参数名的字母序升序排列，再用 key=value 形式拼接。",
-      "签名前字符串必须使用 UTF-8 编码。",
-      "签名前不要把参数值做 URL 编码。需要 URL 编码的字段，应在签名完成后再编码传输。",
-      "SIGN_INVALID：签名校验失败，建议检查参数排序、编码方式、timestamp 是否过期、appid 与环境是否匹配。",
-      "回调地址必须是服务端可访问的 HTTPS 地址。",
-      "如果没有收到回调，应优先确认回调地址、订单号、触发动作、回调响应状态码和服务端日志。",
-      "appsecret 只允许在安全凭证系统中查看、重置或发放，不允许进入普通对话或普通日志。"
-    ];
+    const knowledgePackage = window.AGENT_DEMO_KNOWLEDGE || {
+      api_docs: [],
+      faq: [],
+      error_codes: [],
+      sops: []
+    };
+    const apiDocs = buildKnowledgeDocs(knowledgePackage);
+    const remoteWikiIndexUrl = "https://raw.githubusercontent.com/huakaiwuyeshu/llm-wiki/main/projects/api-infra/exports/agent-demo/search_index.json";
+    let remoteWikiDocs = null;
+    let remoteWikiPromise = null;
 
     const sampleLogs = [
       {
@@ -875,7 +877,8 @@
 
     const state = {
       version: "v1",
-      scenario: "complete"
+      scenario: "complete",
+      renderSeq: 0
     };
 
     const versionList = document.querySelector(".version-list");
@@ -1022,15 +1025,146 @@
       return fieldLabels[field] || field;
     }
 
-    function searchDocs(draft) {
-      const keywords = {
-        signature_debug: ["签名", "SIGN_INVALID", "排序", "UTF-8", "timestamp", "appsecret"],
-        callback_debug: ["回调", "HTTPS", "订单号", "触发动作"],
-        api_field_qa: ["字段", "appid", "order_id", "timestamp", "sign"],
-        credential_request: ["appsecret", "凭证", "安全"],
+    function buildKnowledgeDocs(pkg) {
+      const docs = [];
+      (pkg.api_docs || []).forEach((item) => {
+        docs.push({
+          kind: "API 文档",
+          title: item.title || item.id || "API 文档",
+          text: item.content || "",
+          source: item.source || "data/knowledge/api_docs.json",
+          keywords: [item.id, item.category]
+        });
+      });
+      (pkg.faq || []).forEach((item) => {
+        docs.push({
+          kind: "FAQ",
+          title: item.question || item.id || "FAQ",
+          text: item.answer || "",
+          source: item.source || "data/knowledge/faq.json",
+          keywords: [item.id]
+        });
+      });
+      (pkg.error_codes || []).forEach((item) => {
+        docs.push({
+          kind: "错误码",
+          title: `错误码 ${item.code || ""}`.trim(),
+          text: [item.meaning, item.suggestion].filter(Boolean).join("；"),
+          source: item.source || "data/knowledge/error_codes.json",
+          keywords: [item.code]
+        });
+      });
+      (pkg.sops || []).forEach((item) => {
+        docs.push({
+          kind: "SOP",
+          title: item.title || item.id || "SOP",
+          text: [
+            listText("适用场景", item.applies_to),
+            listText("需要信息", item.required_info),
+            listText("步骤", item.steps)
+          ].filter(Boolean).join("；"),
+          source: item.source || "data/knowledge/sops.json",
+          keywords: [item.id].concat(item.applies_to || [])
+        });
+      });
+      return docs;
+    }
+
+    function buildRemoteWikiDocs(index) {
+      return (index.records || []).map((item) => ({
+        kind: "远程 llm-wiki",
+        title: item.title || item.source || "llm-wiki",
+        text: item.text || "",
+        source: item.source || "search_index.json",
+        line_no: item.line_no,
+        keywords: [item.source]
+      }));
+    }
+
+    async function loadRemoteWikiDocs() {
+      if (remoteWikiDocs) return remoteWikiDocs;
+      if (!remoteWikiPromise) {
+        remoteWikiPromise = fetch(remoteWikiIndexUrl, { cache: "force-cache" })
+          .then((response) => {
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
+            return response.json();
+          })
+          .then((index) => {
+            remoteWikiDocs = buildRemoteWikiDocs(index);
+            return remoteWikiDocs;
+          })
+          .catch(() => {
+            remoteWikiDocs = [];
+            return remoteWikiDocs;
+          });
+      }
+      return remoteWikiPromise;
+    }
+
+    function listText(label, value) {
+      return Array.isArray(value) && value.length ? `${label}：${value.join("、")}` : "";
+    }
+
+    function keywordsFor(draft) {
+      const intentKeywords = {
+        signature_debug: ["签名", "验签", "SIGN_INVALID", "-1", "参数排序", "ASCII", "UTF-8", "timestamp", "appid", "appsecret", "HMAC", "SHA1", "base64"],
+        callback_debug: ["回调", "callback", "重试", "500", "200", "HTTPS", "订单号", "触发动作", "投诉"],
+        api_field_qa: [],
+        credential_request: ["appsecret", "凭证", "密钥", "安全", "appid"],
+        api_onboarding: ["接入", "流程", "appid", "appsecret", "SHA-1", "白名单"],
         unknown: []
-      }[draft.task_type];
-      return apiDocs.filter((line) => keywords.some((keyword) => line.toLowerCase().includes(keyword.toLowerCase()))).slice(0, 5);
+      }[draft.task_type] || [];
+      return unique(intentKeywords.concat(queryTerms(draft.raw_message || "")));
+    }
+
+    function queryTerms(text) {
+      return (text.match(/\/[A-Za-z0-9_\-/]+|[A-Za-z0-9_:\-.]{2,}|[\u4e00-\u9fff]{2,}/g) || [])
+        .map((item) => item.replace(/^[，。；：、,.!?()[\]{}"']+|[，。；：、,.!?()[\]{}"']+$/g, ""))
+        .filter(Boolean);
+    }
+
+    function unique(values) {
+      const seen = new Set();
+      return values.filter((value) => {
+        const normalized = String(value || "").trim();
+        const key = normalized.toLowerCase();
+        if (!normalized || seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
+    }
+
+    function scoreDoc(doc, keywords) {
+      const haystack = `${doc.title}\n${doc.text}\n${doc.source}\n${(doc.keywords || []).join("\n")}`.toLowerCase();
+      return keywords.reduce((score, keyword) => {
+        const normalized = String(keyword || "").toLowerCase().trim();
+        if (!normalized || !haystack.includes(normalized)) return score;
+        return score + (String(doc.title || "").toLowerCase().includes(normalized) ? 2 : 1);
+      }, 0);
+    }
+
+    function formatDocHit(doc) {
+      return `[${doc.kind}] ${doc.title}：${doc.text}（来源：${doc.source}）`;
+    }
+
+    function searchDocs(draft) {
+      const keywords = keywordsFor(draft);
+      return apiDocs
+        .map((doc) => ({ doc, score: scoreDoc(doc, keywords) }))
+        .filter((item) => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5)
+        .map((item) => formatDocHit(item.doc));
+    }
+
+    function searchRemoteDocs(draft) {
+      const keywords = keywordsFor(draft);
+      return (remoteWikiDocs || [])
+        .map((doc) => ({ doc, score: scoreDoc(doc, keywords) }))
+        .filter((item) => item.score > 0)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, 5)
+        .map((item) => formatDocHit(item.doc));
     }
 
     function parseSignParams(raw) {
@@ -1410,9 +1544,12 @@
         keywords: [
           { word: "字段", weight: 3 },
           { word: "什么意思", weight: 3 },
+          { word: "区别", weight: 3 },
           { word: "含义", weight: 2 },
           { word: "枚举", weight: 2 },
           { word: "错误码", weight: 2 },
+          { word: "detailinfo", weight: 3 },
+          { word: "info", weight: 2 },
           { word: "参数", weight: 1 }
         ]
       },
@@ -1452,7 +1589,7 @@
     const scopeSignals = [
       "api", "接口", "接入", "联调", "appid", "appsecret", "签名", "验签",
       "回调", "callback", "错误码", "字段", "参数", "单量", "成功率", "失败率",
-      "订单", "order_id", "timestamp", "SIGN_INVALID"
+      "订单", "order_id", "timestamp", "SIGN_INVALID", "info", "detailinfo"
     ];
 
     function evaluateInputGate(message) {
@@ -1586,6 +1723,7 @@
       const draft = extractTask(message);
       const validation = validate(draft);
       const docs = validation.status === "out_of_scope" ? [] : searchDocs(draft);
+      const remoteDocs = docs.length || !remoteWikiDocs ? [] : searchRemoteDocs(draft);
       const tools = validation.status === "executable" ? runTools(draft) : [];
       const skill = skills[draft.task_type];
       const trace = [];
@@ -1642,9 +1780,13 @@
       if (versionId === "v4") {
         steps = ["Scope", "校验", "检索", "依据回答"];
         trace.push(card("检索前置条件", validation.status === "out_of_scope" ? "范围外输入不进入业务知识库检索。" : `按 ${draft.task_type} 选择检索关键词。`));
-        trace.push(card("命中文档", docs.length ? docs.map((line, index) => `${index + 1}. ${line}`).join("\n") : "当前没有进入检索，或文档未找到依据。"));
+        const displayDocs = docs.length ? docs : remoteDocs;
+        const emptyMessage = remoteWikiDocs
+          ? "当前导出的 demo 知识包和远程 llm-wiki 索引都未命中；请在 llm-wiki 更新后重新生成 search_index.json。"
+          : "当前导出的 demo 知识包未命中；正在尝试查询 GitHub 上的远程 llm-wiki 索引。";
+        trace.push(card("命中文档", displayDocs.length ? displayDocs.map((line, index) => `${index + 1}. ${line}`).join("\n") : emptyMessage));
         finalOutput = validation.status === "executable"
-          ? `依据文档：\n${docs.map((line) => "- " + line).join("\n") || "- 未找到依据"}`
+          ? `依据文档：\n${displayDocs.map((line) => "- " + line).join("\n") || "- 当前导出的 demo 知识包未命中；正在尝试远程 llm-wiki。"}`
           : clarify(draft, validation);
         terminalTitle = "RAG 检索结果";
       }
@@ -1688,7 +1830,8 @@
         finalOutput,
         terminalTitle,
         status: statusLabel(versionId, validation),
-        guard: draft.security_flags.includes("contains_appsecret") ? "Blocked" : versionId === "v7" ? "Strict" : versionId === "v0" ? "Off" : "On"
+        guard: draft.security_flags.includes("contains_appsecret") ? "Blocked" : versionId === "v7" ? "Strict" : versionId === "v0" ? "Off" : "On",
+        needsRemoteWiki: versionId === "v4" && validation.status !== "out_of_scope" && docs.length === 0 && !remoteWikiDocs
       };
     }
 
@@ -1702,6 +1845,7 @@
     }
 
     function render(options = { showToast: false }) {
+      const renderSeq = ++state.renderSeq;
       const version = versions.find((item) => item.id === state.version);
       const message = messageInput.value;
       const run = runVersion(version.id, message);
@@ -1753,6 +1897,13 @@
       terminalOutput.innerHTML = highlight(run.finalOutput);
 
       if (options.showToast) showToast("已根据当前输入重新运行");
+      if (run.needsRemoteWiki) {
+        loadRemoteWikiDocs().then(() => {
+          if (state.renderSeq === renderSeq && state.version === version.id && messageInput.value === message) {
+            render();
+          }
+        });
+      }
     }
 
     function pipeClass(run, index) {

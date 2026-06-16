@@ -1,0 +1,80 @@
+[
+  {
+    "code": "1",
+    "meaning": "成功",
+    "suggestion": "接口处理成功。",
+    "source": "wiki/concepts/api-auth-signature.md"
+  },
+  {
+    "code": "0",
+    "meaning": "错误提示",
+    "suggestion": "读取返回消息，根据具体业务错误处理。",
+    "source": "wiki/concepts/api-auth-signature.md"
+  },
+  {
+    "code": "-1",
+    "meaning": "签名错误",
+    "suggestion": "检查 app_id/app_secret、timestamp 秒级格式、参数 ASCII 升序、sign 是否排除、算法和 base64 编码。",
+    "source": "wiki/concepts/api-auth-signature.md"
+  },
+  {
+    "code": "-100",
+    "meaning": "系统内部异常",
+    "suggestion": "确认请求参数无误后，结合服务端日志排查内部异常。",
+    "source": "wiki/concepts/api-auth-signature.md"
+  },
+  {
+    "code": "ISSUE_1001",
+    "meaning": "快速上号服务参数缺失无法上号",
+    "suggestion": "检查解锁码等必要参数。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  },
+  {
+    "code": "ISSUE_1002",
+    "meaning": "未导入相应上号策略实现库",
+    "suggestion": "检查安卓 SDK 依赖和上号策略库是否集成。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  },
+  {
+    "code": "ISSUE_1003",
+    "meaning": "quickInfo/dataVO 数据解析异常",
+    "suggestion": "检查接口返回结构和 SDK 解析逻辑。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  },
+  {
+    "code": "ISSUE_1004",
+    "meaning": "上号策略初始化失败",
+    "suggestion": "检查策略初始化参数和 SDK 环境。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  },
+  {
+    "code": "ISSUE_1005",
+    "meaning": "1.3 上号获取 Token 失败",
+    "suggestion": "检查上号 token 获取接口和订单信息。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  },
+  {
+    "code": "ISSUE_1006",
+    "meaning": "1.3 获取云游戏备用 Token 失败",
+    "suggestion": "检查云游戏备用 token 服务。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  },
+  {
+    "code": "ISSUE_1007",
+    "meaning": "没有可用的快速上号方式",
+    "suggestion": "提示用户返回 APP 及时撤单并租用其他账号。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  },
+  {
+    "code": "ISSUE_1008",
+    "meaning": "暂时无法打开加速器",
+    "suggestion": "检查 VPN/加速器启动链路。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  },
+  {
+    "code": "ISSUE_5000",
+    "meaning": "快速上号服务异常",
+    "suggestion": "稍后重试或联系客服，并结合 SDK 日志排查。",
+    "source": "wiki/sources/android-login-sdk-integration.md"
+  }
+]

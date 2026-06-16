@@ -1,0 +1,105 @@
+{
+  "name": "api-infra-agent-demo-knowledge",
+  "version": "2026-06-16",
+  "generated_at": "2026-06-16",
+  "source_project": "D:/zuhaowan-ai/llm-wiki/projects/api-infra",
+  "sources": [
+    {
+      "title": "API对接FAQ整理",
+      "slug": "api-integration-faq",
+      "pages": 3,
+      "raw_pdf": "sources/raw-pdfs/API对接FAQ整理.pdf",
+      "extracted_md": "sources/extracted-md/api-integration-faq.md",
+      "wiki_source": "wiki/sources/api-integration-faq.md",
+      "sha256_16": "ab6f0b4e294073bb"
+    },
+    {
+      "title": "安卓上号 SDK 接入文档",
+      "slug": "android-login-sdk-integration",
+      "pages": 7,
+      "raw_pdf": "sources/raw-pdfs/安卓上号 SDK 接入文档.pdf",
+      "extracted_md": "sources/extracted-md/android-login-sdk-integration.md",
+      "wiki_source": "wiki/sources/android-login-sdk-integration.md",
+      "sha256_16": "06210546ee8391cb"
+    },
+    {
+      "title": "API对接流程",
+      "slug": "api-integration-process",
+      "pages": 2,
+      "raw_pdf": "sources/raw-pdfs/API对接流程.pdf",
+      "extracted_md": "sources/extracted-md/api-integration-process.md",
+      "wiki_source": "wiki/sources/api-integration-process.md",
+      "sha256_16": "0c03fad540ca617b"
+    },
+    {
+      "title": "API新续租完整说明",
+      "slug": "api-new-renewal-guide",
+      "pages": 3,
+      "raw_pdf": "sources/raw-pdfs/API新续租完整说明.pdf",
+      "extracted_md": "sources/extracted-md/api-new-renewal-guide.md",
+      "wiki_source": "wiki/sources/api-new-renewal-guide.md",
+      "sha256_16": "83b631b2467e913e"
+    },
+    {
+      "title": "PC端游SDK说明",
+      "slug": "pc-game-sdk-guide",
+      "pages": 7,
+      "raw_pdf": "sources/raw-pdfs/PC端游SDK说明.pdf",
+      "extracted_md": "sources/extracted-md/pc-game-sdk-guide.md",
+      "wiki_source": "wiki/sources/pc-game-sdk-guide.md",
+      "sha256_16": "f0c023b35f29d707"
+    },
+    {
+      "title": "三方标准号池方案",
+      "slug": "third-party-standard-number-pool",
+      "pages": 11,
+      "raw_pdf": "sources/raw-pdfs/三方标准号池方案.pdf",
+      "extracted_md": "sources/extracted-md/third-party-standard-number-pool.md",
+      "wiki_source": "wiki/sources/third-party-standard-number-pool.md",
+      "sha256_16": "901be40a7973f2ac"
+    },
+    {
+      "title": "iOS API接口服务接入文档",
+      "slug": "ios-api-service-integration",
+      "pages": 20,
+      "raw_pdf": "sources/raw-pdfs/iOS API接口服务接入文档.pdf",
+      "extracted_md": "sources/extracted-md/ios-api-service-integration.md",
+      "wiki_source": "wiki/sources/ios-api-service-integration.md",
+      "sha256_16": "3371b5a7bc5fbf15"
+    },
+    {
+      "title": "三方渠道整理",
+      "slug": "third-party-channel-summary",
+      "pages": 11,
+      "raw_pdf": "sources/raw-pdfs/三方渠道整理.pdf",
+      "extracted_md": "sources/extracted-md/third-party-channel-summary.md",
+      "wiki_source": "wiki/sources/third-party-channel-summary.md",
+      "sha256_16": "e20bf408e67fa9c7"
+    },
+    {
+      "title": "货架共享第三方API接口文档",
+      "slug": "shelf-sharing-third-party-api",
+      "pages": 119,
+      "raw_pdf": "sources/raw-pdfs/货架共享第三方API接口文档.pdf",
+      "extracted_md": "sources/extracted-md/shelf-sharing-third-party-api.md",
+      "wiki_source": "wiki/sources/shelf-sharing-third-party-api.md",
+      "sha256_16": "693b4e52eccf0dd0"
+    },
+    {
+      "title": "货架管理三方API文档",
+      "slug": "shelf-management-third-party-api",
+      "pages": 122,
+      "raw_pdf": "sources/raw-pdfs/货架管理三方API文档.pdf",
+      "extracted_md": "sources/extracted-md/shelf-management-third-party-api.md",
+      "wiki_source": "wiki/sources/shelf-management-third-party-api.md",
+      "sha256_16": "f4138d1575e4e92e"
+    }
+  ],
+  "exports": [
+    "api_docs.json",
+    "faq.json",
+    "error_codes.json",
+    "sops.json"
+  ],
+  "boundary": "agent-demo should consume exports/agent-demo only, not raw PDFs or projects/agent-learning."
+}

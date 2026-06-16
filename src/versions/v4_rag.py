@@ -12,13 +12,12 @@ def run(scenario: Scenario) -> RunResult:
     validation = validate_task(draft)
     evidence = search_knowledge(draft.task_type, scenario.message)
 
-    if not validation.executable:
+    if evidence:
+        final_output = "依据文档：\n" + "\n".join(f"- {item.text}" for item in evidence[:3])
+    elif not validation.executable:
         final_output = build_clarification(draft, validation)
     else:
-        final_output = (
-            "根据文档依据，优先检查参数排序、UTF-8 编码、URL 编码时机、timestamp 时间偏差，"
-            "并确认 appsecret 没有进入普通对话或日志。"
-        )
+        final_output = "当前 demo 知识包和本地 llm-wiki 都没有命中文档依据，需要先补充或重新导出资料。"
 
     return RunResult(
         version="v4",

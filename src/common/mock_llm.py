@@ -31,6 +31,10 @@ def extract_task(message: str) -> TaskDraft:
     )
     fields["callback_url"] = _first_match(r"(https://[A-Za-z0-9_\-./?=&%]+)", message)
     fields["order_id"] = _first_match(r"(?:order_id|订单号)\s*[=:：]\s*([A-Za-z0-9_\-]+)", message)
+    fields["trigger_action"] = _first_match(
+        r"(?:触发动作|action)\s*[=:：]\s*([^，。\n]+?)(?=\s+(?:请求时间|request_time|回调地址|callback_url|订单号|order_id)\s*[=:：]|[，。]|$)",
+        message,
+    )
     fields["field_name"] = _detect_field_name(message)
 
     security_flags: list[str] = []
@@ -55,7 +59,9 @@ def _detect_task_type(message: str) -> str:
         return "signature_debug"
     if "回调" in message or "callback" in lowered:
         return "callback_debug"
-    if "字段" in message or "什么意思" in message:
+    if "字段" in message or "什么意思" in message or "区别" in message:
+        return "api_field_qa"
+    if any(field in lowered for field in ["detailinfo", "info", "order_id", "timestamp", "sign"]):
         return "api_field_qa"
     if "appid" in lowered and "appsecret" in lowered:
         return "credential_request"
@@ -84,7 +90,10 @@ def _first_match(pattern: str, text: str) -> str | None:
 
 
 def _detect_field_name(message: str) -> str | None:
-    for field in ["appid", "order_id", "timestamp", "sign", "appsecret"]:
+    lowered = message.lower()
+    if "detailinfo" in lowered and "info" in lowered:
+        return "info/detailinfo"
+    for field in ["detailinfo", "info", "appid", "order_id", "timestamp", "sign", "appsecret"]:
         if field in message.lower():
             return field
     return None

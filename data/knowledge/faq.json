@@ -1,0 +1,74 @@
+[
+  {
+    "id": "faq-single-client-multi-game",
+    "question": "同一个租号客户端能同时登录多个游戏账号吗？",
+    "answer": "不能。同一个租号客户端不支持同时登录多个游戏账号，只支持先后进入；需要另一个游戏退出后才能继续。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-callback-retry",
+    "question": "回调接口失败会重试吗？",
+    "answer": "会。当前回调接口存在 2 次重试机制；不需要约定响应格式，按 HTTP 状态码判断，超时或 500 会重试，返回 200 不重试。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-complaint-callback",
+    "question": "投诉状态会回调几次？",
+    "answer": "投诉行为会按照结果持续回调，直到用户投诉完成。状态变更也会回调，包括货架状态、价格、段位、标题等信息。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-other-platform-complaint",
+    "question": "其他平台投诉会推给当前渠道吗？",
+    "answer": "不会。其他平台投诉不会返回给当前渠道，存在鉴权隔离。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-list-rentable",
+    "question": "列表接口返回的都是可租货架吗？",
+    "answer": "目前列表返回的都是可租货架。回调接口中会包含新增账号、状态变更、价格变更或商品其他信息变更等数据。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-not-in-pool",
+    "question": "平台新增货架没有进入号池，会推送给渠道吗？",
+    "answer": "不会。平台新增货架不进入号池时，不会推送给渠道。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-deleted-shelf",
+    "question": "商品删除状态是什么意思？",
+    "answer": "商品删除指号主将货架从平台删除，该货架 ID 后续可以不再关注，渠道侧基本收不到。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-info-detailinfo",
+    "question": "info 和 detailinfo 有什么区别？",
+    "answer": "info 返回货架基础信息，detailinfo 返回货架装备信息、图片等详情内容。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-signature-debug",
+    "question": "签名错误应该排查什么？",
+    "answer": "重点检查 app_id、app_secret 是否正确，timestamp 是否为秒级 Unix 时间戳，参数是否按 ASCII 升序排序，是否错误地把 sign 参与签名，是否使用正确算法，以及结果是否 base64 编码。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-discount-renewal",
+    "question": "特价游戏支持续租吗？",
+    "answer": "不支持。FAQ 文档列出的特价游戏列表注明特价游戏不支持续租。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-new-renewal-order",
+    "question": "新续租单是否有独立订单号？",
+    "answer": "有。新续租单是新订单，拥有独立订单号和解锁码；系列续租单之间解锁码通用。",
+    "source": "wiki/faq/api-integration-faq.md"
+  },
+  {
+    "id": "faq-new-renewal-failure",
+    "question": "新续租失败常见业务原因有哪些？",
+    "answer": "租客已有一个未开始的续租单、订单处于投诉中、租客被号主拉黑、续租时间与货架不可租时间冲突，都可能导致续租不允许或失败。",
+    "source": "wiki/faq/api-integration-faq.md"
+  }
+]
