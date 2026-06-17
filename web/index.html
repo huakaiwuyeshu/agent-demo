@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>API 接入 Agent 动态演进台</title>
-  <meta name="description" content="API 接入 Agent 多版本能力演进动态演示页" />
+  <title>API 接入 Agent 对话演示</title>
+  <meta name="description" content="API 接入 Agent 真实对话、结果评估与能力升级演示页" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -231,6 +231,15 @@
       background: rgba(34, 197, 94, 0.1);
     }
 
+    .version-btn[data-upgrade-state="recommended"] {
+      border-color: rgba(56, 189, 248, 0.42);
+      background: rgba(56, 189, 248, 0.075);
+    }
+
+    .version-btn[data-upgrade-state="verified"] {
+      border-color: rgba(34, 197, 94, 0.32);
+    }
+
     .version-index {
       width: 42px;
       height: 42px;
@@ -284,7 +293,7 @@
     }
 
     .overview {
-      display: grid;
+      display: none;
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
       margin-bottom: 20px;
@@ -334,13 +343,18 @@
     }
 
     .workspace-head {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) auto;
+      display: flex;
+      justify-content: space-between;
       gap: 16px;
       align-items: center;
-      padding: 18px;
+      padding: 12px 18px;
       border-bottom: 1px solid var(--line);
       background: rgba(21, 27, 33, 0.72);
+    }
+
+    .workspace-title {
+      display: block;
+      min-width: 0;
     }
 
     .workspace-head h2 {
@@ -357,7 +371,7 @@
     }
 
     .scenario-tabs {
-      display: flex;
+      display: none;
       gap: 8px;
       flex-wrap: wrap;
     }
@@ -388,9 +402,340 @@
 
     .input-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(190px, 320px);
+      grid-template-columns: minmax(520px, 1fr) minmax(220px, 320px);
       gap: 12px;
       align-items: stretch;
+    }
+
+    .example-panel {
+      display: grid;
+      grid-template-rows: minmax(260px, 1fr) auto;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .chat-panel {
+      min-width: 0;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(56, 189, 248, 0.045), rgba(34, 197, 94, 0.02)),
+        #0b0f13;
+      overflow: hidden;
+    }
+
+    .chat-head {
+      min-height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 12px;
+      border-bottom: 1px solid rgba(64, 80, 98, 0.58);
+      background: rgba(15, 21, 26, 0.92);
+    }
+
+    .chat-head strong {
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .chat-head span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .chat-log {
+      min-height: 360px;
+      max-height: 560px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding: 14px;
+      overflow-y: auto;
+    }
+
+    .chat-message {
+      max-width: 82%;
+      display: grid;
+      gap: 6px;
+    }
+
+    .chat-message.user {
+      align-self: flex-end;
+      justify-items: end;
+    }
+
+    .chat-message.agent {
+      align-self: flex-start;
+    }
+
+    .chat-role {
+      color: var(--quiet);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .chat-bubble {
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: rgba(255,255,255,0.035);
+      font-size: 13px;
+      line-height: 1.55;
+      overflow-wrap: anywhere;
+    }
+
+    .chat-message.user .chat-bubble {
+      border-color: rgba(34, 197, 94, 0.42);
+      background: rgba(34, 197, 94, 0.13);
+    }
+
+    .chat-message.agent .chat-bubble {
+      border-color: rgba(56, 189, 248, 0.34);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .chat-brief {
+      display: grid;
+      gap: 5px;
+      padding: 10px;
+      border: 1px solid rgba(56, 189, 248, 0.34);
+      border-radius: var(--radius);
+      background: rgba(7, 10, 13, 0.36);
+    }
+
+    .chat-brief strong {
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .chat-brief span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .chat-sections {
+      display: grid;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .chat-section {
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      min-height: 44px;
+      padding: 9px 10px;
+      border: 1px solid rgba(64, 80, 98, 0.52);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.026);
+    }
+
+    .chat-section strong {
+      color: var(--cyan);
+      font-size: 12px;
+      line-height: 1.35;
+    }
+
+    .chat-section span {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .chat-section.result strong { color: var(--accent); }
+    .chat-section.problem strong { color: var(--amber); }
+    .chat-section.blocker strong { color: var(--red); }
+    .chat-section.evidence strong { color: #d7f2ff; }
+    .chat-section.answer strong { color: var(--accent); }
+    .chat-section.assessment strong { color: var(--amber); }
+    .chat-section.improve strong { color: var(--cyan); }
+    .chat-section.compare strong { color: #d7f2ff; }
+
+    .chat-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+
+    .chat-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 0 8px;
+      border: 1px solid rgba(64, 80, 98, 0.68);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(7, 10, 13, 0.36);
+      font: 700 10px/1 var(--mono);
+    }
+
+    .chat-chip.good { color: #c9f7d7; border-color: rgba(34, 197, 94, 0.38); }
+    .chat-chip.warn { color: #ffe0a6; border-color: rgba(245, 158, 11, 0.4); }
+    .chat-chip.bad { color: #ffd0d0; border-color: rgba(239, 68, 68, 0.42); }
+    .chat-chip.info { color: #d7f2ff; border-color: rgba(56, 189, 248, 0.42); }
+
+    .chat-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(64, 80, 98, 0.44);
+    }
+
+    .chat-action-btn {
+      min-height: 32px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 11px;
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      border-radius: var(--radius);
+      color: #d7f2ff;
+      background: rgba(56, 189, 248, 0.11);
+      font-size: 12px;
+      font-weight: 700;
+      transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
+    }
+
+    .chat-action-btn:hover {
+      transform: translateY(-1px);
+      border-color: rgba(34, 197, 94, 0.62);
+      background: rgba(34, 197, 94, 0.12);
+    }
+
+    .chat-action-btn:disabled {
+      cursor: default;
+      transform: none;
+      border-color: rgba(64, 80, 98, 0.48);
+      color: var(--quiet);
+      background: rgba(255,255,255,0.035);
+    }
+
+    .chat-action-btn small {
+      color: var(--quiet);
+      font: 700 10px/1 var(--mono);
+    }
+
+    .quick-inputs {
+      display: grid;
+      gap: 8px;
+    }
+
+    .example-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .example-btn {
+      min-width: 0;
+      min-height: 64px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: start;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.026);
+      text-align: left;
+      transition: background 180ms ease, border-color 180ms ease, transform 180ms ease;
+    }
+
+    .example-btn:hover,
+    .example-btn[aria-selected="true"] {
+      border-color: rgba(56, 189, 248, 0.58);
+      background: rgba(56, 189, 248, 0.11);
+      transform: translateY(-1px);
+    }
+
+    .example-btn strong {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.25;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .example-btn span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.35;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .example-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 20px;
+      padding: 0 7px;
+      border: 1px solid rgba(34, 197, 94, 0.32);
+      border-radius: 999px;
+      color: #c9f7d7;
+      background: rgba(34, 197, 94, 0.1);
+      font: 700 10px/1 var(--mono);
+      white-space: nowrap;
+    }
+
+    .detail-head {
+      min-height: 54px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 14px;
+      border: 1px solid rgba(64, 80, 98, 0.62);
+      border-radius: var(--radius);
+      background: rgba(7, 10, 13, 0.38);
+    }
+
+    .detail-head div {
+      min-width: 0;
+      display: grid;
+      gap: 3px;
+    }
+
+    .detail-head strong {
+      color: var(--ink);
+      font-size: 13px;
+    }
+
+    .detail-head span {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .detail-head em {
+      flex: 0 0 auto;
+      padding: 4px 8px;
+      border: 1px solid rgba(56, 189, 248, 0.34);
+      border-radius: 999px;
+      color: #d7f2ff;
+      background: rgba(56, 189, 248, 0.08);
+      font: 700 11px/1 var(--mono);
+      font-style: normal;
     }
 
     .field-label {
@@ -403,8 +748,8 @@
 
     textarea {
       width: 100%;
-      min-height: 124px;
-      resize: vertical;
+      min-height: 112px;
+      resize: none;
       padding: 14px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
@@ -413,10 +758,41 @@
       line-height: 1.55;
     }
 
+    textarea[readonly] {
+      color: #e8edf4;
+      cursor: default;
+    }
+
     .run-box {
       display: grid;
       gap: 10px;
-      align-content: end;
+      align-content: stretch;
+    }
+
+    .live-state {
+      display: grid;
+      gap: 10px;
+      min-height: 142px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.025);
+    }
+
+    .live-state-row {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .live-state-row strong {
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.35;
+      overflow-wrap: anywhere;
     }
 
     .command {
@@ -441,7 +817,7 @@
     }
 
     .pipeline {
-      display: grid;
+      display: none;
       grid-template-columns: repeat(5, minmax(0, 1fr));
       gap: 8px;
     }
@@ -483,13 +859,13 @@
 
     .trace-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 12px;
     }
 
     .trace-card {
-      min-height: 128px;
-      padding: 14px;
+      min-height: 118px;
+      padding: 13px;
       border: 1px solid var(--line);
       border-radius: var(--radius);
       background: rgba(255,255,255,0.025);
@@ -497,14 +873,14 @@
 
     .trace-card h3 {
       margin: 0 0 8px;
-      font-size: 14px;
+      font-size: 13px;
       letter-spacing: 0;
     }
 
     .trace-card p,
     .trace-card li {
       color: var(--muted);
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .trace-card p {
@@ -514,6 +890,702 @@
     .trace-card ul {
       margin: 0;
       padding-left: 18px;
+    }
+
+    .recognition-board {
+      display: none;
+      border: 1px solid rgba(34, 197, 94, 0.24);
+      border-radius: var(--radius);
+      background: #0b1014;
+      overflow: hidden;
+    }
+
+    .recognition-board.visible {
+      display: block;
+    }
+
+    .recognition-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 48px;
+      padding: 0 14px;
+      border-bottom: 1px solid rgba(34, 197, 94, 0.18);
+      background: rgba(12, 18, 22, 0.94);
+    }
+
+    .recognition-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .recognition-summary {
+      min-width: 0;
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .recognition-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1.15fr 1.15fr;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .recognition-card {
+      min-width: 0;
+      min-height: 168px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.026);
+    }
+
+    .recognition-card.wide {
+      grid-column: span 2;
+    }
+
+    .recognition-card h3 {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 0 12px;
+      font-size: 13px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    .layer-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 42px;
+      min-height: 22px;
+      padding: 0 8px;
+      border-radius: 999px;
+      color: #c9f7d7;
+      border: 1px solid rgba(34, 197, 94, 0.32);
+      background: rgba(34, 197, 94, 0.11);
+      font: 700 10px/1 var(--mono);
+    }
+
+    .recognition-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .recognition-list li,
+    .slot-row {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(84px, 0.82fr) minmax(0, 1.18fr);
+      gap: 8px;
+      align-items: start;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .recognition-list strong,
+    .slot-row strong {
+      color: var(--ink);
+      font-weight: 700;
+      overflow-wrap: anywhere;
+    }
+
+    .intent-bars {
+      display: grid;
+      gap: 9px;
+    }
+
+    .intent-bar {
+      display: grid;
+      grid-template-columns: 116px minmax(0, 1fr) 42px;
+      gap: 8px;
+      align-items: center;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .intent-name {
+      color: var(--ink);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .bar-track {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(64, 80, 98, 0.54);
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      height: 100%;
+      width: var(--score-width, 0%);
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--cyan), var(--accent));
+    }
+
+    .intent-bar.secondary .bar-fill {
+      background: rgba(56, 189, 248, 0.45);
+    }
+
+    .slot-table {
+      display: grid;
+      gap: 7px;
+      max-height: 236px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .slot-row {
+      grid-template-columns: 112px minmax(0, 1fr) 72px;
+      min-height: 28px;
+      padding-bottom: 7px;
+      border-bottom: 1px solid rgba(64, 80, 98, 0.4);
+    }
+
+    .slot-row:last-child {
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .slot-source {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 20px;
+      padding: 0 7px;
+      border-radius: 999px;
+      color: var(--quiet);
+      background: rgba(255,255,255,0.035);
+      font: 600 10px/1 var(--mono);
+    }
+
+    .slot-row.hit .slot-source {
+      color: #c9f7d7;
+      background: rgba(34, 197, 94, 0.12);
+    }
+
+    .slot-row.miss .slot-source {
+      color: #ffe0a6;
+      background: rgba(245, 158, 11, 0.12);
+    }
+
+    .decision-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .decision-item {
+      padding: 10px;
+      border: 1px solid rgba(64, 80, 98, 0.56);
+      border-radius: var(--radius);
+      background: rgba(7, 10, 13, 0.42);
+    }
+
+    .decision-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 12px;
+    }
+
+    .decision-item span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .hybrid-stack {
+      display: grid;
+      gap: 9px;
+    }
+
+    .hybrid-layer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: start;
+      min-height: 56px;
+      padding: 10px;
+      border: 1px solid rgba(64, 80, 98, 0.54);
+      border-radius: var(--radius);
+      background: rgba(7, 10, 13, 0.34);
+    }
+
+    .hybrid-layer.selected {
+      border-color: rgba(34, 197, 94, 0.58);
+      background: rgba(34, 197, 94, 0.08);
+      box-shadow: inset 3px 0 0 rgba(34, 197, 94, 0.85);
+    }
+
+    .hybrid-layer.waiting {
+      opacity: 0.58;
+    }
+
+    .hybrid-layer.warn {
+      border-color: rgba(245, 158, 11, 0.46);
+    }
+
+    .hybrid-layer strong,
+    .hybrid-layer em {
+      color: var(--ink);
+      font-size: 12px;
+      font-style: normal;
+    }
+
+    .hybrid-layer span {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      overflow-wrap: anywhere;
+    }
+
+    .hybrid-layer em {
+      display: inline-flex;
+      align-items: center;
+      min-height: 22px;
+      padding: 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.035);
+      font: 700 10px/1 var(--mono);
+      white-space: nowrap;
+    }
+
+    .session-board {
+      display: none;
+      border: 1px solid rgba(245, 158, 11, 0.24);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(245, 158, 11, 0.07), rgba(56, 189, 248, 0.025)),
+        #0a0e12;
+      overflow: hidden;
+    }
+
+    .session-board.visible {
+      display: block;
+    }
+
+    .session-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 48px;
+      padding: 0 14px;
+      border-bottom: 1px solid rgba(245, 158, 11, 0.18);
+      background: rgba(13, 17, 21, 0.88);
+    }
+
+    .session-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .session-summary {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .session-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr 1.25fr;
+      gap: 12px;
+      padding: 14px;
+    }
+
+    .session-card {
+      min-width: 0;
+      min-height: 160px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.026);
+    }
+
+    .session-card h3 {
+      margin: 0 0 12px;
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+
+    .turn-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .turn-item {
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      gap: 8px;
+      padding: 8px;
+      border: 1px solid rgba(64, 80, 98, 0.48);
+      border-radius: var(--radius);
+      background: rgba(7, 10, 13, 0.35);
+    }
+
+    .turn-item strong {
+      color: var(--cyan);
+      font: 700 11px/1.4 var(--mono);
+    }
+
+    .turn-item span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .task-state-list {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .task-state-list li {
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .task-state-list strong {
+      color: var(--ink);
+    }
+
+    .memory-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .memory-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      max-width: 100%;
+      min-height: 28px;
+      padding: 0 9px;
+      border: 1px solid rgba(64, 80, 98, 0.58);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(7, 10, 13, 0.38);
+      font-size: 12px;
+    }
+
+    .memory-chip strong {
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .signal-flow {
+      display: none;
+      border: 1px solid rgba(56, 189, 248, 0.24);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(180deg, rgba(56, 189, 248, 0.08), rgba(34, 197, 94, 0.035)),
+        #090d11;
+      overflow: hidden;
+    }
+
+    .signal-flow.visible {
+      display: block;
+    }
+
+    .signal-flow-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 48px;
+      padding: 0 14px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+      background: rgba(13, 17, 21, 0.86);
+    }
+
+    .signal-flow-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .signal-pulse {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--cyan);
+      box-shadow: 0 0 0 5px rgba(56, 189, 248, 0.13), 0 0 18px rgba(56, 189, 248, 0.72);
+      animation: signalPulse 1.4s ease-in-out infinite;
+      flex: 0 0 auto;
+    }
+
+    .signal-flow-summary {
+      color: var(--muted);
+      font-size: 12px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #runCurrent {
+      display: none;
+    }
+
+    .signal-map {
+      position: relative;
+      min-height: 390px;
+      min-width: 1040px;
+      padding: 24px;
+    }
+
+    .signal-flow {
+      overflow-x: auto;
+    }
+
+    .signal-paths {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .map-link {
+      fill: none;
+      stroke: rgba(64, 80, 98, 0.9);
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-dasharray: 0;
+    }
+
+    .map-link.live {
+      stroke: url(#flowActive);
+      stroke-width: 3;
+      stroke-dasharray: 8 10;
+      animation: linkCurrent 1.15s linear infinite;
+      filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.62));
+    }
+
+    .map-link.blocked {
+      stroke: rgba(239, 68, 68, 0.62);
+    }
+
+    .flow-node {
+      position: absolute;
+      z-index: 1;
+      width: 206px;
+      min-height: 116px;
+      display: grid;
+      grid-template-columns: 42px minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      column-gap: 10px;
+      row-gap: 8px;
+      align-items: start;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(12, 17, 21, 0.96);
+      text-align: left;
+      transform: translate(-50%, -50%);
+      transition: border-color 180ms ease, opacity 180ms ease, box-shadow 180ms ease, background 180ms ease;
+    }
+
+    .flow-node[data-key="input"] { left: 10%; top: 50%; }
+    .flow-node[data-key="intent"] { left: 31%; top: 50%; }
+    .flow-node[data-key="local"] { left: 58%; top: 18%; }
+    .flow-node[data-key="remote"] { left: 58%; top: 50%; }
+    .flow-node[data-key="blocked"] { left: 58%; top: 82%; }
+    .flow-node[data-key="next"] { left: 86%; top: 50%; }
+
+    .flow-node.done,
+    .flow-node.active,
+    .flow-node.loading {
+      border-color: rgba(34, 197, 94, 0.58);
+      box-shadow: 0 0 22px rgba(34, 197, 94, 0.1);
+    }
+
+    .flow-node.loading {
+      border-color: rgba(56, 189, 248, 0.72);
+      box-shadow: 0 0 24px rgba(56, 189, 248, 0.16);
+    }
+
+    .flow-node.warn {
+      border-color: rgba(245, 158, 11, 0.5);
+    }
+
+    .flow-node.blocked {
+      border-color: rgba(239, 68, 68, 0.56);
+      box-shadow: 0 0 20px rgba(239, 68, 68, 0.12);
+    }
+
+    .flow-node.idle {
+      opacity: 0.46;
+    }
+
+    .flow-node.branch-hit {
+      border-color: rgba(34, 197, 94, 0.78);
+      background: rgba(34, 197, 94, 0.08);
+    }
+
+    .flow-node.branch-dim {
+      opacity: 0.38;
+    }
+
+    .flow-node.branch-standby {
+      opacity: 0.58;
+    }
+
+    .flow-orb {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 999px;
+      background: #0e1419;
+      color: var(--muted);
+      font: 700 12px/1 var(--mono);
+      box-shadow: 0 0 0 4px rgba(7, 10, 13, 0.78);
+      transition: border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, background 180ms ease;
+    }
+
+    .flow-node.done .flow-orb {
+      border-color: rgba(34, 197, 94, 0.76);
+      color: #c9f7d7;
+      background: rgba(34, 197, 94, 0.14);
+      box-shadow: 0 0 0 4px rgba(7, 10, 13, 0.78), 0 0 22px rgba(34, 197, 94, 0.22);
+    }
+
+    .flow-node.active .flow-orb,
+    .flow-node.loading .flow-orb {
+      border-color: rgba(56, 189, 248, 0.86);
+      color: #d7f2ff;
+      background: rgba(56, 189, 248, 0.15);
+      box-shadow: 0 0 0 4px rgba(7, 10, 13, 0.78), 0 0 24px rgba(56, 189, 248, 0.34);
+      animation: orbCurrent 1.15s ease-in-out infinite;
+    }
+
+    .flow-node.warn .flow-orb {
+      border-color: rgba(245, 158, 11, 0.8);
+      color: #ffe0a6;
+      background: rgba(245, 158, 11, 0.14);
+    }
+
+    .flow-node.blocked .flow-orb {
+      border-color: rgba(239, 68, 68, 0.84);
+      color: #ffd0d0;
+      background: rgba(239, 68, 68, 0.14);
+    }
+
+    .flow-node.idle .flow-orb {
+      color: var(--quiet);
+      opacity: 0.78;
+    }
+
+    .flow-copy {
+      min-width: 0;
+      width: 100%;
+    }
+
+    .flow-copy strong {
+      display: block;
+      color: var(--ink);
+      font-size: 13px;
+      line-height: 1.25;
+      white-space: normal;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .flow-copy span {
+      display: -webkit-box;
+      min-height: 38px;
+      margin-top: 4px;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+    }
+
+    .flow-status {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 22px;
+      max-width: 100%;
+      padding: 0 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.035);
+      font: 600 10px/1 var(--mono);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      grid-column: 2;
+    }
+
+    .flow-node.done .flow-status { color: #c9f7d7; border-color: rgba(34, 197, 94, 0.32); }
+    .flow-node.active .flow-status,
+    .flow-node.loading .flow-status { color: #d7f2ff; border-color: rgba(56, 189, 248, 0.38); }
+    .flow-node.warn .flow-status { color: #ffe0a6; border-color: rgba(245, 158, 11, 0.34); }
+    .flow-node.blocked .flow-status { color: #ffd0d0; border-color: rgba(239, 68, 68, 0.38); }
+
+    @keyframes currentFlow {
+      from { background-position: 200% 0; }
+      to { background-position: -200% 0; }
+    }
+
+    @keyframes linkCurrent {
+      from { stroke-dashoffset: 18; }
+      to { stroke-dashoffset: 0; }
+    }
+
+    @keyframes signalPulse {
+      0%, 100% { transform: scale(0.92); opacity: 0.74; }
+      50% { transform: scale(1.1); opacity: 1; }
+    }
+
+    @keyframes orbCurrent {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-2px); }
     }
 
     .terminal {
@@ -709,15 +1781,15 @@
           <svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/><path d="M17 13l3 3-3 3"/><path d="M14 16h6"/></svg>
         </div>
         <div>
-          <h1>API 接入 Agent 动态演进台</h1>
-          <p>输入会真实参与识别、校验、路由、检索和工具检查</p>
+          <h1>API 接入 Agent 对话演示</h1>
+          <p>先像真实 Agent 一样回答，再评估结果，引出下一层能力</p>
         </div>
       </div>
       <div class="top-actions">
         <span class="pill"><span class="status-dot" aria-hidden="true"></span>Live Demo</span>
         <button class="ghost-btn" id="copyCommand" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-          <span>复制命令</span>
+          <span>复制状态</span>
         </button>
         <button class="primary-btn" id="runCurrent" type="button">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 14 9-14 9V3z"/></svg>
@@ -728,7 +1800,7 @@
 
     <div class="layout">
       <aside class="sidebar" aria-label="版本导航">
-        <span class="pill">Version Route</span>
+        <span class="pill">能力层验证</span>
         <div class="version-list" role="tablist" aria-label="Agent 版本"></div>
       </aside>
 
@@ -758,9 +1830,9 @@
 
         <section class="workspace">
           <div class="workspace-head">
-            <div>
-              <h2 id="versionName">V1 · 任务识别</h2>
-              <p id="versionSummary">把自然语言转成 task_type 和字段草稿，并展示每个字段是怎么来的。</p>
+            <div class="workspace-title">
+              <h2 id="versionName">真实 Agent 对话</h2>
+              <p id="versionSummary">点击一个业务问题，先看 Agent 怎么答，再看这次回答暴露了什么问题。</p>
             </div>
             <div class="scenario-tabs" role="tablist" aria-label="示例输入">
               <button class="scenario-btn" type="button" data-scenario="brief" role="tab">brief</button>
@@ -773,19 +1845,39 @@
 
           <div class="workspace-body">
             <div class="input-row">
-              <label>
-                <span class="field-label">用户输入</span>
-                <textarea id="messageInput" spellcheck="false"></textarea>
-              </label>
+              <div class="example-panel">
+                <section class="chat-panel" aria-label="对话记录">
+                  <div class="chat-head">
+                    <strong>API Agent 对话</strong>
+                    <span id="chatMeta">点击下方问题开始</span>
+                  </div>
+                  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+                </section>
+                <div class="quick-inputs">
+                  <span class="field-label">快捷业务问题</span>
+                  <div class="example-grid" id="exampleGrid" role="tablist" aria-label="快捷业务问题"></div>
+                </div>
+                <textarea id="messageInput" spellcheck="false" readonly hidden></textarea>
+              </div>
               <div class="run-box">
-                <span class="field-label">CLI 对应入口</span>
-                <div class="command" id="commandText">python app.py --version v1 --message "..."</div>
-                <p class="hint">页面内会直接用当前文本跑一遍简化版 Agent，不再使用固定假结果。</p>
+                <span class="field-label">本轮状态评估</span>
+                <div class="live-state" id="liveState" aria-live="polite"></div>
+                <div class="command" id="commandText">同一条问题会在当前能力层重新处理。</div>
               </div>
             </div>
 
+            <div class="detail-head">
+              <div>
+                <strong>内部过程细节</strong>
+                <span>讲解时再看这里：识别、状态、检索、工具和审计都会跟随同一条对话变化。</span>
+              </div>
+              <em>白盒视图</em>
+            </div>
+            <div class="recognition-board" id="recognitionBoard" aria-label="任务识别白盒分层"></div>
+            <div class="session-board" id="sessionBoard" aria-label="会话状态与任务状态"></div>
+            <div class="signal-flow" id="signalFlow" aria-label="Agent 识别与检索链路"></div>
             <div class="pipeline" id="pipeline" aria-label="执行链路"></div>
-            <div class="trace-grid" id="traceGrid" aria-label="中间过程"></div>
+            <div class="trace-grid" id="traceGrid" aria-label="PM 可读的识别摘要"></div>
 
             <div class="terminal" aria-live="polite">
               <div class="terminal-head">
@@ -814,6 +1906,65 @@
       secret: "你们 /open/order/create 接口签名失败，appid=app_demo_001，appsecret=demo-secret-123，帮忙看下"
     };
 
+    const demoExamples = [
+      {
+        id: "complete",
+        title: "完整签名排查",
+        route: "需校验",
+        summary: "字段齐全，但需要依据和工具验证",
+        message: scenarios.complete
+      },
+      {
+        id: "brief",
+        title: "缺字段签名",
+        route: "缺字段",
+        summary: "能识别意图，但无法继续排查",
+        message: scenarios.brief
+      },
+      {
+        id: "callback",
+        title: "回调异常",
+        route: "缺SOP",
+        summary: "需要固定排查步骤承接",
+        message: scenarios.callback
+      },
+      {
+        id: "field",
+        title: "字段问答",
+        route: "缺依据",
+        summary: "回答需要文档来源支撑",
+        message: "detailinfo 和 info 字段有什么区别？返回里的 info 代表什么？"
+      },
+      {
+        id: "onboarding",
+        title: "新 API 接入",
+        route: "缺闭环",
+        summary: "多步骤任务需要持续推进",
+        message: "准备订单创建接口，想知道白名单、环境和账号配置步骤"
+      },
+      {
+        id: "volume",
+        title: "单量分析",
+        route: "需状态",
+        summary: "需要记录任务是否能继续",
+        message: "这个接口最近数据表现怎么样，有没有明显下降或波动？"
+      },
+      {
+        id: "secret",
+        title: "安全阻断",
+        route: "安全审计",
+        summary: "误贴 appsecret，需要阻断和脱敏",
+        message: scenarios.secret
+      },
+      {
+        id: "other",
+        title: "范围外输入",
+        route: "范围门控",
+        summary: "非 API 问题不应进入业务链路",
+        message: "今天北京天气怎么样？顺便帮我推荐一家餐厅"
+      }
+    ];
+
     const versions = [
       { id: "v0", name: "普通问答", short: "Chat", summary: "直接回答，不做结构化识别。" },
       { id: "v1", name: "任务识别", short: "Parse", summary: "展示自然语言如何转成 task_type 和字段草稿。" },
@@ -824,6 +1975,57 @@
       { id: "v6", name: "Agent Loop", short: "Loop", summary: "Observe、Think、Act、Observe、Answer 形成闭环。" },
       { id: "v7", name: "状态与审计", short: "Audit", summary: "加入 Task State、Audit、脱敏和人工闸门。" }
     ];
+
+    const versionStories = {
+      v0: {
+        previous: "演示起点：普通问答可以直接回复，但看不到任务类型、字段、状态和依据。",
+        solve: "先暴露黑盒问题，作为后续 Agent 化改造的对照组。",
+        hook: "问题会被当成一段普通文本处理。",
+        next: "v1"
+      },
+      v1: {
+        previous: "普通问答不知道自己正在处理什么任务，也无法解释为什么这么答。",
+        solve: "增加范围门控、规则优先、向量补位、LLM 兜底和字段抽取，把输入变成可解释草稿。",
+        hook: "能识别任务，但缺字段、重复问和不能执行的问题会继续暴露。",
+        next: "v2"
+      },
+      v2: {
+        previous: "V1 能识别任务，但只知道“像什么”，还不知道“缺什么才不能继续”。",
+        solve: "引入 Schema 校验，把每类任务的必填字段显式列出来，只追问阻塞字段。",
+        hook: "同一个任务会被判断为可继续、等待用户补字段、阻断或拒绝。",
+        next: "v3"
+      },
+      v3: {
+        previous: "V2 知道字段是否齐全，但执行步骤仍可能依赖模型临场发挥。",
+        solve: "按 task_type 路由到固定 Skill / SOP，让处理流程可复用、可审计。",
+        hook: "字段满足后，Agent 不再自由发挥，而是进入对应业务 SOP。",
+        next: "v4"
+      },
+      v4: {
+        previous: "V3 有 SOP，但回答如果没有文档依据，PM 和业务方仍然很难信任。",
+        solve: "先检索本地导出包，未命中再查 GitHub llm-wiki 在线索引，把依据带回链路。",
+        hook: "回答前先找资料，找不到也会明确显示本地未命中或在线索引不可用。",
+        next: "v5"
+      },
+      v5: {
+        previous: "V4 有文档依据，但有些问题必须用确定性工具验证，不能只靠文字解释。",
+        solve: "字段满足后调用工具检查签名前字符串、时间戳、错误码等确定性结果。",
+        hook: "只有 Schema 放行后才会调用工具，缺字段或触发边界时不会执行。",
+        next: "v6"
+      },
+      v6: {
+        previous: "V5 有工具，但识别、检索、工具和回答还像几个分散模块。",
+        solve: "用 Agent Loop 串起 Observe、Think、Act、Observe、Answer，形成闭环。",
+        hook: "同一条任务能看到 Agent 先观察、再决策、再行动、再汇总。",
+        next: "v7"
+      },
+      v7: {
+        previous: "V6 能闭环处理，但企业演示还需要安全边界、状态审计和人工闸门。",
+        solve: "加入 Task State、Audit、脱敏、安全阻断和人工介入说明。",
+        hook: "最终版本展示这个任务当前是否可继续、是否阻断、记录了什么、哪些内容被脱敏。",
+        next: null
+      }
+    };
 
     const requiredFields = {
       signature_debug: ["api_path", "appid", "raw_sign_string", "error_code", "request_time"],
@@ -864,6 +2066,7 @@
     const remoteWikiIndexUrl = "https://raw.githubusercontent.com/huakaiwuyeshu/llm-wiki/main/projects/api-infra/exports/agent-demo/search_index.json";
     let remoteWikiDocs = null;
     let remoteWikiPromise = null;
+    let remoteWikiStatus = "idle";
 
     const sampleLogs = [
       {
@@ -878,11 +2081,25 @@
     const state = {
       version: "v1",
       scenario: "complete",
-      renderSeq: 0
+      renderSeq: 0,
+      lastSubmittedMessage: "",
+      chatMessages: [],
+      lastRun: null,
+      recommendedVersion: null,
+      verifiedVersions: [],
+      conversation: {
+        sessionId: `api-demo-${Date.now().toString(36)}`,
+        turns: [],
+        memory: {},
+        activeTask: null
+      }
     };
 
     const versionList = document.querySelector(".version-list");
     const scenarioButtons = [...document.querySelectorAll(".scenario-btn")];
+    const exampleGrid = document.getElementById("exampleGrid");
+    const chatLog = document.getElementById("chatLog");
+    const chatMeta = document.getElementById("chatMeta");
     const messageInput = document.getElementById("messageInput");
     const versionName = document.getElementById("versionName");
     const versionSummary = document.getElementById("versionSummary");
@@ -891,6 +2108,10 @@
     const terminalTitle = document.getElementById("terminalTitle");
     const pipeline = document.getElementById("pipeline");
     const traceGrid = document.getElementById("traceGrid");
+    const signalFlow = document.getElementById("signalFlow");
+    const recognitionBoard = document.getElementById("recognitionBoard");
+    const sessionBoard = document.getElementById("sessionBoard");
+    const liveState = document.getElementById("liveState");
     const commandText = document.getElementById("commandText");
     const toast = document.getElementById("toast");
 
@@ -978,7 +2199,8 @@
 
     function detectFieldName(message) {
       const lower = message.toLowerCase();
-      for (const field of ["appid", "order_id", "timestamp", "sign", "appsecret"]) {
+      if (lower.includes("detailinfo") && lower.includes("info")) return "info/detailinfo";
+      for (const field of ["detailinfo", "info", "error_code", "appid", "order_id", "timestamp", "sign", "appsecret"]) {
         if (lower.includes(field)) return field;
       }
       return null;
@@ -1017,6 +2239,8 @@
         callback_debug: "回调异常排查",
         api_field_qa: "API 字段问答",
         credential_request: "凭证相关请求",
+        api_onboarding: "新 API 接入",
+        volume_analysis: "单量分析",
         unknown: "未识别任务"
       }[taskType] || taskType;
     }
@@ -1084,6 +2308,7 @@
     async function loadRemoteWikiDocs() {
       if (remoteWikiDocs) return remoteWikiDocs;
       if (!remoteWikiPromise) {
+        remoteWikiStatus = "loading";
         remoteWikiPromise = fetch(remoteWikiIndexUrl, { cache: "force-cache" })
           .then((response) => {
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
@@ -1091,10 +2316,12 @@
           })
           .then((index) => {
             remoteWikiDocs = buildRemoteWikiDocs(index);
+            remoteWikiStatus = "loaded";
             return remoteWikiDocs;
           })
           .catch(() => {
             remoteWikiDocs = [];
+            remoteWikiStatus = "failed";
             return remoteWikiDocs;
           });
       }
@@ -1395,15 +2622,33 @@
 
     function renderVersionButtons() {
       versionList.innerHTML = versions.map((item) => `
-        <button class="version-btn" type="button" role="tab" aria-selected="${item.id === state.version}" data-version="${item.id}">
+        <button class="version-btn" type="button" role="tab" aria-selected="${item.id === state.version}" data-version="${item.id}" data-upgrade-state="${escapeHtml(versionUpgradeState(item.id))}">
           <span class="version-index">${item.id.toUpperCase()}</span>
           <span class="version-title">
             <strong>${item.name}</strong>
-            <span>${item.summary}</span>
+            <span>${escapeHtml(versionNavSummary(item))}</span>
           </span>
-          <span class="version-badge">${item.short}</span>
+          <span class="version-badge">${escapeHtml(versionNavBadge(item))}</span>
         </button>
       `).join("");
+    }
+
+    function versionUpgradeState(versionId) {
+      if (versionId === state.recommendedVersion) return "recommended";
+      if (state.verifiedVersions.includes(versionId)) return "verified";
+      return "";
+    }
+
+    function versionNavSummary(version) {
+      if (version.id === state.recommendedVersion) return "推荐：用当前问题验证这一层能力";
+      if (state.verifiedVersions.includes(version.id)) return "已用当前对话重新处理";
+      return version.summary;
+    }
+
+    function versionNavBadge(version) {
+      if (version.id === state.recommendedVersion) return "推荐";
+      if (state.verifiedVersions.includes(version.id)) return "已跑过";
+      return version.short;
     }
 
     function render(options = { showToast: false }) {
@@ -1417,8 +2662,8 @@
       });
 
       versionName.textContent = `${version.id.toUpperCase()} · ${version.name}`;
-      versionSummary.textContent = version.summary;
-      commandText.textContent = `python app.py --version ${version.id} --message "${message.slice(0, 24)}${message.length > 24 ? "..." : ""}"`;
+      versionSummary.textContent = versionStorySummary(version.id, version.summary);
+      commandText.textContent = `${version.id.toUpperCase()} · ${version.name} 正在处理当前对话问题`;
 
       document.getElementById("metricLevel").textContent = version.id.toUpperCase();
       document.getElementById("metricTask").textContent = run.draft.task_type;
@@ -1481,21 +2726,26 @@
     versionList.addEventListener("click", (event) => {
       const button = event.target.closest("[data-version]");
       if (!button) return;
-      state.version = button.dataset.version;
-      render({ showToast: true });
+      upgradeToVersion(button.dataset.version, "manual");
     });
 
     scenarioButtons.forEach((button) => {
       button.addEventListener("click", () => {
         state.scenario = button.dataset.scenario;
         messageInput.value = scenarios[state.scenario];
+        state.lastSubmittedMessage = messageInput.value;
+        resetConversation();
         render({ showToast: true });
       });
     });
 
-    document.getElementById("runCurrent").addEventListener("click", () => {
-      render({ showToast: true });
-    });
+    const runCurrentButton = document.getElementById("runCurrent");
+    if (runCurrentButton) {
+      runCurrentButton.addEventListener("click", () => {
+        state.lastSubmittedMessage = messageInput.value;
+        render({ showToast: true });
+      });
+    }
 
     document.getElementById("copyCommand").addEventListener("click", async () => {
       const command = commandText.textContent;
@@ -1512,7 +2762,14 @@
       state.scenario = "custom";
       scenarioButtons.forEach((button) => button.setAttribute("aria-selected", "false"));
       window.clearTimeout(inputTimer);
-      inputTimer = window.setTimeout(() => render(), 220);
+      renderLiveDraft();
+    });
+
+    messageInput.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" || event.shiftKey) return;
+      event.preventDefault();
+      state.lastSubmittedMessage = messageInput.value;
+      render({ showToast: true, commitTurn: true });
     });
 
     scenarios.other = "今天北京天气怎么样？顺便帮我推荐一家餐厅";
@@ -1586,6 +2843,73 @@
       }
     };
 
+    const semanticIntentExamples = {
+      signature_debug: [
+        "接口验签不过，返回签名错误",
+        "sign 校验失败，怀疑参数排序或编码问题",
+        "下单接口报 SIGN_INVALID，需要排查签名前字符串",
+        "鉴权失败，appid 正确但签名不通过"
+      ],
+      callback_debug: [
+        "客户没有收到支付成功通知",
+        "回调地址一直超时，订单状态没有同步",
+        "callback 返回失败，需要确认是否重试",
+        "第三方投诉订单回调没有送达"
+      ],
+      api_field_qa: [
+        "接口字段是什么意思",
+        "detailinfo 和 info 有什么区别",
+        "错误码含义和处理建议是什么",
+        "参数枚举值有哪些"
+      ],
+      credential_request: [
+        "怎么申请 appid 和密钥",
+        "需要查看 appsecret 或凭证",
+        "商户接入要开通哪些凭证",
+        "密钥丢失需要重置"
+      ],
+      api_onboarding: [
+        "新接口怎么接入联调",
+        "申请开通 API 的流程是什么",
+        "上线前需要哪些配置和白名单",
+        "准备接入订单创建接口"
+      ],
+      volume_analysis: [
+        "看一下最近接口单量趋势",
+        "统计成功率和失败率",
+        "近7天订单接口调用量",
+        "输出 API 调用周报"
+      ]
+    };
+
+    const llmFallbackHints = [
+      {
+        intent: "signature_debug",
+        patterns: ["过不了", "不通过", "校验失败", "鉴权失败", "报错"],
+        reason: "LLM 兜底把“过不了 / 校验失败 / 鉴权失败”归并为签名或鉴权排查语义。"
+      },
+      {
+        intent: "callback_debug",
+        patterns: ["通知没到", "没通知", "推送失败", "状态没同步", "没回传"],
+        reason: "LLM 兜底把“通知没到 / 状态没同步”归并为回调异常。"
+      },
+      {
+        intent: "api_field_qa",
+        patterns: ["这个参数", "这个值", "为什么是", "代表什么", "怎么理解"],
+        reason: "LLM 兜底把“参数解释 / 值含义”归并为 API 字段问答。"
+      },
+      {
+        intent: "api_onboarding",
+        patterns: ["怎么开始", "准备上线", "对接流程", "联调流程"],
+        reason: "LLM 兜底把“开始接入 / 上线 / 联调流程”归并为新 API 接入。"
+      },
+      {
+        intent: "volume_analysis",
+        patterns: ["数据怎么样", "表现怎么样", "有没有下降", "波动"],
+        reason: "LLM 兜底把“数据表现 / 波动”归并为单量分析。"
+      }
+    ];
+
     const scopeSignals = [
       "api", "接口", "接入", "联调", "appid", "appsecret", "签名", "验签",
       "回调", "callback", "错误码", "字段", "参数", "单量", "成功率", "失败率",
@@ -1596,37 +2920,264 @@
       const normalized = message.trim();
       const lower = normalized.toLowerCase();
       const scopeHits = scopeSignals.filter((signal) => lower.includes(signal.toLowerCase()));
-      const scores = Object.entries(intentCatalog).map(([intent, config]) => {
+      const ruleScores = Object.entries(intentCatalog).map(([intent, config]) => {
         const matched = config.keywords
           .filter((item) => lower.includes(item.word.toLowerCase()))
           .map((item) => ({ keyword: item.word, weight: item.weight }));
+        const rawScore = matched.reduce((sum, item) => sum + item.weight, 0);
         return {
           intent,
           label: config.label,
-          score: matched.reduce((sum, item) => sum + item.weight, 0),
+          score: rawScore,
           matched
         };
+      }).map((item, _, items) => {
+        if (item.intent !== "credential_request") return item;
+        const hasCredentialAction = /(申请|获取|查看|重置|开通|给我|提供|找回).{0,8}(appid|appsecret|密钥|凭证|secret)|(appid|appsecret|密钥|凭证|secret).{0,8}(申请|获取|查看|重置|开通|给我|提供|找回)/i.test(normalized);
+        const troubleshootingIntent = items.find((candidate) => ["signature_debug", "callback_debug"].includes(candidate.intent) && candidate.score >= 3);
+        if (!hasCredentialAction && troubleshootingIntent) {
+          return {
+            ...item,
+            score: Math.max(1, item.score - 7),
+            matched: item.matched.concat({ keyword: "安全字段仅作阻断，不改写排查意图", weight: -7 })
+          };
+        }
+        return item;
       }).sort((a, b) => b.score - a.score);
 
-      const best = scores[0];
-      const second = scores[1];
       const hasPath = /(?:^|[\s，,])((?:\/[A-Za-z0-9_-]+){2,})/.test(normalized);
       const hasErrorCode = /(?:错误码|error_code)\s*[=:：]\s*([A-Z0-9_\-]+)/i.test(normalized);
       const strongBusinessSignal = scopeHits.length > 0 || hasPath || hasErrorCode;
-      const isInScope = strongBusinessSignal && best && best.score >= 2;
+      const vectorScores = rankSemanticIntents(normalized);
+      const llmDecision = simulateLlmFallback(normalized, scopeHits, hasPath, hasErrorCode, ruleScores, vectorScores);
+      const decision = chooseIntentLayer(ruleScores, vectorScores, llmDecision, strongBusinessSignal);
+      const best = decision.selected;
+      const second = decision.candidates[1];
+      const isInScope = Boolean(strongBusinessSignal && best && best.intent !== "unknown");
 
       return {
         is_in_scope: isInScope,
         scope_hits: scopeHits,
-        scores,
+        scores: decision.candidates,
+        rule_scores: ruleScores,
+        vector_scores: vectorScores,
+        llm_decision: llmDecision,
+        hybrid_trace: decision.layers,
+        selected_layer: decision.selected_layer,
         selected_intent: isInScope ? best.intent : "unknown",
-        selected_label: isInScope ? best.label : "未识别任务",
-        confidence: isInScope ? Math.min(0.98, 0.45 + best.score * 0.08) : 0.18,
+        selected_label: isInScope ? taskLabel(best.intent) : "未识别任务",
+        confidence: isInScope ? decision.confidence : 0.18,
         decision_reason: isInScope
-          ? `命中 ${best.matched.map((item) => item.keyword).join(" / ")}，${second && second.score > 0 ? `领先第二候选 ${second.intent} ${best.score - second.score} 分` : "无强竞争意图"}`
+          ? `${decision.layers.find((layer) => layer.key === decision.selected_layer)?.label || "混合架构"}通过：${decision.reason}${second && second.score > 0 ? `；第二候选 ${taskLabel(second.intent)} ${Math.round(second.confidence * 100)}%` : ""}`
           : scopeHits.length
-            ? "有少量业务词，但没有达到任何意图阈值"
+            ? "有少量业务词，但规则、向量和 LLM 兜底都没有达到进入阈值"
             : "没有命中当前 API 接入 Agent 的业务范围信号"
+      };
+    }
+
+    function chooseIntentLayer(ruleScores, vectorScores, llmDecision, strongBusinessSignal) {
+      const bestRule = ruleScores[0] || { intent: "unknown", score: 0, matched: [] };
+      const bestVector = vectorScores[0] || { intent: "unknown", score: 0, matched: [] };
+      const layers = [
+        {
+          key: "rule",
+          label: "规则优先",
+          threshold: "规则分 >= 3 或强业务词 >= 2",
+          passed: strongBusinessSignal && (bestRule.score >= 3 || bestRule.matched.length >= 2),
+          status: "未通过",
+          intent: bestRule.intent,
+          confidence: Math.min(0.92, 0.42 + bestRule.score * 0.07),
+          evidence: bestRule.matched.map((item) => item.keyword).join("、") || "无强规则命中",
+          detail: "命中关键词、错误码、接口路径等确定性信号"
+        },
+        {
+          key: "vector",
+          label: "向量补位",
+          threshold: "语义相似度 >= 42%",
+          passed: strongBusinessSignal && bestVector.score >= 0.42,
+          status: "未运行",
+          intent: bestVector.intent,
+          confidence: Math.min(0.88, 0.38 + bestVector.score * 0.55),
+          evidence: bestVector.matched?.slice(0, 2).join(" / ") || "无相似样例",
+          detail: "用本地意图样例做语义相似度补位"
+        },
+        {
+          key: "llm",
+          label: "LLM 兜底",
+          threshold: "前两层低置信且存在业务信号",
+          passed: strongBusinessSignal && llmDecision.intent !== "unknown",
+          status: "未运行",
+          intent: llmDecision.intent,
+          confidence: llmDecision.confidence,
+          evidence: llmDecision.reason,
+          detail: "模拟模型裁决，用于低置信、表达模糊、跨意图描述"
+        }
+      ];
+
+      let selectedLayer = null;
+      if (layers[0].passed) {
+        selectedLayer = layers[0];
+      } else {
+        layers[1].status = "已运行";
+        if (layers[1].passed) {
+          selectedLayer = layers[1];
+        } else {
+          layers[2].status = "已运行";
+          if (layers[2].passed) selectedLayer = layers[2];
+        }
+      }
+
+      const finalLayers = layers.map((layer) => ({
+        ...layer,
+        selected: selectedLayer?.key === layer.key,
+        status: selectedLayer?.key === layer.key ? "已采纳" : layer.status === "未运行" ? "未触发" : layer.passed ? "可用未采纳" : "未通过"
+      }));
+
+      const candidateMap = new Map();
+      ruleScores.forEach((item) => {
+        candidateMap.set(item.intent, {
+          intent: item.intent,
+          label: item.label,
+          rule_score: item.score,
+          vector_score: 0,
+          llm_score: 0,
+          matched: item.matched,
+          score: item.score
+        });
+      });
+      vectorScores.forEach((item) => {
+        const current = candidateMap.get(item.intent) || {
+          intent: item.intent,
+          label: taskLabel(item.intent),
+          rule_score: 0,
+          vector_score: 0,
+          llm_score: 0,
+          matched: [],
+          score: 0
+        };
+        current.vector_score = item.score;
+        current.score += Math.round(item.score * 6);
+        candidateMap.set(item.intent, current);
+      });
+      if (llmDecision.intent !== "unknown") {
+        const current = candidateMap.get(llmDecision.intent) || {
+          intent: llmDecision.intent,
+          label: taskLabel(llmDecision.intent),
+          rule_score: 0,
+          vector_score: 0,
+          llm_score: 0,
+          matched: [],
+          score: 0
+        };
+        current.llm_score = llmDecision.confidence;
+        current.score += Math.round(llmDecision.confidence * 5);
+        candidateMap.set(llmDecision.intent, current);
+      }
+
+      const candidates = [...candidateMap.values()]
+        .map((item) => ({
+          ...item,
+          confidence: Math.min(0.98, 0.22 + item.rule_score * 0.06 + item.vector_score * 0.32 + item.llm_score * 0.22)
+        }))
+        .sort((a, b) => b.score - a.score);
+
+      const selected = selectedLayer
+        ? {
+            intent: selectedLayer.intent,
+            label: taskLabel(selectedLayer.intent),
+            score: Math.round(selectedLayer.confidence * 10),
+            confidence: selectedLayer.confidence,
+            matched: selectedLayer.key === "rule"
+              ? bestMatchedKeywords(ruleScores, selectedLayer.intent)
+              : [{ keyword: selectedLayer.evidence, weight: Math.round(selectedLayer.confidence * 10) }]
+          }
+        : { intent: "unknown", label: "未识别任务", score: 0, confidence: 0.18, matched: [] };
+
+      return {
+        selected,
+        selected_layer: selectedLayer?.key || "none",
+        confidence: selected.confidence,
+        reason: selectedLayer ? selectedLayer.evidence : "三层均未达到阈值",
+        layers: finalLayers,
+        candidates
+      };
+    }
+
+    function bestMatchedKeywords(ruleScores, intent) {
+      return (ruleScores.find((item) => item.intent === intent)?.matched || []);
+    }
+
+    function rankSemanticIntents(text) {
+      return Object.entries(semanticIntentExamples)
+        .map(([intent, examples]) => {
+          const ranked = examples
+            .map((example) => ({ example, score: textSimilarity(text, example) }))
+            .sort((a, b) => b.score - a.score);
+          return {
+            intent,
+            label: taskLabel(intent),
+            score: ranked[0]?.score || 0,
+            matched: ranked.filter((item) => item.score > 0).slice(0, 2).map((item) => `${item.example} ${Math.round(item.score * 100)}%`)
+          };
+        })
+        .sort((a, b) => b.score - a.score);
+    }
+
+    function textSimilarity(a, b) {
+      const left = tokenSet(a);
+      const right = tokenSet(b);
+      if (!left.size || !right.size) return 0;
+      let overlap = 0;
+      left.forEach((token) => {
+        if (right.has(token)) overlap += 1;
+      });
+      return overlap / Math.sqrt(left.size * right.size);
+    }
+
+    function tokenSet(text) {
+      const normalized = String(text || "").toLowerCase();
+      const tokens = normalized.match(/\/[a-z0-9_\-/]+|[a-z0-9_:\-.]{2,}|[\u4e00-\u9fff]{2,}/g) || [];
+      const chars = [...normalized.matchAll(/[\u4e00-\u9fff]/g)].map((item) => item[0]);
+      return new Set(tokens.concat(chars).filter(Boolean));
+    }
+
+    function simulateLlmFallback(message, scopeHits, hasPath, hasErrorCode, ruleScores, vectorScores) {
+      const lower = message.toLowerCase();
+      const hint = llmFallbackHints.find((item) => item.patterns.some((pattern) => lower.includes(pattern.toLowerCase())));
+      if (hint) {
+        return {
+          intent: hint.intent,
+          confidence: 0.66,
+          reason: hint.reason
+        };
+      }
+      const bestRule = ruleScores[0];
+      const bestVector = vectorScores[0];
+      if ((hasPath || hasErrorCode || scopeHits.length > 0) && bestRule && bestRule.score >= 3) {
+        return {
+          intent: bestRule.intent,
+          confidence: Math.min(0.68, 0.48 + bestRule.score * 0.04),
+          reason: `LLM 兜底尊重前置规则信号，倾向 ${taskLabel(bestRule.intent)}。`
+        };
+      }
+      if ((hasPath || hasErrorCode || scopeHits.length >= 2) && bestVector && bestVector.score >= 0.28) {
+        return {
+          intent: bestVector.intent,
+          confidence: 0.58,
+          reason: `LLM 兜底参考语义样例，倾向 ${taskLabel(bestVector.intent)}。`
+        };
+      }
+      if ((hasPath || hasErrorCode) && bestRule && bestRule.score > 0) {
+        return {
+          intent: bestRule.intent,
+          confidence: 0.55,
+          reason: `LLM 兜底参考接口路径/错误码和弱规则，倾向 ${taskLabel(bestRule.intent)}。`
+        };
+      }
+      return {
+        intent: "unknown",
+        confidence: 0.2,
+        reason: "缺少可解释业务信号，LLM 兜底也不放行。"
       };
     }
 
@@ -1682,8 +3233,77 @@
         fields,
         extraction,
         security_flags,
-        raw_message: message
+        raw_message: message,
+        session_context: {
+          used: false,
+          reason: "本轮独立识别",
+          inherited_fields: []
+        }
       };
+    }
+
+    function applyConversationContext(draft) {
+      const activeTask = state.conversation.activeTask;
+      if (!activeTask || activeTask.status !== "waiting_for_user") return draft;
+
+      const currentFields = compactFields(draft.fields);
+      const fieldNames = Object.keys(currentFields);
+      const sameIntent = draft.task_type === activeTask.task_type;
+      const strongNewIntent = draft.input_gate.is_in_scope && draft.confidence >= 0.72 && !sameIntent;
+      const looksLikeFollowUp = fieldNames.length > 0
+        || /^(补充|还有|另外|刚才|上面)/.test(draft.raw_message.trim())
+        || /(接口是|appid|错误码|请求时间|订单号|回调地址|签名前字符串|raw_sign_string)/i.test(draft.raw_message);
+
+      if (strongNewIntent || (!sameIntent && !looksLikeFollowUp)) return draft;
+
+      const inheritedFields = {};
+      Object.entries(state.conversation.memory.fields || {}).forEach(([field, value]) => {
+        if (value && !draft.fields[field]) inheritedFields[field] = value;
+      });
+
+      draft.fields = { ...draft.fields, ...inheritedFields, ...currentFields };
+      draft.extraction = draft.extraction.map((item) => {
+        if (item.value) return item;
+        if (inheritedFields[item.field]) {
+          return { ...item, value: inheritedFields[item.field], rule: "来自会话状态补全" };
+        }
+        return item;
+      });
+      draft.task_type = activeTask.task_type;
+      draft.confidence = Math.max(draft.confidence, 0.74);
+      draft.reason = `沿用会话中的「${taskLabel(activeTask.task_type)}」任务，并合并本轮补充字段`;
+      draft.input_gate.is_in_scope = true;
+      draft.input_gate.selected_intent = activeTask.task_type;
+      draft.input_gate.selected_label = taskLabel(activeTask.task_type);
+      draft.input_gate.decision_reason = draft.reason;
+      draft.input_gate.session_context_used = true;
+      draft.input_gate.scores = ensureIntentCandidate(draft.input_gate.scores, activeTask.task_type, draft.confidence);
+      draft.session_context = {
+        used: true,
+        reason: "上一轮任务仍在等待补充信息，本轮被识别为同一任务的补充输入",
+        inherited_fields: Object.keys(inheritedFields)
+      };
+      return draft;
+    }
+
+    function ensureIntentCandidate(candidates, intent, confidence) {
+      const exists = candidates.some((item) => item.intent === intent);
+      if (exists) {
+        return candidates.map((item) => item.intent === intent
+          ? { ...item, score: Math.max(item.score || 0, Math.round(confidence * 10)), confidence: Math.max(item.confidence || 0, confidence) }
+          : item
+        ).sort((a, b) => b.score - a.score);
+      }
+      return [{
+        intent,
+        label: taskLabel(intent),
+        score: Math.round(confidence * 10),
+        confidence,
+        matched: [{ keyword: "会话状态", weight: Math.round(confidence * 10) }],
+        rule_score: 0,
+        vector_score: 0,
+        llm_score: 0
+      }].concat(candidates).sort((a, b) => b.score - a.score);
     }
 
     function validate(draft) {
@@ -1719,13 +3339,569 @@
       return `我已识别为「${taskLabel(draft.task_type)}」，但还缺少阻塞信息：${validation.missing_fields.map(label).join("、")}。\n请补充这些信息后我再继续排查。不要发送 appsecret、密钥或完整敏感凭证。`;
     }
 
+    function buildSessionSnapshot(draft, validation, docs, remoteDocs) {
+      const fields = compactFields(draft.fields);
+      const taskState = validation.status === "out_of_scope"
+        ? "rejected"
+        : validation.status === "blocked"
+          ? "blocked"
+          : validation.status === "needs_clarification"
+            ? "waiting_for_user"
+            : docs.length || remoteDocs.length
+              ? "ready_with_evidence"
+              : "ready_without_evidence";
+      const activeTask = draft.input_gate.is_in_scope
+        ? {
+            id: state.conversation.activeTask?.id || `task-${Date.now().toString(36)}`,
+            task_type: draft.task_type,
+            status: taskState,
+            pending_fields: validation.missing_fields,
+            fields,
+            updated_at: new Date().toLocaleTimeString("zh-CN", { hour12: false })
+          }
+        : state.conversation.activeTask;
+      const mergedFields = {
+        ...(state.conversation.memory.fields || {}),
+        ...fields
+      };
+      const lastTurn = state.conversation.turns[state.conversation.turns.length - 1];
+      const sameSubmittedTurn = Boolean(lastTurn && lastTurn.text === draft.raw_message.trim());
+      return {
+        sessionId: state.conversation.sessionId,
+        turnCount: state.conversation.turns.length + (sameSubmittedTurn ? 0 : 1),
+        taskState,
+        activeTask,
+        memory: {
+          fields: mergedFields,
+          last_intent: draft.input_gate.is_in_scope ? draft.task_type : state.conversation.memory.last_intent,
+          last_validation: validation.status,
+          last_route: docs.length ? "local_package" : remoteDocs.length ? "remote_llm_wiki" : "none"
+        },
+        contextUsed: draft.session_context
+      };
+    }
+
+    function commitConversationTurn(message, run) {
+      const normalized = message.trim();
+      if (!normalized) return;
+      const turn = {
+        index: state.conversation.turns.length + 1,
+        text: normalized,
+        intent: run.draft.task_type,
+        status: run.session.taskState,
+        missing: run.validation.missing_fields,
+        fields: compactFields(run.draft.fields)
+      };
+      state.conversation.turns = state.conversation.turns.concat(turn).slice(-5);
+      state.conversation.memory = run.session.memory;
+      state.conversation.activeTask = run.session.activeTask;
+    }
+
+    function resetConversation() {
+      state.conversation = {
+        sessionId: `api-demo-${Date.now().toString(36)}`,
+        turns: [],
+        memory: {},
+        activeTask: null
+      };
+    }
+
+    function buildSignalFlow(draft, validation, docs, remoteDocs, remotePending) {
+      const extractedCount = Object.keys(compactFields(draft.fields)).length;
+      const bestIntent = draft.input_gate.scores[0];
+      const shouldRetrieve = validation.status !== "out_of_scope" && validation.status !== "blocked";
+      const localChosen = shouldRetrieve && docs.length > 0;
+      const remoteChosen = shouldRetrieve && !docs.length && (remotePending || remoteDocs.length > 0 || remoteWikiDocs);
+      const blockedChosen = validation.status === "out_of_scope" || validation.status === "blocked";
+      const localState = !shouldRetrieve ? "idle branch-dim" : localChosen ? "done branch-hit" : "warn branch-dim";
+      const remoteState = !shouldRetrieve || docs.length
+        ? "idle branch-dim"
+        : remotePending
+          ? "loading branch-hit"
+          : remoteWikiStatus === "failed"
+            ? "blocked branch-hit"
+            : remoteDocs.length
+              ? "done branch-hit"
+              : remoteWikiDocs
+                ? "warn branch-hit"
+                : "idle branch-standby";
+      const blockedState = blockedChosen ? "blocked branch-hit" : "idle branch-dim";
+      const finalState = validation.status === "out_of_scope" || validation.status === "blocked"
+        ? "blocked"
+        : validation.status === "needs_clarification"
+          ? "warn"
+          : docs.length || remoteDocs.length
+            ? "done"
+            : remotePending
+              ? "loading"
+              : "warn";
+      const nextDetail = validation.status === "out_of_scope"
+        ? "范围外，提示换成 API 接入问题"
+        : validation.status === "blocked"
+          ? "触发安全边界，不进入检索"
+          : validation.status === "needs_clarification"
+            ? `追问 ${validation.missing_fields.map(label).join("、")}`
+            : docs.length || remoteDocs.length
+              ? "可带依据进入后续 RAG / Tool"
+              : "暂无依据，等待补充资料";
+      const activeBranch = blockedChosen ? "blocked" : localChosen ? "local" : remoteChosen ? "remote" : "remote";
+
+      return {
+        summary: validation.status === "out_of_scope"
+          ? "范围外输入已拦截"
+          : validation.status === "blocked"
+            ? "安全边界已拦截，未执行资料检索"
+            : docs.length
+              ? `本地导出包命中 ${docs.length} 条，未触发在线查询`
+              : remotePending
+                ? "本地导出包未命中，正在查询 GitHub llm-wiki"
+                : remoteWikiStatus === "failed"
+                  ? "GitHub llm-wiki 在线索引不可用"
+                : remoteDocs.length
+                  ? `本地未命中，GitHub llm-wiki 命中 ${remoteDocs.length} 条`
+                  : remoteWikiDocs
+                    ? "本地和 GitHub llm-wiki 均未命中"
+                    : "本地未命中，等待触发 GitHub llm-wiki",
+        links: [
+          { key: "input-intent", from: "input", to: "intent", state: draft.raw_message.trim() ? "live" : "idle" },
+          { key: "intent-local", from: "intent", to: "local", state: activeBranch === "local" ? "live" : "idle" },
+          { key: "intent-remote", from: "intent", to: "remote", state: activeBranch === "remote" ? "live" : "idle" },
+          { key: "intent-blocked", from: "intent", to: "blocked", state: activeBranch === "blocked" ? "blocked" : "idle" },
+          { key: "local-next", from: "local", to: "next", state: activeBranch === "local" ? "live" : "idle" },
+          { key: "remote-next", from: "remote", to: "next", state: activeBranch === "remote" ? "live" : "idle" },
+          { key: "blocked-next", from: "blocked", to: "next", state: activeBranch === "blocked" ? "blocked" : "idle" }
+        ],
+        nodes: [
+          {
+            key: "input",
+            label: "用户输入",
+            detail: `输入 ${draft.raw_message.trim().length} 字`,
+            state: "done",
+            status: "实时监听"
+          },
+          {
+            key: "intent",
+            label: "Agent 意图判断",
+            detail: draft.input_gate.is_in_scope ? `${taskLabel(draft.task_type)}；字段 ${extractedCount} 个` : "未进入业务链路",
+            state: draft.input_gate.is_in_scope ? "done" : "blocked",
+            status: bestIntent ? `${Math.round(draft.confidence * 100)}%` : "未识别"
+          },
+          {
+            key: "local",
+            label: "本地导出包检索",
+            detail: !shouldRetrieve ? "检索已跳过" : docs.length ? `命中 ${docs.length} 条资料` : "未命中本地资料",
+            state: localState,
+            status: docs.length ? "hit" : shouldRetrieve ? "miss" : "skip"
+          },
+          {
+            key: "remote",
+            label: "GitHub llm-wiki 在线索引",
+            detail: !shouldRetrieve ? "检索已跳过" : docs.length ? "本地已命中，未触发" : remotePending ? "正在查询在线索引" : remoteWikiStatus === "failed" ? "在线索引不可用" : remoteDocs.length ? `命中 ${remoteDocs.length} 条资料` : remoteWikiDocs ? "在线索引未命中" : "等待本地未命中后触发",
+            state: remoteState,
+            status: remotePending ? "loading" : remoteDocs.length ? "hit" : docs.length ? "skip" : remoteWikiStatus === "failed" ? "failed" : remoteWikiDocs ? "miss" : "standby"
+          },
+          {
+            key: "blocked",
+            label: "安全 / 范围边界",
+            detail: validation.status === "blocked" ? "检测到敏感字段" : validation.status === "out_of_scope" ? "不是 API 接入问题" : "未触发边界",
+            state: blockedState,
+            status: blockedChosen ? "stop" : "standby"
+          },
+          {
+            key: "next",
+            label: "返回依据 / 下一步",
+            detail: nextDetail,
+            state: finalState,
+            status: validation.status
+          }
+        ]
+      };
+    }
+
+    function renderSignalFlow(run, versionId) {
+      if (versionId !== "v1" || !run.flow) {
+        signalFlow.classList.remove("visible");
+        signalFlow.innerHTML = "";
+        return;
+      }
+      const pathByLink = {
+        "input-intent": "M 10 50 C 18 50, 23 50, 31 50",
+        "intent-local": "M 31 50 C 42 50, 45 18, 58 18",
+        "intent-remote": "M 31 50 C 42 50, 48 50, 58 50",
+        "intent-blocked": "M 31 50 C 42 50, 45 82, 58 82",
+        "local-next": "M 58 18 C 72 18, 73 50, 86 50",
+        "remote-next": "M 58 50 C 70 50, 76 50, 86 50",
+        "blocked-next": "M 58 82 C 72 82, 73 50, 86 50"
+      };
+      signalFlow.classList.add("visible");
+      signalFlow.innerHTML = `
+        <div class="signal-flow-head">
+          <div class="signal-flow-title">
+            <span class="signal-pulse" aria-hidden="true"></span>
+            <span>识别后的路由结果</span>
+          </div>
+          <div class="signal-flow-summary">${escapeHtml(run.flow.summary)}</div>
+        </div>
+        <div class="signal-map">
+          <svg class="signal-paths" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="flowActive" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.15"></stop>
+                <stop offset="45%" stop-color="#38bdf8"></stop>
+                <stop offset="100%" stop-color="#22c55e"></stop>
+              </linearGradient>
+            </defs>
+            ${run.flow.links.map((link) => `
+              <path class="map-link ${escapeHtml(link.state)}" d="${pathByLink[link.key]}"></path>
+            `).join("")}
+          </svg>
+          ${run.flow.nodes.map((node) => `
+            <div class="flow-node ${escapeHtml(node.state)}" data-key="${escapeHtml(node.key)}">
+              <div class="flow-orb">${escapeHtml(flowNodeIcon(node.key))}</div>
+              <div class="flow-copy">
+                <strong>${escapeHtml(node.label)}</strong>
+                <span>${escapeHtml(node.detail)}</span>
+              </div>
+              <div class="flow-status">${escapeHtml(node.status)}</div>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function flowNodeIcon(key) {
+      return {
+        input: "IN",
+        intent: "AI",
+        local: "PKG",
+        remote: "GH",
+        blocked: "SEC",
+        next: "OUT"
+      }[key] || key.slice(0, 2).toUpperCase();
+    }
+
+    function buildPmTrace(draft, validation, docs, remoteDocs, remotePending) {
+      const extracted = Object.entries(compactFields(draft.fields)).map(([field, value]) => `${label(field)}=${value}`);
+      const route = validation.status === "out_of_scope"
+        ? "不进入资料检索"
+        : validation.status === "blocked"
+          ? "命中安全边界，停止检索"
+          : docs.length
+            ? `走本地导出包，命中 ${docs.length} 条`
+            : remotePending
+              ? "本地未命中，正在走 GitHub llm-wiki"
+              : remoteDocs.length
+                ? `走 GitHub llm-wiki，命中 ${remoteDocs.length} 条`
+                : remoteWikiDocs
+                  ? "两条资料链路都未命中"
+                  : "等待在线索引返回";
+      const risk = validation.status === "blocked"
+        ? validation.blocked_reasons.join("；")
+        : validation.status === "out_of_scope"
+          ? "当前输入不是 API 接入类问题"
+          : validation.missing_fields.length
+            ? `还缺：${validation.missing_fields.map(label).join("、")}`
+            : "没有发现阻塞项";
+      const next = validation.status === "executable"
+        ? "可以进入后续 RAG 回答或工具检查"
+        : validation.status === "needs_clarification"
+          ? "先向用户追问缺失信息"
+          : validation.status === "blocked"
+            ? "提示用户移除敏感信息后重试"
+            : "提示用户换成 API 接入相关问题";
+
+      return [
+        card("识别结论", `${draft.input_gate.is_in_scope ? "属于 API 接入 Agent" : "范围外"}\n意图：${taskLabel(draft.task_type)}\n置信度：${Math.round(draft.confidence * 100)}%`),
+        card("资料路径", route),
+        card("信息缺口 / 风险", risk),
+        card("下一步动作", `${next}\n已抽取：${extracted.slice(0, 3).join("；") || "暂无关键字段"}${extracted.length > 3 ? ` 等 ${extracted.length} 项` : ""}`)
+      ];
+    }
+
+    function buildRecognitionLayers(run) {
+      const draft = run.draft;
+      const validation = run.validation;
+      const fields = compactFields(draft.fields);
+      const required = requiredFields[draft.task_type] || [];
+      const maxScore = Math.max(1, ...draft.input_gate.scores.map((item) => item.score));
+      const candidates = draft.input_gate.scores.slice(0, 5).map((item, index) => ({
+        name: taskLabel(item.intent),
+        raw: item.intent,
+        score: item.score,
+        matched: item.matched.map((hit) => hit.keyword).join("、") || "无",
+        width: Math.max(4, Math.round((item.score / maxScore) * 100)),
+        primary: index === 0
+      }));
+      const slotRows = draft.extraction
+        .filter((item) => required.includes(item.field) || item.value)
+        .map((item) => ({
+          field: label(item.field),
+          value: item.value || "未抽取",
+          source: item.value ? ruleSource(item.rule) : "missing",
+          hit: Boolean(item.value)
+        }));
+      const confidenceState = validation.status === "out_of_scope"
+        ? "业务范围未通过，直接拒绝进入任务链路"
+        : validation.status === "blocked"
+          ? "命中安全边界，停止进入检索和工具调用"
+          : validation.status === "needs_clarification"
+            ? `置信度可用，但缺少 ${validation.missing_fields.map(label).join("、")}`
+            : "意图和必填槽位满足，可进入后续链路";
+
+      return {
+        summary: `${draft.input_gate.is_in_scope ? "范围内" : "范围外"} · ${taskLabel(draft.task_type)} · ${Math.round(draft.confidence * 100)}%`,
+        candidates,
+        slotRows,
+        hybridLayers: draft.input_gate.hybrid_trace || [],
+        cards: {
+          scope: [
+            ["业务范围", draft.input_gate.is_in_scope ? "API 接入相关" : "范围外"],
+            ["命中信号", draft.input_gate.scope_hits.join("、") || "无"],
+            ["判断依据", draft.input_gate.decision_reason]
+          ],
+          method: [
+            ["规则层", "先用业务关键词、接口路径、错误码做快速识别"],
+            ["语义层", "候选意图打分，保留第二候选用于解释"],
+            ["兜底层", "低置信度、缺槽位或安全命中时进入追问/阻断"]
+          ],
+          decision: [
+            ["置信度", `${Math.round(draft.confidence * 100)}%`],
+            ["完整度", required.length ? `${required.length - validation.missing_fields.length}/${required.length} 个必填槽位` : "无必填槽位"],
+            ["当前状态", confidenceState]
+          ]
+        }
+      };
+    }
+
+    function ruleSource(rule) {
+      if (rule.includes("正则") || rule.includes("匹配")) return "regex";
+      if (rule.includes("字段名") || rule.includes("常见")) return "dict";
+      return "rule";
+    }
+
+    function renderRecognitionBoard(run, versionId) {
+      if (versionId !== "v1") {
+        recognitionBoard.classList.remove("visible");
+        recognitionBoard.innerHTML = "";
+        return;
+      }
+      const model = buildRecognitionLayers(run);
+      recognitionBoard.classList.add("visible");
+      recognitionBoard.innerHTML = `
+        <div class="recognition-head">
+          <div class="recognition-title">
+            <span class="signal-pulse" aria-hidden="true"></span>
+            <span>任务识别白盒分层</span>
+          </div>
+          <div class="recognition-summary">${escapeHtml(model.summary)}</div>
+        </div>
+        <div class="recognition-grid">
+          <section class="recognition-card">
+            <h3>1. 范围门控 <span class="layer-badge">Scope</span></h3>
+            ${renderKeyValueList(model.cards.scope)}
+          </section>
+          <section class="recognition-card">
+            <h3>2. 意图分类 <span class="layer-badge">Intent</span></h3>
+            <div class="intent-bars">
+              ${model.candidates.map((item) => `
+                <div class="intent-bar ${item.primary ? "" : "secondary"}">
+                  <span class="intent-name">${escapeHtml(item.name)}</span>
+                  <span class="bar-track"><span class="bar-fill" style="--score-width:${item.width}%"></span></span>
+                  <strong>${escapeHtml(String(item.score))}</strong>
+                </div>
+              `).join("")}
+            </div>
+          </section>
+          <section class="recognition-card">
+            <h3>3. 工程分层 <span class="layer-badge">Hybrid</span></h3>
+            <div class="hybrid-stack">
+              ${model.hybridLayers.map((layer) => `
+                <div class="hybrid-layer ${layer.selected ? "selected" : layer.status === "未触发" ? "waiting" : layer.status === "未通过" ? "warn" : ""}">
+                  <div>
+                    <strong>${escapeHtml(layer.label)}</strong>
+                    <span>${escapeHtml(layer.detail)}</span>
+                    <span>证据：${escapeHtml(layer.evidence)}</span>
+                  </div>
+                  <em>${escapeHtml(layer.status)}</em>
+                </div>
+              `).join("")}
+            </div>
+          </section>
+          <section class="recognition-card wide">
+            <h3>4. 槽位抽取 <span class="layer-badge">Slots</span></h3>
+            <div class="slot-table">
+              ${model.slotRows.length ? model.slotRows.map((slot) => `
+                <div class="slot-row ${slot.hit ? "hit" : "miss"}">
+                  <strong>${escapeHtml(slot.field)}</strong>
+                  <span>${escapeHtml(slot.value)}</span>
+                  <span class="slot-source">${escapeHtml(slot.source)}</span>
+                </div>
+              `).join("") : `<div class="slot-row miss"><strong>关键字段</strong><span>暂未抽取</span><span class="slot-source">missing</span></div>`}
+            </div>
+          </section>
+          <section class="recognition-card">
+            <h3>5. 决策闸门 <span class="layer-badge">Gate</span></h3>
+            <div class="decision-stack">
+              ${model.cards.decision.map(([name, value]) => `
+                <div class="decision-item">
+                  <strong>${escapeHtml(name)}</strong>
+                  <span>${escapeHtml(value)}</span>
+                </div>
+              `).join("")}
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderKeyValueList(rows) {
+      return `
+        <ul class="recognition-list">
+          ${rows.map(([name, value]) => `
+            <li>
+              <strong>${escapeHtml(name)}</strong>
+              <span>${escapeHtml(value)}</span>
+            </li>
+          `).join("")}
+        </ul>
+      `;
+    }
+
+    function renderSessionBoard(run, versionId) {
+      if (!run.session) {
+        sessionBoard.classList.remove("visible");
+        sessionBoard.innerHTML = "";
+        return;
+      }
+      const session = run.session;
+      const activeTask = session.activeTask;
+      const fieldEntries = Object.entries(session.memory.fields || {}).slice(0, 10);
+      const currentTurn = {
+        index: state.conversation.turns.length + 1,
+        text: run.draft.raw_message,
+        intent: run.draft.task_type,
+        status: session.taskState,
+        missing: run.validation.missing_fields
+      };
+      const lastTurn = state.conversation.turns[state.conversation.turns.length - 1];
+      const shouldPreviewCurrent = !lastTurn || lastTurn.text !== currentTurn.text || lastTurn.status !== currentTurn.status;
+      const turns = (shouldPreviewCurrent ? state.conversation.turns.concat(currentTurn) : state.conversation.turns).slice(-4);
+
+      sessionBoard.classList.add("visible");
+      sessionBoard.innerHTML = `
+        <div class="session-head">
+          <div class="session-title">
+            <span class="signal-pulse" aria-hidden="true"></span>
+            <span>会话状态 / 任务状态</span>
+          </div>
+          <div class="session-summary">${escapeHtml(versionId.toUpperCase())} 复用当前会话 · 第 ${session.turnCount} 轮 · ${escapeHtml(session.taskState)} · ${escapeHtml(session.contextUsed.used ? "已使用上下文" : "本轮独立识别")}</div>
+        </div>
+        <div class="session-grid">
+          <section class="session-card">
+            <h3>多轮会话</h3>
+            <ul class="turn-list">
+              ${turns.map((turn) => `
+                <li class="turn-item">
+                  <strong>#${turn.index}</strong>
+                  <span>${escapeHtml(taskLabel(turn.intent))} · ${escapeHtml(turn.status)}</span>
+                  <strong></strong>
+                  <span>${escapeHtml(turn.text)}</span>
+                </li>
+              `).join("")}
+            </ul>
+          </section>
+          <section class="session-card">
+            <h3>当前任务</h3>
+            <ul class="task-state-list">
+              <li><strong>任务类型</strong><span>${escapeHtml(activeTask ? taskLabel(activeTask.task_type) : "暂无")}</span></li>
+              <li><strong>任务状态</strong><span>${escapeHtml(session.taskState)}</span></li>
+              <li><strong>待补信息</strong><span>${escapeHtml(run.validation.missing_fields.map(label).join("、") || "无")}</span></li>
+              <li><strong>上下文</strong><span>${escapeHtml(session.contextUsed.reason)}</span></li>
+            </ul>
+          </section>
+          <section class="session-card">
+            <h3>已记住字段</h3>
+            <div class="memory-chips">
+              ${fieldEntries.length ? fieldEntries.map(([field, value]) => `
+                <span class="memory-chip"><strong>${escapeHtml(label(field))}</strong>${escapeHtml(value)}</span>
+              `).join("") : `<span class="memory-chip"><strong>暂无</strong>等待有效业务输入</span>`}
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    function renderLiveState(run) {
+      const isDraftDirty = messageInput.value !== state.lastSubmittedMessage;
+      liveState.innerHTML = `
+        <div class="live-state-row">
+          <span>当前意图</span>
+          <strong>${escapeHtml(isDraftDirty ? "等待回车开始识别" : taskLabel(run.draft.task_type))}</strong>
+        </div>
+        <div class="live-state-row">
+          <span>资料路径</span>
+          <strong>${escapeHtml(isDraftDirty ? "输入中，链路暂未启动" : run.flow?.summary || "等待输入")}</strong>
+        </div>
+        <div class="live-state-row">
+          <span>输入状态</span>
+          <strong>${escapeHtml(isDraftDirty ? "按 Enter 开始识别" : run.validation.status === "needs_clarification" ? "需要补充信息" : run.validation.status === "blocked" ? "已触发安全边界" : run.validation.status === "out_of_scope" ? "范围外" : "可继续")}</strong>
+        </div>
+      `;
+    }
+
+    function renderLiveDraft() {
+      const version = versions.find((item) => item.id === state.version);
+      commandText.textContent = `${version?.id.toUpperCase() || state.version.toUpperCase()} · 等待提交当前问题`;
+      liveState.innerHTML = `
+        <div class="live-state-row">
+          <span>当前意图</span>
+          <strong>等待回车开始识别</strong>
+        </div>
+        <div class="live-state-row">
+          <span>资料路径</span>
+          <strong>输入中，链路暂未启动</strong>
+        </div>
+        <div class="live-state-row">
+          <span>输入状态</span>
+          <strong>按 Enter 开始识别</strong>
+        </div>
+      `;
+      recognitionBoard.classList.add("visible");
+      recognitionBoard.innerHTML = `
+        <div class="recognition-head">
+          <div class="recognition-title">
+            <span class="signal-pulse" aria-hidden="true"></span>
+            <span>任务识别白盒分层</span>
+          </div>
+          <div class="recognition-summary">输入已更新，等待 Enter 提交识别</div>
+        </div>
+        <div class="recognition-grid">
+          <section class="recognition-card">
+            <h3>1. 范围门控 <span class="layer-badge">Pending</span></h3>
+            ${renderKeyValueList([["当前状态", "等待提交"], ["说明", "按 Enter 后开始判断是否属于 API 接入问题"]])}
+          </section>
+          <section class="recognition-card">
+            <h3>2. 意图分类 <span class="layer-badge">Pending</span></h3>
+            ${renderKeyValueList([["当前状态", "尚未运行"], ["说明", "不会在输入过程中提前改变链路结果"]])}
+          </section>
+          <section class="recognition-card">
+            <h3>3. 槽位抽取 <span class="layer-badge">Pending</span></h3>
+            ${renderKeyValueList([["当前状态", "等待识别"], ["说明", "提交后再抽取接口、appid、错误码等字段"]])}
+          </section>
+        </div>
+      `;
+    }
+
     function runVersion(versionId, message) {
-      const draft = extractTask(message);
+      const draft = applyConversationContext(extractTask(message));
       const validation = validate(draft);
-      const docs = validation.status === "out_of_scope" ? [] : searchDocs(draft);
-      const remoteDocs = docs.length || !remoteWikiDocs ? [] : searchRemoteDocs(draft);
+      const canSearchDocs = validation.status !== "out_of_scope" && validation.status !== "blocked";
+      const docs = canSearchDocs ? searchDocs(draft) : [];
+      const remoteDocs = canSearchDocs && !docs.length && remoteWikiDocs ? searchRemoteDocs(draft) : [];
+      const needsRemoteWiki = (versionId === "v1" || versionId === "v4") && canSearchDocs && docs.length === 0 && !remoteWikiDocs;
       const tools = validation.status === "executable" ? runTools(draft) : [];
       const skill = skills[draft.task_type];
+      const session = buildSessionSnapshot(draft, validation, docs, remoteDocs);
       const trace = [];
       let steps = [];
       let terminalTitle = "运行输出";
@@ -1741,15 +3917,27 @@
 
       if (versionId === "v1") {
         steps = ["Scope", "Intent", "字段抽取", "Validity"];
-        trace.push(card("1. Scope Gate：先判断归不归我管", `业务范围命中：${draft.input_gate.scope_hits.join("、") || "无"}\nis_in_scope=${draft.input_gate.is_in_scope}\n原因：${draft.input_gate.decision_reason}`));
-        trace.push(card("2. Intent Scoring：再给候选意图打分", draft.input_gate.scores.map((item) => `${item.intent}: ${item.score} 分；命中：${item.matched.map((m) => `${m.keyword}(+${m.weight})`).join("、") || "无"}`).join("\n")));
-        trace.push(card("3. Field Extraction：字段从哪里来", draft.extraction.map((item) => `${label(item.field)}：${item.value ? "命中 " + item.value : "未命中"}；规则：${item.rule}`).join("\n")));
-        trace.push(card("4. Validity：当前输入状态", `validity=${validation.status}\n${validation.status === "out_of_scope" ? "处理方式：拒绝进入业务链路，提示用户换成 API 接入相关问题。" : validation.status === "needs_clarification" ? `处理方式：追问缺失字段 ${validation.missing_fields.map(label).join("、")}` : validation.status === "blocked" ? "处理方式：触发安全边界并阻断。" : "处理方式：允许进入后续 Skill / RAG / Tool。"}`));
+        trace.push(...buildPmTrace(draft, validation, docs, remoteDocs, needsRemoteWiki));
         finalOutput = pretty({
           is_in_scope: draft.input_gate.is_in_scope,
           intent: draft.task_type,
           confidence: draft.confidence,
           evidence: draft.input_gate.scores[0]?.matched.map((item) => item.keyword) || [],
+          selected_layer: draft.input_gate.selected_layer,
+          hybrid_trace: draft.input_gate.hybrid_trace.map((layer) => ({
+            layer: layer.label,
+            status: layer.status,
+            intent: layer.intent,
+            confidence: layer.confidence,
+            evidence: layer.evidence
+          })),
+          session_state: {
+            session_id: session.sessionId,
+            turn_count: session.turnCount,
+            task_state: session.taskState,
+            context_used: session.contextUsed.used,
+            inherited_fields: session.contextUsed.inherited_fields
+          },
           validity: validation.status,
           missing_fields: validation.missing_fields,
           security_flags: draft.security_flags,
@@ -1822,6 +4010,8 @@
         terminalTitle = "状态与审计";
       }
 
+      trace.unshift(...buildVersionStoryTrace(versionId, draft, validation, session, docs, remoteDocs, needsRemoteWiki, tools, skill));
+
       return {
         draft,
         validation,
@@ -1831,7 +4021,13 @@
         terminalTitle,
         status: statusLabel(versionId, validation),
         guard: draft.security_flags.includes("contains_appsecret") ? "Blocked" : versionId === "v7" ? "Strict" : versionId === "v0" ? "Off" : "On",
-        needsRemoteWiki: versionId === "v4" && validation.status !== "out_of_scope" && docs.length === 0 && !remoteWikiDocs
+        flow: buildSignalFlow(draft, validation, docs, remoteDocs, needsRemoteWiki),
+        session,
+        docs,
+        remoteDocs,
+        tools,
+        skill,
+        needsRemoteWiki
       };
     }
 
@@ -1844,19 +4040,635 @@
       return "Executable";
     }
 
+    function renderExampleButtons() {
+      exampleGrid.innerHTML = demoExamples.map((item) => `
+        <button class="example-btn" type="button" role="tab" aria-selected="${item.id === state.scenario}" data-example="${item.id}">
+          <span>
+            <strong>${escapeHtml(item.title)}</strong>
+            <span>${escapeHtml(item.summary)}</span>
+          </span>
+          <em class="example-badge">${escapeHtml(item.route)}</em>
+        </button>
+      `).join("");
+    }
+
+    function renderChatLog() {
+      if (!state.chatMessages.length) {
+        chatLog.innerHTML = `
+          <div class="chat-message agent">
+            <div class="chat-role">Agent</div>
+            <div class="chat-bubble">
+              请选择下方一个业务问题。我会先像真实 Agent 一样回答，再评估这次回答是否可靠、能不能继续执行，并给出可验证的下一层能力。
+            </div>
+          </div>
+        `;
+        chatMeta.textContent = "等待业务问题";
+        return;
+      }
+      chatLog.innerHTML = state.chatMessages.map((message) => `
+        <div class="chat-message ${escapeHtml(message.role)}">
+          <div class="chat-role">${message.role === "user" ? "用户" : "Agent"}</div>
+          <div class="chat-bubble">
+            ${renderChatContent(message)}
+            ${message.meta ? renderChatMeta(message.meta) : ""}
+            ${message.actions ? renderChatActions(message.actions) : ""}
+          </div>
+        </div>
+      `).join("");
+      chatMeta.textContent = `${state.chatMessages.filter((item) => item.role === "user").length} 轮输入`;
+      chatLog.scrollTop = chatLog.scrollHeight;
+    }
+
+    function renderChatContent(message) {
+      if (!message.sections) {
+        return escapeHtml(message.text || "").replaceAll("\n", "<br>");
+      }
+      return `
+        <div class="chat-brief">
+          <strong>${escapeHtml(message.briefTitle || "处理结论")}</strong>
+          <span>${escapeHtml(message.brief || message.text || "")}</span>
+        </div>
+        <div class="chat-sections">
+          ${message.sections.map((section) => `
+            <div class="chat-section ${escapeHtml(section.type || "")}">
+              <strong>${escapeHtml(section.title)}</strong>
+              <span>${escapeHtml(section.body).replaceAll("\n", "<br>")}</span>
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function renderChatMeta(meta) {
+      return `
+        <div class="chat-meta">
+          ${meta.map((item) => `<span class="chat-chip ${escapeHtml(item.level)}">${escapeHtml(item.label)}</span>`).join("")}
+        </div>
+      `;
+    }
+
+    function renderChatActions(actions) {
+      return `
+        <div class="chat-actions">
+          ${actions.map((action) => `
+            <button class="chat-action-btn" type="button" data-upgrade-version="${escapeHtml(action.versionId)}" ${isUpgradeActionDisabled(action.versionId) ? "disabled" : ""}>
+              <small>验证</small>
+              <span>${escapeHtml(isUpgradeActionDisabled(action.versionId) ? "已验证" : action.label)}</span>
+            </button>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function isUpgradeActionDisabled(versionId) {
+      return versionId === state.version || state.verifiedVersions.includes(versionId);
+    }
+
+    function appendChatMessage(message) {
+      state.chatMessages.push({
+        ...message,
+        id: `chat-${Date.now().toString(36)}-${state.chatMessages.length}`
+      });
+      renderChatLog();
+    }
+
+    function buildAgentReply(run) {
+      const layerLabel = {
+        rule: "规则优先",
+        vector: "向量补位",
+        llm: "LLM 兜底",
+        none: "未放行"
+      }[run.draft.input_gate.selected_layer] || run.draft.input_gate.selected_layer;
+      const route = run.flow?.summary || "未进入检索";
+      const currentVersion = versions.find((item) => item.id === state.version);
+      const recommendedVersion = recommendedVersionForRun(state.version, run);
+      const nextVersion = recommendedVersion ? versions.find((item) => item.id === recommendedVersion) : null;
+      const exposure = buildProblemExposure(state.version, run);
+      const userAnswer = buildUserFacingAnswer(state.version, run);
+      const assessment = buildAnswerAssessment(state.version, run, exposure);
+      const improvement = buildImprovementAdvice(state.version, run, nextVersion);
+      state.recommendedVersion = nextVersion?.id || null;
+      return {
+        text: userAnswer.summary,
+        briefTitle: `${currentVersion ? currentVersion.id.toUpperCase() : state.version.toUpperCase()} Agent 回复`,
+        brief: userAnswer.summary,
+        sections: [
+          { type: "answer", title: "Agent 回答", body: userAnswer.detail },
+          { type: "assessment", title: "结果评估", body: assessment },
+          { type: "improve", title: "改进建议", body: improvement },
+          { type: "compare", title: "内部依据", body: `意图=${taskLabel(run.draft.task_type)}；识别层=${layerLabel}；置信度=${Math.round(run.draft.confidence * 100)}%；任务状态=${run.session?.taskState || run.validation.status}；资料路径=${route}。` }
+        ],
+        meta: [
+          { label: currentVersion ? currentVersion.id.toUpperCase() : state.version.toUpperCase(), level: "info" },
+          { label: layerLabel, level: run.draft.input_gate.selected_layer === "llm" ? "warn" : "good" },
+          { label: run.validation.status, level: run.validation.status === "blocked" || run.validation.status === "out_of_scope" ? "bad" : run.validation.status === "needs_clarification" ? "warn" : "good" }
+        ],
+        actions: nextVersion ? [{ versionId: nextVersion.id, label: `验证${capabilityLabel(nextVersion.id)}` }] : []
+      };
+    }
+
+    function buildVersionTransitionReply(run, version, previousVersionId) {
+      const previous = versions.find((item) => item.id === previousVersionId);
+      const recommendedVersion = recommendedVersionForRun(version.id, run);
+      const nextVersion = recommendedVersion ? versions.find((item) => item.id === recommendedVersion) : null;
+      const verification = buildUpgradeVerification(previousVersionId, version.id, run);
+      state.recommendedVersion = nextVersion?.id || null;
+      if (!state.verifiedVersions.includes(version.id)) {
+        state.verifiedVersions = state.verifiedVersions.concat(version.id);
+      }
+      return {
+        text: `已用 ${version.id.toUpperCase()} · ${version.name} 重新处理同一条问题。`,
+        briefTitle: `${capabilityLabel(version.id)}验证结果`,
+        brief: `这不是换一个独立 demo，而是同一条对话在新的能力层下再跑一遍。`,
+        sections: [
+          { type: "answer", title: "Agent 回答", body: buildUserFacingAnswer(version.id, run).detail },
+          { type: "problem", title: "上一版问题", body: verification.before },
+          { type: "compare", title: "本版变化", body: verification.evidence },
+          { type: "assessment", title: "当前评估", body: verification.state },
+          { type: "improve", title: "继续演进", body: nextVersion ? `如果还想继续演示，可以让系统增加「${capabilityLabel(nextVersion.id)}」，再用同一条任务重新处理，观察它解决的是哪一层短板。` : "已经到企业治理层，后续可以收束到真实联调、权限、日志和验收流程。" }
+        ],
+        meta: [
+          { label: `${previous?.id.toUpperCase() || "上一版"} → ${version.id.toUpperCase()}`, level: "info" },
+          { label: run.session?.taskState || run.validation.status, level: run.validation.status === "blocked" || run.validation.status === "out_of_scope" ? "bad" : run.validation.status === "needs_clarification" ? "warn" : "good" },
+          { label: taskLabel(run.draft.task_type), level: run.validation.status === "out_of_scope" ? "bad" : "info" }
+        ],
+        actions: nextVersion ? [{ versionId: nextVersion.id, label: `验证${capabilityLabel(nextVersion.id)}` }] : []
+      };
+    }
+
+    function versionStorySummary(versionId, fallback) {
+      const story = versionStories[versionId];
+      if (!story) return fallback;
+      return `上一版问题：${story.previous}｜本版解决：${story.solve}`;
+    }
+
+    function nextVersionFor(versionId) {
+      const nextId = versionStories[versionId]?.next;
+      return nextId ? versions.find((item) => item.id === nextId) : null;
+    }
+
+    function capabilityLabel(versionId) {
+      return {
+        v1: "任务识别白盒化",
+        v2: "字段清单校验",
+        v3: "固定排查流程",
+        v4: "文档依据检索",
+        v5: "确定性工具校验",
+        v6: "Agent 闭环执行",
+        v7: "状态审计与脱敏"
+      }[versionId] || "下一层能力";
+    }
+
+    function buildImprovementAdvice(versionId, run, nextVersion) {
+      if (!nextVersion) {
+        return "当前已经覆盖识别、校验、检索、工具、闭环和治理能力。后续重点不再是页面演示，而是接真实接口、真实日志、真实权限和验收流程。";
+      }
+      const missing = run.validation.missing_fields.map(label).join("、") || "无";
+      if (run.validation.status === "out_of_scope") {
+        return "解决方案：先让系统做业务范围门控。提问方需要换成 API 接入相关问题；Agent 只把签名、回调、字段、凭证、新接口接入、单量分析这类请求放入后续链路。\n这对应的是「任务识别白盒化」能力。";
+      }
+      if (run.validation.status === "blocked") {
+        return "解决方案：提问方先移除 appsecret、密钥、完整 token 等敏感值；系统侧对输入做脱敏、阻断和审计记录，避免敏感信息进入模型上下文、检索链路或普通日志。\n这对应的是「状态审计与脱敏」能力。";
+      }
+      if (run.validation.status === "needs_clarification") {
+        return `解决方案：提问方补充阻塞字段：${missing}；系统侧用必填字段清单判断哪些信息必须追问，避免泛泛地说“信息不足”。\n这对应的是「字段清单校验」能力。`;
+      }
+      if (run.draft.task_type === "signature_debug") {
+        return "解决方案：提问方提供接口路径、appid、错误码、请求时间、签名前原始字符串；系统侧先查资料，再用工具检查参数排序、timestamp 是否存在、错误码解释和示例日志是否匹配。\n这对应的是「确定性工具校验」能力。";
+      }
+      if (run.draft.task_type === "api_field_qa") {
+        return "解决方案：系统侧必须先检索 API 文档、FAQ 或 llm-wiki，找到字段定义、适用场景和示例后再回答；如果没有资料命中，就明确告诉用户依据不足。\n这对应的是「文档依据检索」能力。";
+      }
+      if (run.draft.task_type === "callback_debug") {
+        return "解决方案：系统侧按固定步骤排查：确认回调地址可访问、订单是否触发、服务端是否发起请求、第三方是否返回 2xx、是否进入重试队列。\n这对应的是「固定排查流程」能力。";
+      }
+      if (run.draft.task_type === "api_onboarding") {
+        return "解决方案：系统侧把接入任务拆成环境准备、账号配置、白名单、签名联调、回调联调、验收清单，并持续记录每一步是否完成。\n这对应的是「Agent 闭环执行」能力。";
+      }
+      if (run.draft.task_type === "volume_analysis") {
+        return "解决方案：系统侧需要记录当前任务状态、数据口径、查询时间范围和人工确认点，避免只给一段无法追溯的分析话术。\n这对应的是「状态审计与脱敏」能力。";
+      }
+      return `解决方案：让系统增加「${capabilityLabel(nextVersion.id)}」，再用同一条问题重新处理，观察回答是否更完整、可验证、可继续。`;
+    }
+
+    function recommendedVersionForRun(currentVersionId, run) {
+      const currentIndex = versions.findIndex((item) => item.id === currentVersionId);
+      const choose = (versionId) => {
+        const targetIndex = versions.findIndex((item) => item.id === versionId);
+        return targetIndex > currentIndex ? versionId : nextVersionFor(currentVersionId)?.id || null;
+      };
+      if (currentVersionId === "v7") return null;
+      if (run.validation.status === "blocked") return choose("v7");
+      if (run.validation.status === "out_of_scope") return choose("v1");
+      if (run.validation.status === "needs_clarification") return choose("v2");
+      if (run.draft.task_type === "api_field_qa") return choose("v4");
+      if (run.draft.task_type === "callback_debug") return choose("v3");
+      if (run.draft.task_type === "signature_debug" && currentIndex < versions.findIndex((item) => item.id === "v5")) {
+        const hasDocs = (run.docs?.length || 0) + (run.remoteDocs?.length || 0) > 0;
+        return choose(hasDocs ? "v5" : "v4");
+      }
+      if (run.draft.task_type === "api_onboarding") return choose("v6");
+      if (run.draft.task_type === "volume_analysis") return choose("v7");
+      return nextVersionFor(currentVersionId)?.id || null;
+    }
+
+    function buildAnswerAssessment(versionId, run, exposure) {
+      const docsCount = (run.docs?.length || 0) + (run.remoteDocs?.length || 0);
+      const toolRan = run.tools?.some((item) => item.status !== "skipped");
+      const missing = run.validation.missing_fields.map(label).join("、") || "无";
+      if (run.validation.status === "out_of_scope") {
+        return "回答质量：合格。\n能否完整解决：不能解决用户原问题，因为它不是 API 接入问题，不应该进入当前 Agent 的业务链路。\n为什么不能：如果继续回答天气或餐厅推荐，会把无关请求误接进 API 支持流程，后续检索和状态记录都会失真。";
+      }
+      if (run.validation.status === "blocked") {
+        return "回答质量：安全正确。\n能否完整解决：不能继续排查，必须先阻断。\n为什么不能：输入里出现敏感凭证，继续检索、记录或交给模型都有泄露风险。当前最正确的结果不是给排查结论，而是要求提问方移除敏感信息。";
+      }
+      if (run.validation.status === "needs_clarification") {
+        return `回答质量：方向正确，但不可执行。\n能否完整解决：不能。当前只能确认任务类型，不能定位根因。\n为什么不能：缺少 ${missing}。如果继续给结论，就会从排查变成猜测。${exposure.problem}`;
+      }
+      if (versionId === "v1") {
+        if (run.draft.task_type === "signature_debug") {
+          return "回答质量：可用于初步排查。\n能否完整解决：还不能完整解决。\n为什么不能：当前回答能给出排查路径，也能找到资料，但签名前字符串顺序、timestamp、错误码解释需要确定性校验；只靠文字建议不能证明根因。";
+        }
+        if (run.draft.task_type === "api_field_qa") {
+          return "回答质量：识别正确，但依据不足。\n能否完整解决：不能直接完整回答。\n为什么不能：字段含义必须来自 API 文档、FAQ 或 llm-wiki；没有来源时，PM 和业务方无法判断这个解释是否可信。";
+        }
+        if (run.draft.task_type === "callback_debug") {
+          return "回答质量：能给方向，但流程不稳定。\n能否完整解决：不能稳定解决。\n为什么不能：回调问题需要固定排查顺序；如果每次都让模型临场组织流程，容易漏掉触发动作、回调地址、响应码、重试队列等关键检查点。";
+        }
+        return `回答质量：能说明任务类型。\n能否完整解决：暂时不能。\n为什么不能：还没有独立校验层证明字段是否足够继续。${exposure.problem}`;
+      }
+      if (versionId === "v2") {
+        return `回答质量：字段判断更清楚。\n能否完整解决：不一定。\n为什么不能：字段完整性已经可判断，但业务排查步骤还没有固定下来。${exposure.problem}`;
+      }
+      if (versionId === "v3") {
+        return `回答质量：流程更稳定。\n能否完整解决：还取决于资料依据。\n为什么不能：固定流程能减少临场发挥，但最终答案还需要文档或 FAQ 支撑。当前资料命中 ${docsCount} 条。${exposure.problem}`;
+      }
+      if (versionId === "v4") {
+        return docsCount
+          ? `回答质量：有依据，可信度较高。\n能否完整解决：如果只是字段解释，可以基本解决；如果是签名失败，还不能证明根因。\n为什么不能：签名顺序、时间戳这类问题还需要工具给确定性结果。`
+          : "回答质量：流程正确但依据不足。\n能否完整解决：不能。\n为什么不能：知道该查什么，但没有找到足够资料，不能硬给结论。";
+      }
+      if (versionId === "v5") {
+        return toolRan
+          ? "回答质量：可验证。\n能否完整解决：对签名类确定性问题，已经接近完整解决。\n为什么还可继续优化：识别、检索、工具和回答还可以串成连续闭环，让每一步观察和行动都可追踪。"
+          : "回答质量：未进入工具验证。\n能否完整解决：不能。\n为什么不能：工具没有被放行，说明任务仍卡在字段、安全或范围条件上。";
+      }
+      if (versionId === "v6") {
+        return "回答质量：链路完整。\n能否完整解决：大多数正常任务可以闭环推进。\n为什么还可继续优化：企业演示还需要说明状态、审计、脱敏和人工闸门，否则无法解释安全边界和责任归属。";
+      }
+      return "回答质量：企业治理完整。\n能否完整解决：当前演示链路已经覆盖状态、安全和审计。\n后续重点：进入真实联调、权限配置、日志接入和业务验收。";
+    }
+
+    function buildUserFacingAnswer(versionId, run) {
+      const missing = run.validation.missing_fields.map(label).join("、") || "无";
+      const docsCount = (run.docs?.length || 0) + (run.remoteDocs?.length || 0);
+      const taskName = taskLabel(run.draft.task_type);
+      const fields = compactFields(run.draft.fields);
+      const hasToolResult = run.tools?.some((item) => item.status !== "skipped");
+      const fieldLines = formatKnownFields(fields);
+
+      if (run.validation.status === "out_of_scope") {
+        return {
+          summary: "这条消息不是当前 API 接入 Agent 的处理范围。",
+          detail: "我先做范围判断：这不是 API 接入支持问题，所以不会把它继续送入文档检索、工具校验或任务状态流转。\n当前 Agent 只处理：签名失败、回调异常、字段/错误码问答、凭证请求、新 API 接入和单量分析。\n请换成 API 接入相关问题后继续。"
+        };
+      }
+      if (run.validation.status === "blocked") {
+        return {
+          summary: "这个请求触发了安全边界，我不能继续检索或排查。",
+          detail: "我先保护输入安全：这条消息里包含 appsecret 或类似敏感凭证，不能继续进入普通模型上下文、文档检索、日志记录或工具链路。\n处理方案：请提问方删除敏感值，只保留 appid、接口路径、错误码、请求时间、脱敏后的签名前字符串，再重新提交。\n在敏感值移除前，我不会继续排查。"
+        };
+      }
+      if (versionId === "v5" && hasToolResult) {
+        return {
+          summary: "我已经用工具做了确定性检查，并返回了可验证结果。",
+          detail: summarizeTools(run.tools)
+        };
+      }
+      if (versionId === "v6" && run.validation.status === "executable") {
+        return {
+          summary: "我会按观察、判断、行动、复盘的闭环处理这条任务。",
+          detail: `处理方案：\n1. 先确认任务类型是「${taskName}」。\n2. 再确认字段是否满足继续处理：${fieldLines || "当前没有抽取到关键字段"}。\n3. 如果字段满足，就检索资料、选择 Skill、必要时调用工具。\n4. 最后把观察结果、行动结果和最终建议汇总给用户。\n这会把“查什么、为什么查、查到什么、下一步怎么答”串成一条连续链路。`
+        };
+      }
+      if (versionId === "v7") {
+        return {
+          summary: run.validation.status === "blocked" ? "我会先保护敏感信息，不继续排查。" : `我会在处理「${taskName}」的同时记录状态和审计信息。`,
+          detail: run.validation.status === "blocked"
+            ? "输入中包含 appsecret 这类敏感凭证，我不会把它继续带入检索、模型上下文或普通日志。请移除敏感值后再提交。"
+            : `处理方案：\n1. 记录当前任务状态：${run.session?.taskState || run.validation.status}。\n2. 只保存脱敏摘要、任务类型、处理节点和必要证据。\n3. 如果触发安全边界，就停止检索和工具调用；如果需要人工确认，就把任务状态标记为等待人工。\n这样后续能审计、能接管，也能解释为什么某一步没有继续执行。`
+        };
+      }
+      if (run.validation.status === "needs_clarification") {
+        return {
+          summary: `我先判断这是「${taskName}」，但还不能完成排查。`,
+          detail: `我先给出当前处理结论：这是「${taskName}」，但现在不能直接定位根因。\n原因是关键上下文还不够，当前缺少：${missing}。\n处理方案：请提问方补充这些字段；系统收到后会合并到当前会话任务里，再继续做字段校验、资料检索或工具校验。\n注意：不要发送 appsecret、密钥或完整敏感凭证。`
+        };
+      }
+      if (versionId === "v3" && run.validation.status === "executable") {
+        return {
+          summary: `我已判断这是「${taskName}」，并会进入固定处理流程。`,
+          detail: run.skill
+            ? `处理方案：当前任务会进入 ${run.skill}。\n我会按固定 SOP 排查，不再临场决定步骤：先确认输入范围，再检查必填字段，然后按业务步骤推进，最后输出可复核结果。`
+            : "当前没有命中可用 SOP，需要人工分流或补充对应 Skill 后再继续。"
+        };
+      }
+      if (versionId === "v4" && run.validation.status === "executable") {
+        return {
+          summary: docsCount > 0 ? `我已找到「${taskName}」的资料依据。` : `我识别到了「${taskName}」，但资料依据不足。`,
+          detail: docsCount > 0
+            ? `处理方案：我会优先引用已命中的 ${docsCount} 条资料，再给排查建议。\n当前不会只凭经验解释字段或错误码，而是先说明答案来源，再给结论和下一步动作。`
+            : "本地导出包和在线索引暂时没有足够命中，当前不能把推测包装成确定结论。"
+        };
+      }
+      if (run.draft.task_type === "signature_debug" && run.validation.status === "executable") {
+        return {
+          summary: "我会先按签名失败的排查路径处理这条问题。",
+          detail: `我先给出排查方案：\n1. 已识别为「签名失败排查」，当前字段基本齐全：${fieldLines}。\n2. 先核对 appid 是否属于正确环境，避免测试环境和生产环境混用。\n3. 再核对签名前字符串：字段是否完整、参数顺序是否符合约定、是否使用 UTF-8 编码、特殊字符是否做了一致处理。\n4. 继续核对 timestamp 是否过期、错误码 SIGN_INVALID 是否对应签名校验失败。\n5. 如果要给出根因，下一步需要用工具对签名前字符串顺序和日志记录做确定性校验。`
+        };
+      }
+      if (run.draft.task_type === "callback_debug" && run.validation.status === "executable") {
+        return {
+          summary: "我会按回调异常的排查路径处理这条问题。",
+          detail: `处理方案：\n1. 先确认订单是否真的触发了「${fields.trigger_action || "对应动作"}」。\n2. 再检查回调地址是否可访问：${fields.callback_url || "未提供"}。\n3. 检查服务端是否发起回调请求，以及对方是否返回 2xx。\n4. 如果失败，继续看是否进入重试队列、是否有超时或证书问题。\n5. 当前已知字段：${fieldLines || "暂无关键字段"}。`
+        };
+      }
+      if (run.draft.task_type === "api_field_qa" && run.validation.status === "executable") {
+        return {
+          summary: "我会先按字段问答处理，但答案必须绑定资料依据。",
+          detail: `处理方案：\n1. 先确认用户问的是字段：${fields.field_name || "未抽取"}。\n2. 再去 API 文档、FAQ 或 llm-wiki 中查字段定义、返回位置、示例和注意事项。\n3. 命中文档后，再回答字段含义和使用差异。\n4. 如果资料没有命中，我不会直接编一个字段解释，而会提示依据不足。`
+        };
+      }
+      if (docsCount > 0) {
+        return {
+          summary: `我已判断这是「${taskName}」，并找到了可参考资料。`,
+          detail: `处理方案：当前字段满足继续处理条件，已抽取字段 ${Object.keys(fields).length} 个，资料命中 ${docsCount} 条。\n我会先核对已知字段：${fieldLines || "暂无关键字段"}。\n再结合资料给出排查方向；如果涉及确定性判断，再进入工具校验。`
+        };
+      }
+      return {
+        summary: `我已判断这是「${taskName}」，当前可以继续处理。`,
+        detail: `处理方案：当前字段满足继续处理条件，已抽取字段 ${Object.keys(fields).length} 个。\n我可以先给排查方向，但还没有足够资料或工具证据支撑最终结论。\n下一步应补齐依据或校验结果，再把建议升级成可执行结论。`
+      };
+    }
+
+    function formatKnownFields(fields) {
+      const entries = Object.entries(fields).filter(([, value]) => value);
+      if (!entries.length) return "";
+      return entries.slice(0, 6).map(([field, value]) => `${label(field)}=${value}`).join("；");
+    }
+
+    function buildProblemExposure(versionId, run) {
+      const missing = run.validation.missing_fields.map(label).join("、") || "无";
+      const taskState = run.session?.taskState || run.validation.status;
+      const docsHit = (run.docs?.length || 0) + (run.remoteDocs?.length || 0);
+      const toolHit = run.tools?.some((item) => item.status !== "skipped");
+      if (run.validation.status === "blocked" && versionId !== "v7") {
+        return {
+          problem: "这次输入包含敏感凭证，回答不能继续进入普通检索、模型上下文或普通日志。",
+          reason: "原因是安全边界不能只靠提示词提醒，需要有脱敏、阻断、审计和人工闸门来治理。解决思路是进入状态与审计层。"
+        };
+      }
+      const byVersion = {
+        v0: {
+          problem: "能给一段回答，但无法证明这是不是当前 Agent 应该处理的 API 问题。",
+          reason: "需要先把黑盒回答拆成可解释的范围判断、意图识别和字段草稿。"
+        },
+        v1: {
+          problem: run.validation.status === "needs_clarification"
+            ? `我能判断这是签名排查，但只能基于当前抽取结果告诉你“信息不足”。缺哪些字段、哪些字段会阻塞继续排查，还没有形成稳定清单。当前缺口：${missing}。`
+            : run.draft.task_type === "signature_debug"
+              ? "字段已经足够做初步排查，但 V1 只能给方向，不能确定性验证签名前字符串顺序、timestamp 或错误码根因。"
+              : run.draft.task_type === "api_field_qa"
+                ? "已经知道这是字段问答，但回答还没有强制绑定文档依据，容易变成经验式解释。"
+                : run.draft.task_type === "callback_debug"
+                  ? "已经知道这是回调异常，但还没有进入固定 SOP，处理步骤不够稳定。"
+            : "我能识别任务和字段，也能找到资料，但还没有一个独立的字段校验闸门来判断这条任务是否真的可以执行。",
+          reason: run.validation.status === "needs_clarification"
+            ? "原因是 V1 主要展示意图识别和字段抽取，还没有把每类任务的必填信息固化为 Schema。解决思路是增加一层字段清单校验，让系统先判断哪些信息会阻塞继续处理。"
+            : run.draft.task_type === "signature_debug"
+              ? "原因是 V1 只把问题识别成结构化草稿，不调用确定性工具。解决思路是把签名排序、时间戳、错误码这类检查交给工具层验证。"
+              : run.draft.task_type === "api_field_qa"
+                ? "原因是字段解释必须从知识库拿依据。解决思路是在回答前加入文档检索，把本地导出包和 llm-wiki 依据带回来。"
+                : run.draft.task_type === "callback_debug"
+                  ? "原因是回调排查需要稳定步骤。解决思路是按 task_type 路由到对应 Skill / SOP。"
+                  : "原因是 V1 主要展示意图识别和字段抽取，还没有把每类任务的必填信息固化为 Schema。解决思路是增加一层字段清单校验，让系统先判断哪些信息会阻塞继续处理。"
+        },
+        v2: {
+          problem: run.validation.status === "executable"
+            ? "字段已经放行，但接下来按什么业务步骤排查，还缺少固定处理手册。"
+            : `Schema 能知道缺什么，但当前还只是停留在字段校验，尚未进入固定业务处理步骤。当前状态是 ${taskState}。`,
+          reason: "原因是 V2 解决的是字段完整性，不负责定义业务 SOP。解决思路是把 task_type 路由到对应 Skill，让每类任务按固定步骤处理。"
+        },
+        v3: {
+          problem: "已经能命中 Skill / SOP，但回答前还没有强制带文档依据。",
+          reason: "原因是 Skill 解决的是流程稳定性，不保证回答一定有资料来源。解决思路是在回答前加入文档检索，把本地导出包和 llm-wiki 依据带回来。"
+        },
+        v4: {
+          problem: docsHit ? "已经找到资料依据，但签名顺序、时间戳这类问题仍需要确定性工具验证。" : "检索没有命中足够依据，下一步仍缺少确定性校验能力。",
+          reason: "原因是 RAG 负责找资料，不负责执行确定性检查。解决思路是在字段满足后调用工具，把解释变成可验证结果。"
+        },
+        v5: {
+          problem: toolHit ? "工具能给结果，但识别、检索、工具和回答还没有形成统一闭环。" : "工具没有被放行或没有结果，链路仍缺少观察与决策闭环。",
+          reason: "原因是工具调用只是一个动作，还需要把观察、决策、行动和回答串起来。解决思路是引入 Agent Loop。"
+        },
+        v6: {
+          problem: "Agent Loop 能跑通，但企业演示还需要看见状态审计、脱敏和人工闸门。",
+          reason: "原因是闭环执行不等于企业可治理。解决思路是加入 Task State、Audit、脱敏、安全阻断和人工闸门。"
+        },
+        v7: {
+          problem: "最终版本已经覆盖状态、安全和审计，后续问题会进入真实系统接入。",
+          reason: "可以开始讲工程落地和真实数据联调。"
+        }
+      };
+      return byVersion[versionId] || byVersion.v1;
+    }
+
+    function buildUpgradeVerification(previousVersionId, versionId, run) {
+      const missing = run.validation.missing_fields.map(label).join("、") || "无";
+      const taskState = run.session?.taskState || run.validation.status;
+      const previousExposure = buildProblemExposure(previousVersionId, run);
+      const base = {
+        before: previousExposure.problem,
+        state: `${taskState}；${buildVersionOutcome(versionId, run)}`
+      };
+
+      if (versionId === "v2") {
+        return {
+          ...base,
+          evidence: run.validation.status === "needs_clarification"
+            ? `Schema 已明确阻塞字段：${missing}。这解决的是“只知道缺信息，但说不清缺什么”的问题。`
+            : `Schema 校验结果为 ${run.validation.status}，说明任务是否可继续已经由字段清单决定。`
+        };
+      }
+      if (versionId === "v3") {
+        return {
+          ...base,
+          evidence: run.skill ? `Skill Router 命中 ${run.skill}，同一任务不再靠模型临场决定处理步骤。` : "没有命中 Skill，页面明确给出需要人工分流或补充 Skill。"
+        };
+      }
+      if (versionId === "v4") {
+        const docs = run.docs?.length ? `本地导出包命中 ${run.docs.length} 条` : run.remoteDocs?.length ? `GitHub llm-wiki 命中 ${run.remoteDocs.length} 条` : "本地和在线索引暂未命中";
+        return { ...base, evidence: `${docs}，回答链路能展示依据来源或明确未命中。` };
+      }
+      if (versionId === "v5") {
+        const tools = run.validation.status === "executable" && run.tools?.length
+          ? run.tools.map((item) => `${item.name}:${item.status}`).join("、")
+          : "字段未满足或触发边界，所以工具没有被放行";
+        return { ...base, evidence: `工具调用证据：${tools}。这解决的是“只靠文档解释，无法确定性验证”的问题。` };
+      }
+      if (versionId === "v6") {
+        return { ...base, evidence: "页面按 Observe → Think → Act → Observe → Answer 展示同一任务的闭环处理。分散模块被串成连续 Agent 行为。" };
+      }
+      if (versionId === "v7") {
+        return { ...base, evidence: `Task State=${taskState}，Guard=${run.guard}，敏感输入会脱敏或阻断，审计记录有明确边界。` };
+      }
+      if (versionId === "v1") {
+        return { ...base, evidence: `Input Gate 输出 task_type=${run.draft.task_type}，置信度 ${Math.round(run.draft.confidence * 100)}%，字段草稿 ${Object.keys(compactFields(run.draft.fields)).length} 个。` };
+      }
+      return { ...base, evidence: buildVersionOutcome(versionId, run) };
+    }
+
+    function buildVersionStoryTrace(versionId, draft, validation, session, docs, remoteDocs, remotePending, tools, skill) {
+      const story = versionStories[versionId] || versionStories.v1;
+      const verification = buildUpgradeVerification(previousVersionFor(versionId), versionId, {
+        draft,
+        validation,
+        session,
+        docs,
+        remoteDocs,
+        tools,
+        skill,
+        needsRemoteWiki: remotePending,
+        guard: draft.security_flags.includes("contains_appsecret") ? "Blocked" : versionId === "v7" ? "Strict" : versionId === "v0" ? "Off" : "On"
+      });
+      return [
+        card("卡点诊断", story.previous),
+        card("升级能力", story.solve),
+        card("验证证据", verification.evidence)
+      ];
+    }
+
+    function previousVersionFor(versionId) {
+      const index = versions.findIndex((item) => item.id === versionId);
+      return index > 0 ? versions[index - 1].id : versionId;
+    }
+
+    function buildVersionOutcome(versionId, run) {
+      const missing = run.validation.missing_fields.map(label).join("、") || "无";
+      const fieldCount = Object.keys(compactFields(run.draft.fields)).length;
+      const taskName = taskLabel(run.draft.task_type);
+      const taskState = run.session?.taskState || run.validation.status;
+      const evidenceText = run.docs?.length
+        ? `本地导出包命中 ${run.docs.length} 条`
+        : run.remoteDocs?.length
+          ? `GitHub llm-wiki 命中 ${run.remoteDocs.length} 条`
+          : run.needsRemoteWiki
+            ? "本地未命中，准备查询 GitHub llm-wiki"
+            : "暂无文档依据";
+      const toolText = run.tools?.length
+        ? run.tools.map((item) => `${item.name}:${item.status}`).join("、")
+        : "暂未调用工具";
+      const statusText = run.validation.status === "out_of_scope"
+        ? "范围外输入，停在业务门控。"
+        : run.validation.status === "blocked"
+          ? "触发安全边界，停止检索和工具调用。"
+          : run.validation.status === "needs_clarification"
+            ? `任务是「${taskName}」，还缺：${missing}。`
+            : `任务是「${taskName}」，字段已满足继续处理条件。`;
+
+      if (versionId === "v0") return `黑盒直接回答；${statusText}`;
+      if (versionId === "v1") return `${statusText} 已抽取 ${fieldCount} 个字段，会话状态写成 ${taskState}。`;
+      if (versionId === "v2") return `${statusText} Schema 只追问阻塞字段：${missing}。`;
+      if (versionId === "v3") return `${statusText} Skill 路由结果：${run.skill || "未命中 Skill / 等待人工分流"}。`;
+      if (versionId === "v4") return `${statusText} 检索路径：${evidenceText}。`;
+      if (versionId === "v5") return `${statusText} 工具层：${run.validation.status === "executable" ? toolText : "未放行，不调用工具"}。`;
+      if (versionId === "v6") return `${statusText} Loop 会按 Observe → Think → Act → Observe → Answer 串起本轮处理。`;
+      if (versionId === "v7") return `${statusText} Task State=${taskState}，审计记录会脱敏保存。`;
+      return statusText;
+    }
+
+    function findConversationHistoryHit(message) {
+      const normalized = normalizeMessage(message);
+      if (!normalized) return null;
+      const userMessages = state.chatMessages
+        .filter((item) => item.role === "user")
+        .map((item, index) => ({ ...item, index }))
+        .reverse();
+      for (const item of userMessages) {
+        const previous = normalizeMessage(item.text);
+        if (!previous) continue;
+        if (previous === normalized) {
+          return {
+            type: "exact",
+            similarity: 1,
+            previous: item
+          };
+        }
+        const similarity = textSimilarity(normalized, previous);
+        if (similarity >= 0.86) {
+          return {
+            type: "similar",
+            similarity,
+            previous: item
+          };
+        }
+      }
+      return null;
+    }
+
+    function buildHistoryReply(historyHit) {
+      const activeTask = state.conversation.activeTask;
+      const lastRun = state.lastRun;
+      const taskName = activeTask ? taskLabel(activeTask.task_type) : lastRun ? taskLabel(lastRun.draft.task_type) : "上一轮任务";
+      const pending = activeTask?.pending_fields?.length
+        ? activeTask.pending_fields.map(label).join("、")
+        : lastRun?.validation?.missing_fields?.length
+          ? lastRun.validation.missing_fields.map(label).join("、")
+          : "";
+      const exactText = historyHit.type === "exact" ? "这条问题刚才已经问过。" : `这条问题和上一条相似度 ${Math.round(historyHit.similarity * 100)}%。`;
+      const text = pending
+        ? `${exactText}\n我不再重新走规则识别，直接沿用会话状态：当前仍是「${taskName}」，还缺少：${pending}。\n请补充这些字段后我再继续。`
+        : `${exactText}\n我不再重新走规则识别，直接沿用上次结果：当前任务是「${taskName}」。如果要继续，请补充新的字段或换一个问题。`;
+      return {
+        text,
+        briefTitle: "沿用会话历史",
+        brief: exactText,
+        sections: [
+          { type: "answer", title: "Agent 回答", body: pending ? `这还是同一个「${taskName}」任务，我不会重复给一段相同排查话术。当前需要你补充：${pending}。` : `这条问题已经处理过，我沿用上次识别结果：当前任务是「${taskName}」。` },
+          { type: "assessment", title: "结果评估", body: "这次命中了当前会话历史，所以不重新走规则识别。它演示的是短期会话状态，不是长期记忆。" },
+          { type: "improve", title: "改进建议", body: pending ? "继续补充缺失字段后，Agent 会把新字段合并进当前任务，再推进后续校验和检索。" : "如果你想开始新任务，请点击另一个快捷业务问题；如果想延续当前任务，请补充新的业务字段。" }
+        ],
+        meta: [
+          { label: "历史命中", level: "info" },
+          { label: historyHit.type === "exact" ? "完全重复" : "相似问题", level: "good" },
+          { label: pending ? "waiting_for_user" : "reuse_result", level: pending ? "warn" : "good" }
+        ]
+      };
+    }
+
+    function normalizeMessage(text) {
+      return String(text || "")
+        .toLowerCase()
+        .replace(/\s+/g, "")
+        .replace(/[，。；：、,.!?！？"'“”‘’()[\]{}]/g, "");
+    }
+
     function render(options = { showToast: false }) {
       const renderSeq = ++state.renderSeq;
       const version = versions.find((item) => item.id === state.version);
-      const message = messageInput.value;
+      if (!state.lastSubmittedMessage) state.lastSubmittedMessage = messageInput.value;
+      const message = state.lastSubmittedMessage;
       const run = runVersion(version.id, message);
+      state.recommendedVersion = state.chatMessages.some((item) => item.role === "user") ? recommendedVersionForRun(version.id, run) : null;
       renderVersionButtons();
+      renderExampleButtons();
 
       scenarioButtons.forEach((button) => {
         button.setAttribute("aria-selected", String(button.dataset.scenario === state.scenario));
       });
 
       versionName.textContent = `${version.id.toUpperCase()} · ${version.name}`;
-      versionSummary.textContent = version.summary;
+      versionSummary.textContent = versionStorySummary(version.id, version.summary);
       commandText.textContent = `python app.py --version ${version.id} --message "${message.slice(0, 24)}${message.length > 24 ? "..." : ""}"`;
 
       document.getElementById("metricLevel").textContent = version.id.toUpperCase();
@@ -1895,6 +4707,10 @@
       terminalTitle.textContent = run.terminalTitle;
       terminalMeta.textContent = `status: ${run.status.toLowerCase()}`;
       terminalOutput.innerHTML = highlight(run.finalOutput);
+      renderRecognitionBoard(run, version.id);
+      renderSessionBoard(run, version.id);
+      renderSignalFlow(run, version.id);
+      renderLiveState(run);
 
       if (options.showToast) showToast("已根据当前输入重新运行");
       if (run.needsRemoteWiki) {
@@ -1904,6 +4720,13 @@
           }
         });
       }
+
+      if (options.commitTurn) {
+        commitConversationTurn(message, run);
+      }
+
+      state.lastRun = run;
+      return run;
     }
 
     function pipeClass(run, index) {
@@ -1922,8 +4745,53 @@
       return "写回运行状态";
     }
 
-    messageInput.value = scenarios.complete;
+    function upgradeToVersion(nextVersionId, source = "manual") {
+      if (!nextVersionId || nextVersionId === state.version) return null;
+      const previousVersion = state.version;
+      state.version = nextVersionId;
+      const run = render({ showToast: true });
+      if (state.chatMessages.some((item) => item.role === "user")) {
+        const version = versions.find((item) => item.id === nextVersionId);
+        appendChatMessage({ role: "agent", ...buildVersionTransitionReply(run, version, previousVersion) });
+        renderVersionButtons();
+        renderChatLog();
+      }
+      showToast(source === "chat" ? "已用下一版验证同一任务" : "已切换并验证当前任务");
+      return run;
+    }
+
+    exampleGrid.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-example]");
+      if (!button) return;
+      const example = demoExamples.find((item) => item.id === button.dataset.example);
+      if (!example) return;
+      state.scenario = example.id;
+      state.lastSubmittedMessage = example.message;
+      messageInput.value = example.message;
+      const historyHit = findConversationHistoryHit(example.message);
+      appendChatMessage({ role: "user", text: example.message });
+      if (historyHit) {
+        appendChatMessage({ role: "agent", ...buildHistoryReply(historyHit) });
+        showToast("已命中会话历史");
+        return;
+      }
+      const run = render({ showToast: true, commitTurn: true });
+      appendChatMessage({ role: "agent", ...buildAgentReply(run) });
+    });
+
+    chatLog.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-upgrade-version]");
+      if (!button) return;
+      upgradeToVersion(button.dataset.upgradeVersion, "chat");
+    });
+
+    const initialExample = demoExamples.find((item) => item.id === "complete") || demoExamples[0];
+    state.scenario = initialExample.id;
+    messageInput.value = initialExample.message;
+    state.lastSubmittedMessage = messageInput.value;
     renderVersionButtons();
+    renderExampleButtons();
+    renderChatLog();
     render();
   </script>
 </body>
