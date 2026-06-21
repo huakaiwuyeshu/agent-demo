@@ -1,0 +1,7325 @@
+{
+  "name": "api-cancellation-analytics",
+  "description": "API渠道撤单分析数据：按日期/渠道/游戏聚合的撤单统计",
+  "generated_at": "2026-06-20",
+  "data_range": {
+    "start": "2025-01-28",
+    "end": "2025-02-06",
+    "days": 10
+  },
+  "summary": {
+    "total_cancellations": 17404,
+    "channels": {
+      "GG": 12983,
+      "WFgame": 4421
+    },
+    "games_top10": {
+      "穿越火线": 10247,
+      "CSGO": 1961,
+      "无畏契约": 1289,
+      "绝地求生": 908,
+      "英雄联盟": 560,
+      "逆战": 483,
+      "侠盗猎车手Online": 373,
+      "Nba2Kol2": 344,
+      "Steam游戏": 334,
+      "QQ飞车": 143
+    },
+    "reasons_top10": {
+      "账号描述与实际不符": 5375,
+      "无法登录(登录不上)": 4040,
+      "不想玩了或其它理由不玩了": 2408,
+      "安装不了上号器": 1115,
+      "账号冻结": 883,
+      "ZD主动防御": 688,
+      "不输入账号密码": 512,
+      "使用外挂 By 上号器": 264,
+      "号被封了": 237,
+      "上号器自动投诉 (人脸识别)": 199
+    }
+  },
+  "youyou_daily_rate": [
+    {
+      "date": "2025-08-13",
+      "orders": 1,
+      "cancels": 1,
+      "rate": 100.0
+    },
+    {
+      "date": "2025-08-14",
+      "orders": 3,
+      "cancels": 2,
+      "rate": 66.7
+    },
+    {
+      "date": "2025-08-15",
+      "orders": 14,
+      "cancels": 13,
+      "rate": 92.9
+    },
+    {
+      "date": "2025-08-17",
+      "orders": 2,
+      "cancels": 2,
+      "rate": 100.0
+    },
+    {
+      "date": "2025-08-18",
+      "orders": 6,
+      "cancels": 5,
+      "rate": 83.3
+    },
+    {
+      "date": "2025-08-19",
+      "orders": 24,
+      "cancels": 23,
+      "rate": 95.8
+    },
+    {
+      "date": "2025-08-20",
+      "orders": 7,
+      "cancels": 7,
+      "rate": 100.0
+    },
+    {
+      "date": "2025-08-21",
+      "orders": 19,
+      "cancels": 18,
+      "rate": 94.7
+    },
+    {
+      "date": "2025-08-22",
+      "orders": 20,
+      "cancels": 18,
+      "rate": 90.0
+    },
+    {
+      "date": "2025-08-24",
+      "orders": 2,
+      "cancels": 2,
+      "rate": 100.0
+    },
+    {
+      "date": "2025-08-25",
+      "orders": 28,
+      "cancels": 27,
+      "rate": 96.4
+    },
+    {
+      "date": "2025-08-26",
+      "orders": 15,
+      "cancels": 9,
+      "rate": 60.0
+    },
+    {
+      "date": "2025-08-27",
+      "orders": 34,
+      "cancels": 33,
+      "rate": 97.1
+    },
+    {
+      "date": "2025-08-28",
+      "orders": 31,
+      "cancels": 28,
+      "rate": 90.3
+    },
+    {
+      "date": "2025-08-29",
+      "orders": 11,
+      "cancels": 10,
+      "rate": 90.9
+    },
+    {
+      "date": "2025-08-30",
+      "orders": 1,
+      "cancels": 1,
+      "rate": 100.0
+    },
+    {
+      "date": "2025-09-01",
+      "orders": 5,
+      "cancels": 4,
+      "rate": 80.0
+    },
+    {
+      "date": "2025-09-02",
+      "orders": 13,
+      "cancels": 7,
+      "rate": 53.8
+    },
+    {
+      "date": "2025-09-03",
+      "orders": 45,
+      "cancels": 28,
+      "rate": 62.2
+    },
+    {
+      "date": "2025-09-04",
+      "orders": 65,
+      "cancels": 38,
+      "rate": 58.5
+    }
+  ],
+  "daily_by_channel_game": [
+    {
+      "date": "2025-01-28",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 61,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 18
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 16
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 24,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 12
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 7
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "不输入账号密码",
+          "count": 3
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 62,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 21
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 17
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 645,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 229
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 134
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 97
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 16,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 7
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 3
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 38,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 11
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 7
+        },
+        {
+          "reason": "账号冻结",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "Apex 英雄（steam版）",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 51,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 29
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 8
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "Nba2Kol2",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "无法下载上号器",
+          "count": 1
+        },
+        {
+          "reason": "信誉积分不足",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "QQ飞车",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 18,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 8
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        },
+        {
+          "reason": "TP检测16-2/36-2",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "Valorant",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "使命召唤19：现代战争2",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "使命召唤20：现代战争3",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "使命召唤21：黑色行动6",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 39,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 26
+        },
+        {
+          "reason": "上号器自动投诉（自动下架）",
+          "count": 3
+        },
+        {
+          "reason": "号被封了",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "反恐精英OL",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "只狼：影逝二度",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "彩虹6号",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "战地风云1",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "账号冻结",
+          "count": 1
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "暗区突围(PC国际服)",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线 4",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        },
+        {
+          "reason": "设备锁",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "森林The Forest",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "求生之路2(steam版)",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 2
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "火线精英",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "猛兽派对",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "生死狙击",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 33,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 9
+        },
+        {
+          "reason": "游戏维护",
+          "count": 5
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 61,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 20
+        },
+        {
+          "reason": "使用外挂 By 上号器",
+          "count": 9
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 29,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 10
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 4
+        },
+        {
+          "reason": "上号器自动投诉（封号）",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-28",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "信誉积分不足",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 103,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 34
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 21
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 19
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 31,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 13
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 10
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 19,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 9
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 111,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 26
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 25
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 20
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 901,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 332
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 169
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 164
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 39,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 17
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 10
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 25,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        },
+        {
+          "reason": "账号冻结",
+          "count": 5
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "Apex 英雄（steam版）",
+      "cancel_count": 11,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 5
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 104,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 49
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 18
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "Nba2Kol2",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "QQ飞车",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 4
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 30,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 15
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 7
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "Valorant",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "云顶之弈",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "人渣",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "人类一败涂地",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "使命召唤21：黑色行动6",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "信用分不足",
+          "count": 1
+        },
+        {
+          "reason": "账号禁言",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 36,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 16
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 4
+        },
+        {
+          "reason": "上号器自动投诉（自动下架）",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "僵尸世界大战：劫后余生",
+      "cancel_count": 14,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 13
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "刺客信条：奥德赛",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "坦克世界",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "不输入账号密码",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "怪物猎人世界",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "恐惧饥饿Dread Hunge",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "战地风云1",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法下载上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 17,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "账号冻结",
+          "count": 3
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "木筏Raft",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "梦三国",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "求生之路2(steam版)",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "火线精英",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "猛兽派对",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "信用分不足",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "盗贼之海",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 48,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 22
+        },
+        {
+          "reason": "使用外挂 By 上号器",
+          "count": 7
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "穿越火线：高清竞技大区",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "自己要玩",
+          "count": 1
+        },
+        {
+          "reason": "设备锁",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 84,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 45
+        },
+        {
+          "reason": "号被封了",
+          "count": 9
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 43,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 15
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 7
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "游戏维护",
+          "count": 1
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "骗子酒馆",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "不输入账号密码",
+          "count": 1
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-29",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Wegame版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 124,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 49
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 38
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 36,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 19
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 13
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 11,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "不输入账号密码",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 104,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 24
+        },
+        {
+          "reason": "账号冻结",
+          "count": 20
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 19
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 1007,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 395
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 183
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 151
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 31,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 12
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 7
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 39,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 12
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 12
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 96,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 44
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 11
+        },
+        {
+          "reason": "5E登录失败",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "QQ飞车",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 37,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 16
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 8
+        },
+        {
+          "reason": "号被封了",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "Valorant",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法下载上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "严阵以待",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 1
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "人渣",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 37,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 26
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "双人成行",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 4
+        },
+        {
+          "reason": "steam客服已冻结该帐户",
+          "count": 1
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "反恐精英OL",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "只狼：影逝二度",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "地下城与勇士",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "坦克世界",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "Uplay无法登陆",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 13,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "账号冻结",
+          "count": 4
+        },
+        {
+          "reason": "号被封了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "完蛋！我被美女包围了！",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号触发人脸验证",
+          "count": 1
+        },
+        {
+          "reason": "无法登录（wegame错误码：282）",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "彩虹6号",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "恐惧饥饿Dread Hunge",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号禁赛",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "暗区突围(PC国际服)",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线 4",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        },
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录（wegame错误码：282）",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "求生之路2(steam版)",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "火线精英",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "安装不了上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "猛兽派对",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 32,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 8
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 6
+        },
+        {
+          "reason": "段位不符",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "穿越火线：高清竞技大区",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "其他原因-游戏维护",
+          "count": 1
+        },
+        {
+          "reason": "自己要玩",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 58,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 21
+        },
+        {
+          "reason": "使用外挂 By 上号器",
+          "count": 9
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "艾尔登法环",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 19,
+      "top_reasons": [
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 4
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "逃生：试炼",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "逃离后室",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "黎明杀机",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-30",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "因财产密码",
+          "count": 1
+        },
+        {
+          "reason": "上号器自动投诉（自动下架）",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 136,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 34
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 28
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 20
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 40,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 21
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 9
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 134,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 35
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 28
+        },
+        {
+          "reason": "账号冻结",
+          "count": 25
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 931,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 370
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 191
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 124
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 26,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 11
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 5
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 37,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 14
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 7
+        },
+        {
+          "reason": "账号冻结",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "Apex 英雄（steam版）",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 88,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 30
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 17
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "NBA2KOL",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "上号器自动投诉（账号密码错误）",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "Nba2Kol2",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 33,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 13
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 5
+        },
+        {
+          "reason": "一直云检测",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "云顶之弈",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "人渣",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "人类一败涂地",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "游戏账号未实名认证/未成年",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "使命召唤19：现代战争2",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "使命召唤20：现代战争3",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 51,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 40
+        },
+        {
+          "reason": "steam客服已冻结该帐户",
+          "count": 3
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "僵尸世界大战：劫后余生",
+      "cancel_count": 9,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 8
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "双人成行",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号禁言",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "设备锁",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "完蛋！我被美女包围了！",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "彩虹6号",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "恐鬼症",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "文明6",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "账号冻结",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 17,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 7
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "暗区突围(PC国际服)",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线 4",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "森林The Forest",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "森林之子",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "柯恩币不足",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "求生之路2(steam版)",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 2
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "猛兽派对",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "盗贼之海",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 69,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 18
+        },
+        {
+          "reason": "段位不符",
+          "count": 9
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "糖豆人",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 77,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 33
+        },
+        {
+          "reason": "号被封了",
+          "count": 12
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "胡闹厨房：全都好吃",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "安全问题错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "致命公司",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "游戏维护",
+          "count": 2
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        },
+        {
+          "reason": "无法下载上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 27,
+      "top_reasons": [
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 7
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "账号禁言",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "逃离后室",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "设备锁",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 2
+        },
+        {
+          "reason": "提示有外挂残留",
+          "count": 1
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "链在一起",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "麦克风不能用",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "黎明杀机",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 3
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "因财产密码",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-01-31",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Wegame版",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "上号器自动投诉（账号密码错误）",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 128,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 44
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 32
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 17
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 28,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 13
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        },
+        {
+          "reason": "账号冻结",
+          "count": 1
+        },
+        {
+          "reason": "上号器自动投诉（账号密码错误）",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 119,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 38
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 32
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 14
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 1084,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 456
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 182
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 172
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 27,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 16
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 6
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 42,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 12
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 8
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 8
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 89,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 38
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 19
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "Nba2Kol2",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "QQ飞车",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 21,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 11
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 6
+        },
+        {
+          "reason": "上号器自动投诉（自动下架）",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "YY号码",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 5
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "三角洲行动(pc)",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "人渣",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "使命召唤21：黑色行动6",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 42,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 23
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "僵尸世界大战：劫后余生",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "刺客信条4：黑旗",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "刺客信条：奥德赛",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "双人成行",
+      "cancel_count": 9,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 7
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "只狼：影逝二度",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "吞噬Devour",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "其他原因-游戏维护",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "大富翁10",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 4
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "幻兽帕鲁",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "怪物猎人世界",
+      "cancel_count": 26,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 8
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 8
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "揍击派对",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 11,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 1
+        },
+        {
+          "reason": "上号器自动投诉（账号密码错误）",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "木筏Raft",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线 4",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 2
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "森林之子",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "求生之路2(steam版)",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "消逝的光芒",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "火线精英",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "猛兽派对",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "生死狙击",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 46,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 11
+        },
+        {
+          "reason": "段位不符",
+          "count": 9
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 120,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 54
+        },
+        {
+          "reason": "使用外挂 By 上号器",
+          "count": 19
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 13
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "艾尔登法环",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 29,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 6
+        },
+        {
+          "reason": "账号禁言",
+          "count": 5
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "逃离后室",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 6
+        },
+        {
+          "reason": "账号触发人脸验证",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 2
+        },
+        {
+          "reason": "一直云检测",
+          "count": 2
+        },
+        {
+          "reason": "游戏账号未实名认证/未成年",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "骗子酒馆",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-01",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Wegame版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "上号器自动投诉（账号密码错误）",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 116,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 44
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 30
+        },
+        {
+          "reason": "账号冻结",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 40,
+      "top_reasons": [
+        {
+          "reason": "安装不了上号器",
+          "count": 13
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 10
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 11,
+      "top_reasons": [
+        {
+          "reason": "不输入账号密码",
+          "count": 4
+        },
+        {
+          "reason": "自己的号要撤销",
+          "count": 2
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 120,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 38
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 26
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 26
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 1193,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 557
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 220
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 140
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 32,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 7
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 50,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 14
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 13
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 80,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 31
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 13
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "NBA2KOL",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "上号器自动投诉（自动下架）",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "QQ飞车",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 44,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 16
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 11
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 40,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 30
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 6
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "全面战争：三国",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "安装不了上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "双人成行",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "steam客服已冻结该帐户",
+          "count": 5
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 2
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "喋血复仇",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "柯恩币不足",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "城市：天际线",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "完蛋！我被美女包围了！",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "揍击派对",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 29,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 9
+        },
+        {
+          "reason": "号被封了",
+          "count": 5
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "暗区突围(PC国际服)",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线 4",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 3
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "森林之子",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 1
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "欧洲卡车模拟2",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "求生之路2(steam版)",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "深入后室",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "会员时间到期",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "火线精英",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "生化危机8",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 84,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 27
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 12
+        },
+        {
+          "reason": "段位不符",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "穿越火线：高清竞技大区",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 116,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 53
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 13
+        },
+        {
+          "reason": "使用外挂 By 上号器",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "胡闹厨房：全都好吃",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "致命公司",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 30,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 10
+        },
+        {
+          "reason": "租错号了",
+          "count": 5
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "起凡游戏平台",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "客服发起-无法登录",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "逃生：试炼",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "逃离后室",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 12,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 9
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "链在一起",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        },
+        {
+          "reason": "安全问题错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "骗子酒馆",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "黎明杀机",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "安全问题错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-02",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Wegame版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "上号器自动投诉（账号密码错误）",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 132,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 53
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 38
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 13
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 36,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 14
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 11
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 15,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 5
+        },
+        {
+          "reason": "不输入账号密码",
+          "count": 4
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 90,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 27
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 24
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 12
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 962,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 368
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 179
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 130
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 22,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 6
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 4
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 59,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 14
+        },
+        {
+          "reason": "不输入账号密码",
+          "count": 13
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "Apex 英雄（steam版）",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 92,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 44
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 11
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "Nba2Kol2",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "QQ飞车",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 26,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 15
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 4
+        },
+        {
+          "reason": "账号冻结",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "Valorant",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 2
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "三角洲行动(pc)",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        },
+        {
+          "reason": "柯恩币不足",
+          "count": 1
+        },
+        {
+          "reason": "健康时间",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "严阵以待",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "云顶之弈",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "人渣",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 33,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 20
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        },
+        {
+          "reason": "上号器自动投诉（自动下架）",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "内容警告",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        },
+        {
+          "reason": "账号冻结",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "双人成行",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "坦克世界",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "账号冻结",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "城市：天际线",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "大多数",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        },
+        {
+          "reason": "steam客服已冻结该帐户",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "帝国时代4",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "彩虹6号",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "怪物猎人世界",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "恐鬼症",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 25,
+      "top_reasons": [
+        {
+          "reason": "账号禁赛",
+          "count": 7
+        },
+        {
+          "reason": "账号冻结",
+          "count": 4
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "暗区突围(PC国际服)",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "木筏Raft",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线 4",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录（wegame错误码：282）",
+          "count": 1
+        },
+        {
+          "reason": "不输入账号密码",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "账号触发人脸验证",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "森林之子",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "欧洲卡车模拟2",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "求生之路",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "求生之路2(steam版)",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "深入后室",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "生死狙击",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 59,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 13
+        },
+        {
+          "reason": "段位不符",
+          "count": 12
+        },
+        {
+          "reason": "租错号了",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 118,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 58
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 18
+        },
+        {
+          "reason": "号被封了",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 27,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        },
+        {
+          "reason": "租错号了",
+          "count": 6
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "逃离后室",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "steam客服已冻结该帐户",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 9,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        },
+        {
+          "reason": "游戏账号未实名认证/未成年",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "链在一起",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-03",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Wegame版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 108,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 37
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 28
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 14
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 32,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 16
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 5
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 10,
+      "top_reasons": [
+        {
+          "reason": "不输入账号密码",
+          "count": 4
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 2
+        },
+        {
+          "reason": "账号冻结",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 116,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 34
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 25
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 19
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 1014,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 443
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 187
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 154
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 33,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 19
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 4
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 52,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 17
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 10
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 103,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 33
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 24
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 14
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "NBA2KOL",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "Nba2Kol2",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "信誉积分不足",
+          "count": 1
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 48,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 25
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "Valorant",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "安装不了上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "三角洲行动(pc)",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "人渣",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "使命召唤19：现代战争2",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "使命召唤20：现代战争3",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 43,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 35
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "游戏账号未实名认证/未成年",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "双人成行",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "只狼：影逝二度",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "坦克世界",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "怪物猎人世界",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "方舟：生存进化",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 33,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 8
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 7
+        },
+        {
+          "reason": "号被封了",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 12,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 4
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "森林之子",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "欧洲卡车模拟2",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "会员时间到期",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "生死狙击",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 46,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 12
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 5
+        },
+        {
+          "reason": "租错号了",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "穿越火线：高清竞技大区",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 109,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 51
+        },
+        {
+          "reason": "号被封了",
+          "count": 22
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 20,
+      "top_reasons": [
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 6
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 5
+        },
+        {
+          "reason": "租错号了",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "起凡游戏平台",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 2
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "骑马与砍杀2",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "黎明杀机",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-04",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Wegame版",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "上号器自动投诉（账号密码错误）",
+          "count": 3
+        },
+        {
+          "reason": "无法登录（wegame错误码：282）",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 86,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 29
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 21
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 15
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 21,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 5
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "不输入账号密码",
+          "count": 3
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "上号器自动投诉（账号密码错误）",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 93,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 25
+        },
+        {
+          "reason": "账号冻结",
+          "count": 24
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 13
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 1025,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 420
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 193
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 158
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 27,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 13
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 5
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 36,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 12
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 10
+        },
+        {
+          "reason": "不输入账号密码",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "Apex 英雄（steam版）",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "不输入账号密码",
+          "count": 1
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 72,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 28
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 13
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 11
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "Nba2Kol2",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 1
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "QQ飞车",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 56,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 30
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        },
+        {
+          "reason": "号被封了",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "Valorant",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "三角洲行动(pc)",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "健康时间",
+          "count": 1
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "使命召唤19：现代战争2",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号冻结",
+          "count": 1
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "使命召唤20：现代战争3",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "使命召唤21：黑色行动6",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 20,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 13
+        },
+        {
+          "reason": "一直云检测",
+          "count": 3
+        },
+        {
+          "reason": "上号器自动投诉（自动下架）",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "双人成行",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "反恐精英OL",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "提示有外挂残留",
+          "count": 1
+        },
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "只狼：影逝二度",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "安抚",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "完蛋！我被美女包围了！",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "彩虹6号",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "战地风云2042 steam版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "战地风云5 steam版",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "方舟：生存进化",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 30,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 10
+        },
+        {
+          "reason": "账号冻结",
+          "count": 6
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "暗区突围(PC国际服)",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "因财产密码",
+          "count": 1
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线 4",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "森林之子",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "泰拉瑞亚",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "消逝的光芒",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "猛兽派对",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 66,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 17
+        },
+        {
+          "reason": "段位不符",
+          "count": 13
+        },
+        {
+          "reason": "租错号了",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 63,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 32
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 7
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "胡闹厨房：全都好吃",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 34,
+      "top_reasons": [
+        {
+          "reason": "账号禁言",
+          "count": 8
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 7
+        },
+        {
+          "reason": "租错号了",
+          "count": 7
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 10,
+      "top_reasons": [
+        {
+          "reason": "一直云检测",
+          "count": 4
+        },
+        {
+          "reason": "租错号了",
+          "count": 2
+        },
+        {
+          "reason": "游戏画质不清晰",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "黎明杀机",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-05",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 8,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 2
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "GG",
+      "game": "CSGO",
+      "cancel_count": 111,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 42
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 17
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 15
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "GG",
+      "game": "Nba2Kol2",
+      "cancel_count": 22,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 11
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 4
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "GG",
+      "game": "QQ飞车",
+      "cancel_count": 27,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 8
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "GG",
+      "game": "双人成行",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号密码错误",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "GG",
+      "game": "无畏契约",
+      "cancel_count": 116,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 32
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 21
+        },
+        {
+          "reason": "账号冻结",
+          "count": 19
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "GG",
+      "game": "穿越火线",
+      "cancel_count": 933,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 379
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 189
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 119
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "GG",
+      "game": "英雄联盟",
+      "cancel_count": 25,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 15
+        },
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 3
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "GG",
+      "game": "逆战",
+      "cancel_count": 33,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 16
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        },
+        {
+          "reason": "账号冻结",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "Apex 英雄（steam版）",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "CSGO",
+      "cancel_count": 81,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 38
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 11
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 9
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "Nba2Kol2",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "QQ飞车",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "Steam游戏",
+      "cancel_count": 21,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 9
+        },
+        {
+          "reason": "号被封了",
+          "count": 3
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "严阵以待",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 1
+        },
+        {
+          "reason": "租错号了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "云顶之弈",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "使命召唤19：现代战争2",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 1
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "侠盗猎车手Online",
+      "cancel_count": 32,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 20
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 7
+        },
+        {
+          "reason": "steam客服已冻结该帐户",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "双人成行",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 1
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "城市：天际线",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "安装不了上号器",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "守望先锋2steam版",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 3
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "完蛋！我被美女包围了！",
+      "cancel_count": 6,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 6
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "方舟：生存进化",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号密码错误",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "无畏契约",
+      "cancel_count": 49,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 22
+        },
+        {
+          "reason": "账号禁赛",
+          "count": 9
+        },
+        {
+          "reason": "被挤号（顶号）了",
+          "count": 5
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "暗区突围(PC国际服)",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "不输入账号密码",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线 4",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "5E登录失败",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "极限竞速：地平线5",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "完美登录失败",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "求生之路2(steam版)",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "不想玩了或其它理由不玩了",
+          "count": 2
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        },
+        {
+          "reason": "号被封了",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "泰拉瑞亚",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "深入后室",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "盗贼之海",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 3
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "穿越火线",
+      "cancel_count": 69,
+      "top_reasons": [
+        {
+          "reason": "段位不符",
+          "count": 23
+        },
+        {
+          "reason": "租错号了",
+          "count": 11
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 10
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "绝地求生",
+      "cancel_count": 102,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 27
+        },
+        {
+          "reason": "号被封了",
+          "count": 16
+        },
+        {
+          "reason": "ZD主动防御",
+          "count": 16
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "英雄联盟",
+      "cancel_count": 24,
+      "top_reasons": [
+        {
+          "reason": "账号禁言",
+          "count": 7
+        },
+        {
+          "reason": "上号器自动投诉 (人脸识别)",
+          "count": 3
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 3
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "荒野大镖客2STEAM版",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "逃生：试炼",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "steam客服已冻结该帐户",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "逆战",
+      "cancel_count": 10,
+      "top_reasons": [
+        {
+          "reason": "租错号了",
+          "count": 5
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "一直云检测",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "链在一起",
+      "cancel_count": 3,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 2
+        },
+        {
+          "reason": "游戏登陆后无账号信息",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "霍格沃茨之遗",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "游戏维护",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "骑马与砍杀2",
+      "cancel_count": 4,
+      "top_reasons": [
+        {
+          "reason": "账号描述与实际不符",
+          "count": 4
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "骗子酒馆",
+      "cancel_count": 1,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "黎明杀机",
+      "cancel_count": 2,
+      "top_reasons": [
+        {
+          "reason": "号被封了",
+          "count": 2
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Steam版",
+      "cancel_count": 5,
+      "top_reasons": [
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 4
+        },
+        {
+          "reason": "其他原因-游戏维护",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "date": "2025-02-06",
+      "channel": "WFgame",
+      "game": "黑神话:悟空Wegame版",
+      "cancel_count": 7,
+      "top_reasons": [
+        {
+          "reason": "账号冻结",
+          "count": 2
+        },
+        {
+          "reason": "账号描述与实际不符",
+          "count": 2
+        },
+        {
+          "reason": "无法登录(登录不上)",
+          "count": 1
+        }
+      ]
+    }
+  ]
+}

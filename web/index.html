@@ -121,6 +121,39 @@
       font-size: 13px;
     }
 
+    .mode-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: rgba(16, 20, 24, 0.9);
+      overflow: hidden;
+    }
+
+    .mode-tab {
+      min-height: 36px;
+      padding: 0 16px;
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 180ms ease, color 180ms ease;
+      white-space: nowrap;
+    }
+
+    .mode-tab:hover {
+      color: var(--ink);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .mode-tab.active {
+      background: var(--accent);
+      color: #041108;
+    }
+
     .top-actions {
       display: flex;
       align-items: center;
@@ -1761,6 +1794,339 @@
       }
     }
 
+    /* === Agent Chat Mode === */
+    .agent-chat {
+      display: none;
+      flex-direction: column;
+      min-height: calc(100dvh - var(--header-h));
+      max-height: calc(100dvh - var(--header-h));
+      background: var(--bg);
+    }
+
+    .agent-chat-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      padding: 24px;
+      padding-bottom: 12px;
+      overflow-y: auto;
+      max-width: 780px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .agent-msg {
+      max-width: 82%;
+      display: grid;
+      gap: 4px;
+    }
+
+    .agent-msg.user {
+      justify-self: end;
+      align-self: flex-end;
+    }
+
+    .agent-msg.agent {
+      align-self: flex-start;
+    }
+
+    .agent-msg-role {
+      color: var(--quiet);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .agent-msg.user .agent-msg-role { text-align: right; }
+
+    .agent-msg-bubble {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      font-size: 14px;
+      line-height: 1.6;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+    }
+
+    .agent-msg.user .agent-msg-bubble {
+      border-color: rgba(34, 197, 94, 0.42);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .agent-msg.agent .agent-msg-bubble {
+      border-color: rgba(56, 189, 248, 0.34);
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    .typing-dots {
+      display: inline-flex;
+      gap: 4px;
+      padding: 12px 14px;
+      border: 1px solid rgba(56, 189, 248, 0.34);
+      border-radius: var(--radius);
+      background: rgba(56, 189, 248, 0.06);
+    }
+
+    .typing-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: var(--cyan);
+      opacity: 0.5;
+      animation: typingBounce 1.2s ease-in-out infinite;
+    }
+
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes typingBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.5; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    .agent-input-bar {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      padding: 14px 24px 20px;
+      border-top: 1px solid var(--line);
+      background: rgba(10, 13, 17, 0.92);
+      max-width: 780px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .agent-input {
+      flex: 1;
+      min-height: 44px;
+      max-height: 120px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      color: var(--ink);
+      background: #0b0f13;
+      font: inherit;
+      font-size: 14px;
+      line-height: 1.5;
+      resize: none;
+      overflow-y: auto;
+    }
+
+    .agent-input:focus {
+      border-color: rgba(56, 189, 248, 0.55);
+      outline: none;
+    }
+
+    .agent-send-btn {
+      min-height: 44px;
+      min-width: 72px;
+    }
+
+    /* === Version Experience Mode === */
+    .experience-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      min-height: 52px;
+      padding: 10px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 20, 24, 0.84);
+      margin-bottom: 16px;
+    }
+
+    .experience-nav {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .exp-nav-btn {
+      min-height: 34px;
+      min-width: 34px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.03);
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 160ms ease, border-color 160ms ease;
+    }
+
+    .exp-nav-btn:hover:not(:disabled) {
+      border-color: var(--line-strong);
+      background: var(--surface-2);
+      color: var(--ink);
+    }
+
+    .exp-nav-btn:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    .exp-counter {
+      color: var(--muted);
+      font: 700 13px/1 var(--mono);
+      min-width: 48px;
+      text-align: center;
+    }
+
+    .exp-auto-btn {
+      min-height: 34px;
+      padding: 0 12px;
+      border: 1px solid rgba(56, 189, 248, 0.4);
+      border-radius: 999px;
+      background: rgba(56, 189, 248, 0.08);
+      color: #d7f2ff;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 160ms ease;
+    }
+
+    .exp-auto-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+    }
+
+    .exp-auto-btn.playing {
+      border-color: rgba(245, 158, 11, 0.5);
+      background: rgba(245, 158, 11, 0.1);
+      color: #ffe0a6;
+    }
+
+    .exp-question {
+      flex: 1;
+      min-width: 0;
+      color: var(--muted);
+      font-size: 13px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .version-steps {
+      display: grid;
+      gap: 12px;
+    }
+
+    .version-step {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(16, 20, 24, 0.6);
+      overflow: hidden;
+      transition: border-color 200ms ease, opacity 200ms ease;
+    }
+
+    .version-step.active {
+      border-color: rgba(34, 197, 94, 0.5);
+      background: rgba(16, 20, 24, 0.84);
+    }
+
+    .version-step.done {
+      opacity: 0.6;
+    }
+
+    .version-step-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 14px;
+      cursor: pointer;
+    }
+
+    .version-step-header:hover {
+      background: rgba(255,255,255,0.03);
+    }
+
+    .vs-badge {
+      min-width: 36px;
+      height: 24px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--cyan);
+      font: 700 11px/1 var(--mono);
+      background: var(--surface);
+    }
+
+    .version-step.active .vs-badge {
+      border-color: rgba(34, 197, 94, 0.55);
+      color: var(--accent);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .vs-name {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--ink);
+    }
+
+    .vs-tag {
+      font: 600 10px/1 var(--mono);
+      padding: 3px 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      color: var(--quiet);
+    }
+
+    .version-step.active .vs-tag {
+      background: rgba(34, 197, 94, 0.12);
+      color: #c9f7d7;
+    }
+
+    .step-content {
+      display: grid;
+      gap: 12px;
+      padding: 0 14px 14px;
+    }
+
+    .step-section {
+      padding: 12px;
+      border-radius: var(--radius);
+      border-left: 3px solid var(--line);
+      background: rgba(7, 10, 13, 0.4);
+    }
+
+    .step-section h4 {
+      margin: 0 0 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .step-section p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--ink);
+    }
+
+    .step-section.response { border-left-color: var(--cyan); }
+    .step-section.response h4 { color: var(--cyan); }
+    .step-section.diagnosis { border-left-color: var(--amber); background: rgba(245, 158, 11, 0.04); }
+    .step-section.diagnosis h4 { color: var(--amber); }
+    .step-section.solve { border-left-color: var(--accent); background: rgba(34, 197, 94, 0.04); }
+    .step-section.solve h4 { color: var(--accent); }
+    .step-section.next-hint { border-left-color: rgba(56, 189, 248, 0.5); }
+    .step-section.next-hint h4 { color: var(--cyan); }
+
+    .step-next-link {
+      display: inline-block;
+      margin-top: 8px;
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .step-next-link:hover { text-decoration: underline; }
+
     @media (prefers-reduced-motion: reduce) {
       *,
       *::before,
@@ -1785,6 +2151,10 @@
           <p>先像真实 Agent 一样回答，再评估结果，引出下一层能力</p>
         </div>
       </div>
+      <div class="mode-tabs">
+        <button class="mode-tab active" data-mode="agent" type="button">Agent 对话</button>
+        <button class="mode-tab" data-mode="experience" type="button">版本体验</button>
+      </div>
       <div class="top-actions">
         <span class="pill"><span class="status-dot" aria-hidden="true"></span>Live Demo</span>
         <button class="ghost-btn" id="copyCommand" type="button">
@@ -1798,7 +2168,18 @@
       </div>
     </header>
 
-    <div class="layout">
+    <section class="agent-chat" id="agentChat">
+      <div class="agent-chat-view" id="agentChatView"></div>
+      <div class="agent-input-bar">
+        <textarea class="agent-input" id="agentInput" placeholder="输入 API 接入问题，按 Enter 发送..." rows="1"></textarea>
+        <button class="primary-btn agent-send-btn" id="agentSendBtn" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 3 14 9-14 9V3z"/></svg>
+          <span>发送</span>
+        </button>
+      </div>
+    </section>
+
+    <div class="layout" id="experienceLayout" style="display:none">
       <aside class="sidebar" aria-label="版本导航">
         <span class="pill">能力层验证</span>
         <div class="version-list" role="tablist" aria-label="Agent 版本"></div>
@@ -2067,6 +2448,105 @@
     let remoteWikiDocs = null;
     let remoteWikiPromise = null;
     let remoteWikiStatus = "idle";
+
+    const cancellationDataUrl = "https://raw.githubusercontent.com/huakaiwuyeshu/llm-wiki/main/projects/api-infra/exports/agent-demo/cancellation_analytics.json";
+    let cancellationData = null;
+    let cancellationDataPromise = null;
+
+    function loadCancellationData() {
+      if (cancellationData) return Promise.resolve(cancellationData);
+      if (!cancellationDataPromise) {
+        cancellationDataPromise = fetch(cancellationDataUrl, { cache: "force-cache" })
+          .then(r => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); })
+          .then(d => { cancellationData = d; return d; })
+          .catch(() => { cancellationData = null; return null; });
+      }
+      return cancellationDataPromise;
+    }
+
+    function analyzeData(query) {
+      if (!cancellationData) return { available: false, result: "撤单分析数据尚未加载完成，请稍后再试。" };
+      const d = cancellationData;
+      const lower = query.toLowerCase();
+      const sections = [];
+
+      sections.push(`数据范围：${d.data_range.start} 至 ${d.data_range.end}（${d.data_range.days}天）`);
+      sections.push(`总撤单量：${d.summary.total_cancellations}`);
+      sections.push(`渠道分布：${Object.entries(d.summary.channels).map(([k,v]) => k + '=' + v).join('、')}`);
+
+      // Channel filter
+      let channelFilter = null;
+      if (/wf|wfgame/i.test(lower)) channelFilter = 'WFgame';
+      else if (/gg|gg租号/i.test(lower)) channelFilter = 'GG';
+
+      // Game filter
+      let gameFilter = null;
+      const gameKeywords = {'csgo':'CSGO','穿越火线':'穿越火线','穿越':'穿越火线','cf':'穿越火线','逆战':'逆战','无畏契约':'无畏契约','valorant':'无畏契约','绝地求生':'绝地求生','吃鸡':'绝地求生','steam':'Steam游戏','英雄联盟':'英雄联盟','lol':'英雄联盟'};
+      for (const [kw, gm] of Object.entries(gameKeywords)) {
+        if (lower.includes(kw)) { gameFilter = gm; break; }
+      }
+
+      // Filter daily data
+      let filtered = d.daily_by_channel_game;
+      if (channelFilter) filtered = filtered.filter(r => r.channel.trim() === channelFilter);
+      if (gameFilter) filtered = filtered.filter(r => r.game && r.game.trim().includes(gameFilter));
+
+      // Daily trend
+      const dailyMap = {};
+      filtered.forEach(r => {
+        if (!dailyMap[r.date]) dailyMap[r.date] = 0;
+        dailyMap[r.date] += r.cancel_count;
+      });
+      const trend = Object.entries(dailyMap).sort((a,b) => a[0].localeCompare(b[0]));
+      if (trend.length) {
+        sections.push(`\n每日撤单趋势${channelFilter ? '（' + channelFilter + '）' : ''}${gameFilter ? '（' + gameFilter + '）' : ''}：`);
+        trend.forEach(([date, count]) => sections.push(`  ${date}: ${count}单`));
+        const counts = trend.map(t => t[1]);
+        const avg = Math.round(counts.reduce((a,b) => a+b, 0) / counts.length);
+        const max = Math.max(...counts);
+        const min = Math.min(...counts);
+        sections.push(`  日均：${avg}、最高：${max}、最低：${min}`);
+      }
+
+      // Reason distribution
+      const reasonMap = {};
+      filtered.forEach(r => {
+        (r.top_reasons || []).forEach(tr => {
+          if (!reasonMap[tr.reason]) reasonMap[tr.reason] = 0;
+          reasonMap[tr.reason] += tr.count;
+        });
+      });
+      const reasons = Object.entries(reasonMap).sort((a,b) => b[1]-a[1]).slice(0, 8);
+      if (reasons.length) {
+        const total = reasons.reduce((s, r) => s + r[1], 0);
+        sections.push(`\n撤单原因 TOP 分布：`);
+        reasons.forEach(([reason, count], i) => {
+          sections.push(`  ${i+1}. ${reason}：${count}次（${(count/total*100).toFixed(1)}%）`);
+        });
+      }
+
+      // Game distribution
+      if (!gameFilter) {
+        const gameMap = {};
+        filtered.forEach(r => {
+          const g = (r.game || '').trim();
+          if (g) { if (!gameMap[g]) gameMap[g] = 0; gameMap[g] += r.cancel_count; }
+        });
+        const games = Object.entries(gameMap).sort((a,b) => b[1]-a[1]).slice(0, 8);
+        if (games.length) {
+          sections.push(`\n游戏撤单量 TOP：`);
+          games.forEach(([game, count], i) => sections.push(`  ${i+1}. ${game}：${count}单`));
+        }
+      }
+
+      // Youyou daily rate
+      if ((!channelFilter || /悠悠|youyou|api_悠悠/i.test(lower)) && d.youyou_daily_rate && d.youyou_daily_rate.length) {
+        sections.push(`\n悠悠有品渠道撤单率趋势：`);
+        d.youyou_daily_rate.forEach(r => sections.push(`  ${r.date}: 订单${r.orders}、撤单${r.cancels}、撤单率${r.rate}%`));
+      }
+
+      return { available: true, result: sections.join('\n') };
+    }
 
     const sampleLogs = [
       {
@@ -2831,14 +3311,24 @@
         ]
       },
       volume_analysis: {
-        label: "单量分析",
+        label: "数据分析",
         keywords: [
           { word: "单量", weight: 4 },
           { word: "成功率", weight: 4 },
           { word: "失败率", weight: 4 },
+          { word: "撤单", weight: 5 },
+          { word: "撤单率", weight: 5 },
+          { word: "撤单量", weight: 5 },
+          { word: "撤单原因", weight: 5 },
+          { word: "投诉", weight: 3 },
           { word: "近7天", weight: 2 },
-          { word: "趋势", weight: 2 },
-          { word: "周报", weight: 2 }
+          { word: "趋势", weight: 3 },
+          { word: "数据", weight: 2 },
+          { word: "分析", weight: 2 },
+          { word: "周报", weight: 2 },
+          { word: "对比", weight: 2 },
+          { word: "波动", weight: 2 },
+          { word: "异常", weight: 2 }
         ]
       }
     };
@@ -2878,7 +3368,14 @@
         "看一下最近接口单量趋势",
         "统计成功率和失败率",
         "近7天订单接口调用量",
-        "输出 API 调用周报"
+        "输出 API 调用周报",
+        "最近撤单量怎么样",
+        "WF渠道撤单趋势",
+        "GG渠道撤单原因分布",
+        "哪个游戏撤单最多",
+        "撤单率有没有异常",
+        "穿越火线撤单数据分析",
+        "各渠道撤单对比"
       ]
     };
 
@@ -2905,15 +3402,16 @@
       },
       {
         intent: "volume_analysis",
-        patterns: ["数据怎么样", "表现怎么样", "有没有下降", "波动"],
-        reason: "LLM 兜底把“数据表现 / 波动”归并为单量分析。"
+        patterns: ["数据怎么样", "表现怎么样", "有没有下降", "波动", "撤单怎么样", "撤了多少", "退了多少单", "退款多少"],
+        reason: "LLM 兆底把「数据表现 / 撤单 / 波动」归并为数据分析。"
       }
     ];
 
     const scopeSignals = [
       "api", "接口", "接入", "联调", "appid", "appsecret", "签名", "验签",
       "回调", "callback", "错误码", "字段", "参数", "单量", "成功率", "失败率",
-      "订单", "order_id", "timestamp", "SIGN_INVALID", "info", "detailinfo"
+      "订单", "order_id", "timestamp", "SIGN_INVALID", "info", "detailinfo",
+      "撤单", "投诉", "退单", "数据", "分析", "趋势", "统计", "渠道"
     ];
 
     function evaluateInputGate(message) {
@@ -4785,14 +5283,382 @@
       upgradeToVersion(button.dataset.upgradeVersion, "chat");
     });
 
+    // === DUAL MODE: Agent Dialog + Version Experience ===
+
+    state.mode = "agent";
+    state.agentMessages = [];
+    state.agentProcessing = false;
+    state.experienceVersionIndex = 0;
+    state.experienceAutoPlay = false;
+    state.experienceAutoPlayTimer = null;
+    state.experienceVersionCache = {};
+    state.experienceMessage = "";
+
+    const agentChatEl = document.getElementById("agentChat");
+    const agentChatView = document.getElementById("agentChatView");
+    const agentInputEl = document.getElementById("agentInput");
+    const agentSendBtn = document.getElementById("agentSendBtn");
+    const experienceLayoutEl = document.getElementById("experienceLayout");
+
+    function switchMode(mode) {
+      state.mode = mode;
+      document.querySelectorAll(".mode-tab").forEach(tab => {
+        tab.classList.toggle("active", tab.dataset.mode === mode);
+      });
+      if (mode === "agent") {
+        agentChatEl.style.display = "flex";
+        experienceLayoutEl.style.display = "none";
+        renderAgentChatView();
+        agentInputEl.focus();
+      } else {
+        agentChatEl.style.display = "none";
+        experienceLayoutEl.style.display = "grid";
+        if (!state.experienceMessage) {
+          state.experienceMessage = scenarios.complete;
+        }
+        renderExperienceMode();
+      }
+    }
+
+    document.querySelector(".mode-tabs").addEventListener("click", (e) => {
+      const tab = e.target.closest("[data-mode]");
+      if (tab) switchMode(tab.dataset.mode);
+    });
+
+    // === Mode 1: Agent Chat (with Real LLM) ===
+
+    const LLM_CONFIG = {
+      endpoint: "http://127.0.0.1:8081/v1/chat/completions",
+      model: "gpt-5.5",
+      apiKey: "none"
+    };
+
+    const SKILL_SOPS = {
+      signature_debug: `## 签名失败排查 SOP\n适用：接口返回 SIGN_INVALID、签名错误、验签失败。\n必要信息：接口路径、appid、签名前原始字符串、错误码、请求时间。\n排查步骤：\n1. 检查参数是否按参数名 ASCII 升序排列\n2. 检查签名前字符串是否和文档规则一致\n3. 检查是否使用 UTF-8 编码\n4. 检查是否提前做了 URL 编码\n5. 检查 timestamp 是否超过允许时间偏差\n6. 检查 appid 是否属于当前环境\n不要要求用户提供 appsecret。`,
+      callback_debug: `## 回调异常排查 SOP\n适用：没有收到回调、回调延迟、超时、状态异常。\n必要信息：回调地址、订单号、触发动作、回调时间。\n排查步骤：\n1. 确认回调地址是否为可访问的 HTTPS 地址\n2. 检查订单是否触发了回调动作\n3. 查询服务端是否发起过回调\n4. 检查第三方响应状态码\n5. 未返回 2xx 则提示修复后等待重试`,
+      api_field_qa: `## API 字段问答\n适用：询问字段含义、枚举值、传参规则、错误码含义。\n原则：\n1. 优先用知识库检索结果回答\n2. 找到依据后引用来源\n3. 未找到依据说明"当前文档未覆盖"，不要编造`
+    };
+
+    function appendAgentMsg(role, text) {
+      state.agentMessages.push({ role, text, ts: Date.now() });
+    }
+
+    function renderAgentChatView() {
+      let html = state.agentMessages.map(msg => {
+        const roleLabel = msg.role === "user" ? "你" : "Agent";
+        return `<div class="agent-msg ${msg.role}">` +
+          `<div class="agent-msg-role">${roleLabel}</div>` +
+          `<div class="agent-msg-bubble">${escapeHtml(msg.text)}</div>` +
+          `</div>`;
+      }).join("");
+      if (state.agentProcessing) {
+        html += `<div class="agent-msg agent"><div class="agent-msg-role">Agent</div><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
+      }
+      agentChatView.innerHTML = html;
+      agentChatView.scrollTop = agentChatView.scrollHeight;
+    }
+
+    async function callLLM(messages) {
+      const response = await fetch(LLM_CONFIG.endpoint, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${LLM_CONFIG.apiKey}`
+        },
+        body: JSON.stringify({
+          model: LLM_CONFIG.model,
+          messages,
+          max_tokens: 1024,
+          temperature: 0.4
+        })
+      });
+      if (!response.ok) {
+        const errText = await response.text().catch(() => "");
+        throw new Error(`LLM API ${response.status}: ${errText.slice(0, 200)}`);
+      }
+      const data = await response.json();
+      return data.choices?.[0]?.message?.content || "(无回复)";
+    }
+
+    function buildSystemPrompt(draft, validation, docs, tools, analysisResult) {
+      let prompt = `你是一个 API 接入技术支持 Agent。你的职责是帮助第三方开发者排查 API 接入问题和分析业务数据，回答简洁专业。
+
+## 能力范围
+- 签名失败排查（SIGN_INVALID、验签错误）
+- 回调异常排查（回调超时、未送达）
+- API 字段/错误码含义查询
+- 新 API 接入流程咨询
+- 撤单数据分析（趋势、原因分布、渠道对比、异常检测）
+
+## 当前任务状态
+- 任务类型：${taskLabel(draft.task_type)}
+- 校验状态：${validation.status}
+- 已收集字段：${Object.entries(compactFields(draft.fields)).map(([k,v]) => `${label(k)}=${v}`).join("、") || "无"}
+- 缺失字段：${validation.missing_fields.map(label).join("、") || "无"}`;
+
+      // Inject relevant Skill SOP
+      const sop = SKILL_SOPS[draft.task_type];
+      if (sop) {
+        prompt += `\n\n${sop}`;
+      }
+
+      // Inject knowledge retrieval results
+      if (docs.length) {
+        prompt += `\n\n## 知识库检索结果（作为回答依据）\n${docs.slice(0, 5).join("\n")}`;
+      }
+
+      // Inject tool results
+      if (tools.length && tools.some(t => t.status !== "skipped")) {
+        prompt += `\n\n## 工具执行结果\n${tools.map(t => `${t.name}: ${t.status} — ${t.detail}`).join("\n")}`;
+      }
+
+      // Inject data analysis results
+      if (analysisResult && analysisResult.available) {
+        prompt += `\n\n## 数据分析工具执行结果\n以下是根据用户查询从撤单数据库中提取的分析结果，请基于这些数据回答用户问题，给出趋势判断和建议：\n${analysisResult.result}`;
+      } else if (draft.task_type === "volume_analysis" && (!analysisResult || !analysisResult.available)) {
+        prompt += `\n\n## 数据分析状态\n撤单分析数据正在从 llm-wiki 加载中，请告知用户稍后再试。`;
+      }
+
+      prompt += `\n\n## 安全规则
+- 绝不在回复中包含或复述 appsecret、密钥
+- 不要编造 API 规则，没有文档依据就说"当前文档未覆盖该内容"
+- 如果用户提供了敏感凭证，提醒他们不要发送
+
+## 回复要求
+- 简洁专业，像有经验的技术支持，不要加不必要的寒暄
+- 信息不足时只追问关键缺失项，一次不超过 3 个问题
+- 给排查建议要有可操作的下一步
+- 引用文档时注明来源
+- 用中文回复`;
+
+      return prompt;
+    }
+
+    async function sendAgentMessage() {
+      const text = agentInputEl.value.trim();
+      if (!text || state.agentProcessing) return;
+      agentInputEl.value = "";
+      appendAgentMsg("user", text);
+      state.agentProcessing = true;
+      renderAgentChatView();
+
+      try {
+        // Pre-load remote wiki index if not yet loaded
+        if (!remoteWikiDocs && remoteWikiStatus === "idle") {
+          loadRemoteWikiDocs();
+        }
+
+        const draft = extractTask(text);
+        const contextualDraft = applyConversationContext(draft);
+        const validation = validate(contextualDraft);
+        const localDocs = searchDocs(contextualDraft);
+        const remoteDocs = remoteWikiDocs ? searchRemoteDocs(contextualDraft) : [];
+        const docs = localDocs.length ? localDocs : remoteDocs;
+        const tools = validation.status === "executable" ? runTools(contextualDraft) : [];
+
+        let reply;
+
+        // Data analysis: load data and run analysis tools
+        let analysisResult = null;
+        if (contextualDraft.task_type === "volume_analysis") {
+          if (!cancellationData) await loadCancellationData();
+          analysisResult = analyzeData(text);
+        }
+
+        // Security and scope checks are handled by code, not LLM
+        if (validation.status === "blocked") {
+          reply = "检测到您的输入中包含 appsecret 等敏感凭证。为了安全，我无法处理此请求。\n\n请移除敏感信息后重新提交，只保留 appid、接口路径、错误码等非敏感字段即可。";
+        } else if (validation.status === "out_of_scope") {
+          reply = "这个问题不在我的处理范围内。我目前可以帮助处理：\n\n1. 签名失败排查\n2. 回调异常排查\n3. API 字段/错误码问答\n4. 新 API 接入流程\n5. 撤单数据分析\n\n请输入 API 接入相关问题。";
+        } else {
+          // Call real LLM for understanding and expression
+          const systemPrompt = buildSystemPrompt(contextualDraft, validation, docs, tools, analysisResult);
+          const messages = [{ role: "system", content: systemPrompt }];
+          // Add conversation history (last 10 turns)
+          const history = state.agentMessages.slice(-10);
+          history.forEach(msg => {
+            messages.push({ role: msg.role === "user" ? "user" : "assistant", content: msg.text });
+          });
+          reply = await callLLM(messages);
+        }
+
+        // Commit conversation state
+        const session = buildSessionSnapshot(contextualDraft, validation, localDocs, remoteDocs);
+        state.conversation.turns = state.conversation.turns.concat({
+          index: state.conversation.turns.length + 1,
+          text, intent: contextualDraft.task_type,
+          status: validation.status,
+          missing: validation.missing_fields,
+          fields: compactFields(contextualDraft.fields)
+        }).slice(-10);
+        state.conversation.memory = session.memory;
+        state.conversation.activeTask = session.activeTask;
+
+        appendAgentMsg("agent", reply);
+      } catch (err) {
+        appendAgentMsg("agent", `抱歉，处理时遇到错误：${err.message}\n\n请稍后重试。`);
+      }
+
+      state.agentProcessing = false;
+      renderAgentChatView();
+    }
+
+    agentSendBtn.addEventListener("click", sendAgentMessage);
+    agentInputEl.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendAgentMessage();
+      }
+    });
+
+    // === Mode 2: Version Experience ===
+
+    function renderExperienceMode() {
+      const msg = state.experienceMessage;
+      // Hide the chat-based input row in experience mode, show experience container
+      const inputRow = document.querySelector(".input-row");
+      if (inputRow) inputRow.style.display = "none";
+      let expContainer = document.getElementById("expContainer");
+      if (!expContainer) {
+        const workspaceBody = document.querySelector(".workspace-body");
+        if (!workspaceBody) return;
+        const el = document.createElement("div");
+        el.id = "expContainer";
+        workspaceBody.prepend(el);
+      }
+      expContainer = document.getElementById("expContainer");
+
+      // Build navigation + steps
+      const currentV = versions[state.experienceVersionIndex];
+      expContainer.innerHTML = `
+        <div class="experience-header">
+          <div class="experience-nav">
+            <button class="exp-nav-btn" id="expPrevBtn" type="button" ${state.experienceVersionIndex <= 0 ? "disabled" : ""}>&lt; 上一步</button>
+            <span class="exp-counter">${state.experienceVersionIndex + 1} / ${versions.length}</span>
+            <button class="exp-nav-btn" id="expNextBtn" type="button" ${state.experienceVersionIndex >= versions.length - 1 ? "disabled" : ""}>下一步 &gt;</button>
+            <button class="exp-auto-btn ${state.experienceAutoPlay ? 'playing' : ''}" id="expAutoBtn" type="button">${state.experienceAutoPlay ? '⏸ 暂停' : '▶ 自动播放'}</button>
+          </div>
+          <div class="exp-question">当前问题：${escapeHtml(msg.slice(0, 60))}${msg.length > 60 ? '...' : ''}</div>
+        </div>
+        <div class="version-steps" id="versionSteps"></div>
+      `;
+
+      const stepsEl = document.getElementById("versionSteps");
+      stepsEl.innerHTML = versions.map((v, idx) => {
+        const isActive = idx === state.experienceVersionIndex;
+        const isDone = idx < state.experienceVersionIndex;
+        const story = versionStories[v.id];
+        // Lazy cache
+        if (!state.experienceVersionCache[v.id]) {
+          state.experienceVersionCache[v.id] = runVersion(v.id, msg);
+        }
+        const run = state.experienceVersionCache[v.id];
+        const nextStory = story.next ? versionStories[story.next] : null;
+
+        return `<div class="version-step ${isActive ? 'active' : isDone ? 'done' : ''}" data-exp-idx="${idx}">
+          <div class="version-step-header">
+            <span class="vs-badge">${v.id.toUpperCase()}</span>
+            <span class="vs-name">${v.name}</span>
+            <span class="vs-tag">${isActive ? '当前' : isDone ? '已查看' : ''}</span>
+          </div>
+          ${isActive ? `<div class="step-content">
+            <div class="step-section response">
+              <h4>Agent 回答</h4>
+              <p>${escapeHtml(run.finalOutput)}</p>
+            </div>
+            <div class="step-section diagnosis">
+              <h4>当前版本局限</h4>
+              <p>${escapeHtml(story.previous)}</p>
+            </div>
+            <div class="step-section solve">
+              <h4>本版解决了什么</h4>
+              <p>${escapeHtml(story.solve)}</p>
+            </div>
+            ${story.next && nextStory ? `<div class="step-section next-hint">
+              <h4>下一版本 ${story.next.toUpperCase()} 要解决的问题</h4>
+              <p>${escapeHtml(versionStories[story.next].previous)}</p>
+              <a href="#" class="step-next-link" data-exp-next="${versions.findIndex(x => x.id === story.next)}">查看 ${story.next.toUpperCase()} →</a>
+            </div>` : `<div class="step-section solve">
+              <h4>最终版本</h4>
+              <p>已覆盖全部能力层：识别、校验、Skill、RAG、工具、Agent Loop、状态审计。</p>
+            </div>`}
+          </div>` : ''}
+        </div>`;
+      }).join("");
+
+      // Bind events
+      document.getElementById("expPrevBtn")?.addEventListener("click", () => stepExp(-1));
+      document.getElementById("expNextBtn")?.addEventListener("click", () => stepExp(1));
+      document.getElementById("expAutoBtn")?.addEventListener("click", toggleExpAutoPlay);
+      stepsEl.addEventListener("click", (e) => {
+        const link = e.target.closest("[data-exp-next]");
+        if (link) { e.preventDefault(); state.experienceVersionIndex = parseInt(link.dataset.expNext); renderExperienceMode(); }
+        const header = e.target.closest(".version-step-header");
+        if (header) {
+          const step = header.closest("[data-exp-idx]");
+          if (step) { state.experienceVersionIndex = parseInt(step.dataset.expIdx); renderExperienceMode(); }
+        }
+      });
+
+      // Also run the existing render for the detail panels
+      state.version = currentV.id;
+      messageInput.value = msg;
+      state.lastSubmittedMessage = msg;
+      render();
+    }
+
+    function stepExp(dir) {
+      const next = state.experienceVersionIndex + dir;
+      if (next < 0 || next >= versions.length) return;
+      state.experienceVersionIndex = next;
+      renderExperienceMode();
+    }
+
+    function toggleExpAutoPlay() {
+      state.experienceAutoPlay = !state.experienceAutoPlay;
+      if (state.experienceAutoPlay) {
+        state.experienceAutoPlayTimer = setInterval(() => {
+          if (state.experienceVersionIndex >= versions.length - 1) {
+            state.experienceAutoPlay = false;
+            clearInterval(state.experienceAutoPlayTimer);
+            renderExperienceMode();
+            return;
+          }
+          stepExp(1);
+        }, 5000);
+      } else {
+        clearInterval(state.experienceAutoPlayTimer);
+      }
+      renderExperienceMode();
+    }
+
+    // === Initialization ===
+
     const initialExample = demoExamples.find((item) => item.id === "complete") || demoExamples[0];
     state.scenario = initialExample.id;
     messageInput.value = initialExample.message;
     state.lastSubmittedMessage = messageInput.value;
+    state.experienceMessage = initialExample.message;
+
+    // Pre-load remote knowledge index and cancellation data for Agent mode
+    loadRemoteWikiDocs();
+    loadCancellationData();
+
+    // Start in Agent mode with welcome message
+    appendAgentMsg("agent",
+      "你好，我是 API 接入 Agent。我可以帮你处理以下问题：\n\n" +
+      "1. 签名失败排查（如 SIGN_INVALID 错误）\n" +
+      "2. 回调异常排查（如回调超时、未送达）\n" +
+      "3. API 字段/错误码含义查询\n" +
+      "4. 新 API 接入流程咨询\n" +
+      "5. 接口单量分析\n\n" +
+      "请问有什么可以帮助你的？"
+    );
+    switchMode("agent");
+
+    // Keep existing experience mode initialization ready
     renderVersionButtons();
     renderExampleButtons();
-    renderChatLog();
-    render();
   </script>
 </body>
 </html>
