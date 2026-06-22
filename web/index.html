@@ -220,7 +220,7 @@
 
     .layout {
       display: grid;
-      grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+      grid-template-columns: 1fr;
       min-height: calc(100dvh - var(--header-h));
       min-width: 0;
     }
@@ -5187,6 +5187,7 @@
     }
 
     function renderVersionButtons() {
+      if (!versionList) return;
       versionList.innerHTML = versions.map((item) => `
         <button class="version-btn" type="button" role="tab" aria-selected="${item.id === state.version}" data-version="${item.id}" data-upgrade-state="${escapeHtml(versionUpgradeState(item.id))}">
           <span class="version-index">${item.id.toUpperCase()}</span>
@@ -5289,11 +5290,13 @@
       showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1800);
     }
 
-    versionList.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-version]");
-      if (!button) return;
-      upgradeToVersion(button.dataset.version, "manual");
-    });
+    if (versionList) {
+      versionList.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-version]");
+        if (!button) return;
+        upgradeToVersion(button.dataset.version, "manual");
+      });
+    }
 
     scenarioButtons.forEach((button) => {
       button.addEventListener("click", () => {
