@@ -769,6 +769,113 @@
       color: var(--quiet);
     }
 
+    /* Stage Flow Diagram (reuses signal-flow visual system) */
+    .stage-flow {
+      border: 1px solid rgba(56, 189, 248, 0.24);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(56, 189, 248, 0.06), rgba(34, 197, 94, 0.03)), #090d11;
+      overflow-x: auto;
+      margin-bottom: 24px;
+    }
+
+    .stage-flow-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 16px;
+      border-bottom: 1px solid rgba(56, 189, 248, 0.15);
+    }
+
+    .stage-flow-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font: 600 13px/1 var(--sans);
+      color: var(--cyan);
+    }
+
+    .stage-flow-map {
+      position: relative;
+      min-height: 220px;
+      min-width: 900px;
+      padding: 24px;
+    }
+
+    .stage-flow-map svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .stage-flow-map svg path {
+      fill: none;
+      stroke: url(#stageFlowGrad);
+      stroke-width: 2;
+      stroke-dasharray: 6 4;
+      animation: flowDash 1.5s linear infinite;
+    }
+
+    @keyframes flowDash {
+      to { stroke-dashoffset: -20; }
+    }
+
+    .stage-flow-node {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 10px;
+      align-items: center;
+      width: 180px;
+      min-height: 90px;
+      padding: 12px;
+      border: 1px solid rgba(34, 197, 94, 0.4);
+      border-radius: 8px;
+      background: rgba(16, 20, 24, 0.95);
+    }
+
+    .stage-flow-node .node-orb {
+      width: 42px;
+      height: 42px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      border: 2px solid var(--accent);
+      font: 700 12px var(--mono);
+      color: var(--accent);
+    }
+
+    .stage-flow-node .node-copy strong {
+      display: block;
+      font: 600 13px/1.3 var(--sans);
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .stage-flow-node .node-copy span {
+      font: 400 11px/1.3 var(--sans);
+      color: var(--muted);
+    }
+
+    /* Linear topology: 5 nodes in a row */
+    .stage-flow[data-topology="linear"] .stage-flow-node:nth-child(2) { left: 10%; top: 50%; }
+    .stage-flow[data-topology="linear"] .stage-flow-node:nth-child(3) { left: 30%; top: 50%; }
+    .stage-flow[data-topology="linear"] .stage-flow-node:nth-child(4) { left: 50%; top: 50%; }
+    .stage-flow[data-topology="linear"] .stage-flow-node:nth-child(5) { left: 70%; top: 50%; }
+    .stage-flow[data-topology="linear"] .stage-flow-node:nth-child(6) { left: 90%; top: 50%; }
+
+    /* Fan-out topology: like existing signal-flow */
+    .stage-flow[data-topology="fanout"] .stage-flow-node:nth-child(2) { left: 10%; top: 50%; }
+    .stage-flow[data-topology="fanout"] .stage-flow-node:nth-child(3) { left: 31%; top: 50%; }
+    .stage-flow[data-topology="fanout"] .stage-flow-node:nth-child(4) { left: 58%; top: 18%; }
+    .stage-flow[data-topology="fanout"] .stage-flow-node:nth-child(5) { left: 58%; top: 50%; }
+    .stage-flow[data-topology="fanout"] .stage-flow-node:nth-child(6) { left: 58%; top: 82%; }
+    .stage-flow[data-topology="fanout"] .stage-flow-node:nth-child(7) { left: 86%; top: 50%; }
+
     @media (max-width: 1200px) {
       .comparison-grid-3col {
         grid-template-columns: 1fr;
@@ -3993,30 +4100,26 @@
                   </div>
                 </div>
 
-                <div class="single-version-demo">
-                  <div class="version-card-large">
-                    <div class="version-header">
-                      <span class="version-badge v3">V3</span>
-                      <strong>Skill 路由</strong>
+                <div class="stage-flow" data-topology="linear">
+                  <div class="stage-flow-head">
+                    <div class="stage-flow-title">
+                      <span class="signal-pulse" aria-hidden="true"></span>
+                      <span>Skill 路由流程</span>
                     </div>
-                    <div class="version-body-large">
-                      <div class="demo-section">
-                        <h5>🎯 路由逻辑</h5>
-                        <p>根据 <code>task_type = signature_debug</code> 自动命中 <strong>签名排查 Skill</strong></p>
-                      </div>
-                      <div class="demo-section">
-                        <h5>📖 加载 SOP</h5>
-                        <p>从 <code>signature_debug/SKILL.md</code> 加载 15 步排查 SOP：<br>
-                        1. 检查参数是否按字典序排序<br>
-                        2. 验证 timestamp 格式<br>
-                        3. 确认签名算法...</p>
-                      </div>
-                      <div class="demo-section">
-                        <h5>✅ 效果</h5>
-                        <p>Agent 回答遵循标准 SOP，不再凭空猜测</p>
-                      </div>
-                    </div>
-                    <button class="details-btn" onclick="alert('V3 白盒细节：\n- task_type: signature_debug\n- skill_path: signature_debug/SKILL.md\n- sop_steps: 15')">查看细节 ▼</button>
+                  </div>
+                  <div class="stage-flow-map">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <defs><linearGradient id="stageFlowGrad0" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
+                      <path d="M 10 50 C 16 50, 24 50, 30 50"/>
+                      <path d="M 30 50 C 36 50, 44 50, 50 50"/>
+                      <path d="M 50 50 C 56 50, 64 50, 70 50"/>
+                      <path d="M 70 50 C 76 50, 84 50, 90 50"/>
+                    </svg>
+                    <div class="stage-flow-node" style="left:10%;top:50%"><div class="node-orb">IN</div><div class="node-copy"><strong>字段齐全</strong><span>Schema 校验通过</span></div></div>
+                    <div class="stage-flow-node" style="left:30%;top:50%"><div class="node-orb">AI</div><div class="node-copy"><strong>识别 task_type</strong><span>signature_debug</span></div></div>
+                    <div class="stage-flow-node" style="left:50%;top:50%"><div class="node-orb">SKILL</div><div class="node-copy"><strong>Skill 路由</strong><span>匹配签名排查 Skill</span></div></div>
+                    <div class="stage-flow-node" style="left:70%;top:50%"><div class="node-orb">SOP</div><div class="node-copy"><strong>加载 SOP</strong><span>15 步排查流程</span></div></div>
+                    <div class="stage-flow-node" style="left:90%;top:50%"><div class="node-orb">OUT</div><div class="node-copy"><strong>标准化回答</strong><span>遵循 SOP 执行</span></div></div>
                   </div>
                 </div>
 
@@ -4026,35 +4129,123 @@
                 </div>
               </div>
 
-              <!-- Stage 3-6: 类似结构（暂时简化） -->
+              <!-- Stage 3-6 with flow diagrams -->
               <div class="stage-panel" data-stage="3">
                 <div class="stage-header">
                   <h3>阶段 3：文档检索（V4）</h3>
-                  <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">从知识库检索《签名规范》等文档，回答有据可查</p>
+                  <div class="stage-scenario">
+                    <strong>前提：</strong>字段已补全，Schema 校验通过
+                    <br><strong>能力：</strong>从知识库检索文档依据，回答有据可查
+                  </div>
                 </div>
-                <div class="placeholder-demo">
-                  <p>🚧 V4 演示内容待完善...</p>
-                  <button class="details-btn" onclick="alert('V4 白盒细节：\n- 文档检索：3 个匹配\n- 来源：签名规范.md\n- 相关度：0.85')">查看细节 ▼</button>
+
+                <div class="stage-flow" data-topology="fanout">
+                  <div class="stage-flow-head">
+                    <div class="stage-flow-title">
+                      <span class="signal-pulse" aria-hidden="true"></span>
+                      <span>文档检索路由</span>
+                    </div>
+                  </div>
+                  <div class="stage-flow-map">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <defs><linearGradient id="stageFlowGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
+                      <path d="M 10 50 C 18 50, 23 50, 31 50"/>
+                      <path d="M 31 50 C 42 50, 45 18, 58 18"/>
+                      <path d="M 31 50 C 42 50, 48 50, 58 50"/>
+                      <path d="M 31 50 C 42 50, 45 82, 58 82"/>
+                      <path d="M 58 18 C 72 18, 73 50, 86 50"/>
+                      <path d="M 58 50 C 70 50, 76 50, 86 50"/>
+                      <path d="M 58 82 C 72 82, 73 50, 86 50"/>
+                    </svg>
+                    <div class="stage-flow-node" style="left:10%;top:50%"><div class="node-orb">IN</div><div class="node-copy"><strong>用户输入</strong><span>字段已补全</span></div></div>
+                    <div class="stage-flow-node" style="left:31%;top:50%"><div class="node-orb">AI</div><div class="node-copy"><strong>意图判断</strong><span>signature_debug</span></div></div>
+                    <div class="stage-flow-node" style="left:58%;top:18%"><div class="node-orb">PKG</div><div class="node-copy"><strong>本地包检索</strong><span>FAQ + 错误码 + SOP</span></div></div>
+                    <div class="stage-flow-node" style="left:58%;top:50%"><div class="node-orb">GH</div><div class="node-copy"><strong>GitHub llm-wiki</strong><span>1400+ 文档段</span></div></div>
+                    <div class="stage-flow-node" style="left:58%;top:82%"><div class="node-orb">SEC</div><div class="node-copy"><strong>安全/范围边界</strong><span>appsecret 检测</span></div></div>
+                    <div class="stage-flow-node" style="left:86%;top:50%"><div class="node-orb">OUT</div><div class="node-copy"><strong>返回依据</strong><span>带文档来源的回答</span></div></div>
+                  </div>
+                </div>
+
+                <div class="stage-insights">
+                  <h4>💡 核心价值</h4>
+                  <p>回答前先找文档依据（本地优先 → 远程兜底），减少编造。引用来源让用户可以验证。</p>
                 </div>
               </div>
 
               <div class="stage-panel" data-stage="4">
                 <div class="stage-header">
                   <h3>阶段 4：工具调用（V5）</h3>
-                  <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">调用签名检查工具验证参数排序、timestamp 等</p>
+                  <div class="stage-scenario">
+                    <strong>前提：</strong>字段齐全 + 文档已检索
+                    <br><strong>能力：</strong>调用确定性工具验证，不靠 LLM 猜测
+                  </div>
                 </div>
-                <div class="placeholder-demo">
-                  <p>🚧 V5 演示内容待完善...</p>
+
+                <div class="stage-flow" data-topology="linear">
+                  <div class="stage-flow-head">
+                    <div class="stage-flow-title">
+                      <span class="signal-pulse" aria-hidden="true"></span>
+                      <span>工具调用链</span>
+                    </div>
+                  </div>
+                  <div class="stage-flow-map">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <defs><linearGradient id="stageFlowGrad2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
+                      <path d="M 10 50 C 16 50, 24 50, 30 50"/>
+                      <path d="M 30 50 C 36 50, 44 50, 50 50"/>
+                      <path d="M 50 50 C 56 50, 64 50, 70 50"/>
+                      <path d="M 70 50 C 76 50, 84 50, 90 50"/>
+                    </svg>
+                    <div class="stage-flow-node" style="left:10%;top:50%"><div class="node-orb">IN</div><div class="node-copy"><strong>字段齐全</strong><span>5 个必填字段已收集</span></div></div>
+                    <div class="stage-flow-node" style="left:30%;top:50%"><div class="node-orb">T1</div><div class="node-copy"><strong>参数排序检查</strong><span>字典序验证</span></div></div>
+                    <div class="stage-flow-node" style="left:50%;top:50%"><div class="node-orb">T2</div><div class="node-copy"><strong>timestamp 校验</strong><span>格式 + 有效期</span></div></div>
+                    <div class="stage-flow-node" style="left:70%;top:50%"><div class="node-orb">T3</div><div class="node-copy"><strong>错误码查询</strong><span>匹配错误码文档</span></div></div>
+                    <div class="stage-flow-node" style="left:90%;top:50%"><div class="node-orb">OUT</div><div class="node-copy"><strong>综合结论</strong><span>工具验证 + 建议</span></div></div>
+                  </div>
+                </div>
+
+                <div class="stage-insights">
+                  <h4>💡 核心价值</h4>
+                  <p>用确定性工具验证参数排序、时间戳、错误码，而不是让 LLM 凭文字描述猜测问题所在。</p>
                 </div>
               </div>
 
               <div class="stage-panel" data-stage="5">
                 <div class="stage-header">
                   <h3>阶段 5：Agent Loop（V6）</h3>
-                  <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">Observe → Think → Act → Observe → Answer 完整闭环</p>
+                  <div class="stage-scenario">
+                    <strong>能力：</strong>Observe → Think → Act → Observe → Answer 形成闭环
+                    <br><strong>特点：</strong>多轮对话自动推进，直到问题解决
+                  </div>
                 </div>
-                <div class="placeholder-demo">
-                  <p>🚧 V6 演示内容待完善...</p>
+
+                <div class="stage-flow" data-topology="linear">
+                  <div class="stage-flow-head">
+                    <div class="stage-flow-title">
+                      <span class="signal-pulse" aria-hidden="true"></span>
+                      <span>Agent Loop 闭环</span>
+                    </div>
+                  </div>
+                  <div class="stage-flow-map">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <defs><linearGradient id="stageFlowGrad3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
+                      <path d="M 10 50 C 16 50, 24 50, 30 50"/>
+                      <path d="M 30 50 C 36 50, 44 50, 50 50"/>
+                      <path d="M 50 50 C 56 50, 64 50, 70 50"/>
+                      <path d="M 70 50 C 76 50, 84 50, 90 50"/>
+                      <path d="M 70 60 C 70 80, 30 80, 30 60" style="stroke-dasharray: 4 3; opacity: 0.5;"/>
+                    </svg>
+                    <div class="stage-flow-node" style="left:10%;top:50%"><div class="node-orb">OBS</div><div class="node-copy"><strong>Observe</strong><span>收到用户输入</span></div></div>
+                    <div class="stage-flow-node" style="left:30%;top:50%"><div class="node-orb">THK</div><div class="node-copy"><strong>Think</strong><span>识别任务 + 校验</span></div></div>
+                    <div class="stage-flow-node" style="left:50%;top:50%"><div class="node-orb">ACT</div><div class="node-copy"><strong>Act</strong><span>检索 + 工具调用</span></div></div>
+                    <div class="stage-flow-node" style="left:70%;top:50%"><div class="node-orb">OBS</div><div class="node-copy"><strong>Observe</strong><span>工具返回结果</span></div></div>
+                    <div class="stage-flow-node" style="left:90%;top:50%"><div class="node-orb">ANS</div><div class="node-copy"><strong>Answer</strong><span>生成排查结论</span></div></div>
+                  </div>
+                </div>
+
+                <div class="stage-insights">
+                  <h4>💡 核心价值</h4>
+                  <p>把识别、校验、检索、工具串成闭环。缺字段时自动追问 → 补充后继续 → 直到给出结论。Loop 可多次循环。</p>
                 </div>
               </div>
 
@@ -4063,13 +4254,36 @@
                   <h3>阶段 6：安全边界（V7）</h3>
                   <div class="stage-scenario">
                     <strong>特殊输入：</strong>"我想要 appsecret"
+                    <br><strong>能力：</strong>敏感信息检测 + 安全阻断 + 人工闸门
                   </div>
                 </div>
-                <div class="placeholder-demo">
-                  <p>🚧 V7 演示内容待完善...</p>
-                  <p style="color: var(--red); font-size: 13px; margin-top: 12px;">
-                    🛡️ 检测到敏感信息查询 → 触发人工闸门 → 拒绝执行
-                  </p>
+
+                <div class="stage-flow" data-topology="linear">
+                  <div class="stage-flow-head">
+                    <div class="stage-flow-title">
+                      <span class="signal-pulse" aria-hidden="true"></span>
+                      <span>安全边界拦截流程</span>
+                    </div>
+                  </div>
+                  <div class="stage-flow-map">
+                    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                      <defs><linearGradient id="stageFlowGrad4" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.3"/><stop offset="50%" stop-color="#ef4444"/><stop offset="100%" stop-color="#f59e0b"/></linearGradient></defs>
+                      <path d="M 10 50 C 16 50, 24 50, 30 50" style="stroke: url(#stageFlowGrad4);"/>
+                      <path d="M 30 50 C 36 50, 44 50, 50 50" style="stroke: url(#stageFlowGrad4);"/>
+                      <path d="M 50 50 C 56 50, 64 50, 70 50" style="stroke: url(#stageFlowGrad4);"/>
+                      <path d="M 70 50 C 76 50, 84 50, 90 50" style="stroke: url(#stageFlowGrad4);"/>
+                    </svg>
+                    <div class="stage-flow-node" style="left:10%;top:50%;border-color:rgba(239,68,68,0.6)"><div class="node-orb" style="border-color:var(--red);color:var(--red)">IN</div><div class="node-copy"><strong>用户输入</strong><span>包含 appsecret</span></div></div>
+                    <div class="stage-flow-node" style="left:30%;top:50%;border-color:rgba(239,68,68,0.6)"><div class="node-orb" style="border-color:var(--red);color:var(--red)">SEC</div><div class="node-copy"><strong>敏感信息检测</strong><span>security_flags 标记</span></div></div>
+                    <div class="stage-flow-node" style="left:50%;top:50%;border-color:rgba(239,68,68,0.6)"><div class="node-orb" style="border-color:var(--red);color:var(--red)">GATE</div><div class="node-copy"><strong>安全闸门</strong><span>validate() → blocked</span></div></div>
+                    <div class="stage-flow-node" style="left:70%;top:50%;border-color:rgba(245,158,11,0.6)"><div class="node-orb" style="border-color:var(--amber);color:var(--amber)">MASK</div><div class="node-copy"><strong>脱敏处理</strong><span>不进入 LLM 上下文</span></div></div>
+                    <div class="stage-flow-node" style="left:90%;top:50%;border-color:rgba(245,158,11,0.6)"><div class="node-orb" style="border-color:var(--amber);color:var(--amber)">OUT</div><div class="node-copy"><strong>安全提示</strong><span>引导用户移除密钥</span></div></div>
+                  </div>
+                </div>
+
+                <div class="stage-insights">
+                  <h4>💡 核心价值</h4>
+                  <p>在执行前拦截敏感信息（appsecret 不进入 LLM），触发人工闸门而不是自动处理凭证请求。安全 > 功能。</p>
                 </div>
               </div>
 
