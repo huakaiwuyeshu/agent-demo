@@ -812,10 +812,11 @@
 
     .stage-flow-map svg path {
       fill: none;
-      stroke: url(#stageFlowGrad);
-      stroke-width: 2;
-      stroke-dasharray: 6 4;
-      animation: flowDash 1.5s linear infinite;
+      stroke: var(--cyan);
+      stroke-width: 2.5;
+      stroke-dasharray: 8 5;
+      stroke-linecap: round;
+      animation: flowDash 1.2s linear infinite;
     }
 
     @keyframes flowDash {
@@ -4109,7 +4110,7 @@
                   </div>
                   <div class="stage-flow-map">
                     <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <defs><linearGradient id="stageFlowGrad0" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
+                      <defs><linearGradient id="stageFlowGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
                       <path d="M 10 50 C 16 50, 24 50, 30 50"/>
                       <path d="M 30 50 C 36 50, 44 50, 50 50"/>
                       <path d="M 50 50 C 56 50, 64 50, 70 50"/>
@@ -4190,7 +4191,7 @@
                   </div>
                   <div class="stage-flow-map">
                     <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <defs><linearGradient id="stageFlowGrad2" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
+                      <defs><linearGradient id="stageFlowGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
                       <path d="M 10 50 C 16 50, 24 50, 30 50"/>
                       <path d="M 30 50 C 36 50, 44 50, 50 50"/>
                       <path d="M 50 50 C 56 50, 64 50, 70 50"/>
@@ -4228,12 +4229,12 @@
                   </div>
                   <div class="stage-flow-map">
                     <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-                      <defs><linearGradient id="stageFlowGrad3" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
+                      <defs><linearGradient id="stageFlowGrad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#38bdf8" stop-opacity="0.3"/><stop offset="50%" stop-color="#38bdf8"/><stop offset="100%" stop-color="#22c55e"/></linearGradient></defs>
                       <path d="M 10 50 C 16 50, 24 50, 30 50"/>
                       <path d="M 30 50 C 36 50, 44 50, 50 50"/>
                       <path d="M 50 50 C 56 50, 64 50, 70 50"/>
                       <path d="M 70 50 C 76 50, 84 50, 90 50"/>
-                      <path d="M 70 60 C 70 80, 30 80, 30 60" style="stroke-dasharray: 4 3; opacity: 0.5;"/>
+                      <path d="M 70 60 C 70 80, 30 80, 30 60" style="opacity: 0.5;"/>
                     </svg>
                     <div class="stage-flow-node" style="left:10%;top:50%"><div class="node-orb">OBS</div><div class="node-copy"><strong>Observe</strong><span>收到用户输入</span></div></div>
                     <div class="stage-flow-node" style="left:30%;top:50%"><div class="node-orb">THK</div><div class="node-copy"><strong>Think</strong><span>识别任务 + 校验</span></div></div>
