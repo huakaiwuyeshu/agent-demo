@@ -375,6 +375,414 @@
       overflow: hidden;
     }
 
+    /* Stage-based Experience Prototype (方案 A+C) */
+    .stage-experience-prototype {
+      padding: 24px;
+      background: rgba(7, 10, 13, 0.6);
+      border-bottom: 2px solid var(--line-strong);
+    }
+
+    /* Story Guide */
+    .story-guide {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .story-guide h2 {
+      margin: 0 0 12px 0;
+      font-size: 22px;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .story-guide p {
+      margin: 0;
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* Stage Navigation */
+    .stage-nav {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 32px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .stage-btn {
+      min-width: 140px;
+      min-height: 72px;
+      padding: 12px 16px;
+      border: 2px solid var(--line);
+      border-radius: 8px;
+      background: rgba(16, 20, 24, 0.8);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .stage-btn:hover {
+      border-color: var(--cyan);
+      background: rgba(56, 189, 248, 0.08);
+      transform: translateY(-2px);
+    }
+
+    .stage-btn.active {
+      border-color: var(--cyan);
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.15), rgba(34, 197, 94, 0.08));
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.25);
+    }
+
+    .stage-btn.active::before {
+      content: "";
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, var(--cyan), var(--accent));
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    .stage-num {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(56, 189, 248, 0.15);
+      font: 600 16px var(--mono);
+      color: var(--cyan);
+      flex-shrink: 0;
+    }
+
+    .stage-btn.active .stage-num {
+      background: var(--cyan);
+      color: white;
+    }
+
+    .stage-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      text-align: left;
+    }
+
+    .stage-info strong {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .stage-info small {
+      font-size: 11px;
+      color: var(--quiet);
+    }
+
+    /* Stage Content */
+    .stage-content {
+      position: relative;
+    }
+
+    .stage-panel {
+      display: none;
+    }
+
+    .stage-panel.active {
+      display: block;
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .stage-header {
+      margin-bottom: 24px;
+    }
+
+    .stage-header h3 {
+      margin: 0 0 12px 0;
+      font-size: 20px;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .stage-scenario {
+      padding: 12px 16px;
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.08);
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .stage-scenario strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .stage-scenario span {
+      color: var(--cyan);
+      font-weight: 500;
+    }
+
+    /* 3-column comparison grid */
+    .comparison-grid-3col {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .version-card-stage {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(16, 20, 24, 0.9);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: all 0.3s;
+    }
+
+    .version-card-stage:hover {
+      border-color: var(--cyan);
+      box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+      transform: translateY(-2px);
+    }
+
+    .version-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .version-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 4px;
+      font: 600 12px var(--mono);
+      color: white;
+    }
+
+    .version-badge.v0 { background: rgba(239, 68, 68, 0.9); }
+    .version-badge.v1 { background: rgba(251, 146, 60, 0.9); }
+    .version-badge.v2 { background: rgba(245, 158, 11, 0.9); }
+    .version-badge.v3 { background: rgba(34, 197, 94, 0.9); }
+    .version-badge.v4 { background: rgba(16, 185, 129, 0.9); }
+    .version-badge.v5 { background: rgba(56, 189, 248, 0.9); }
+    .version-badge.v6 { background: rgba(99, 102, 241, 0.9); }
+    .version-badge.v7 { background: rgba(168, 85, 247, 0.9); }
+
+    .version-header strong {
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .version-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .response-text {
+      padding: 12px;
+      border-radius: 6px;
+      background: rgba(7, 10, 13, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.1);
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .version-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .version-tags span {
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .tag-positive {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent);
+    }
+
+    .tag-negative {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+
+    .tag-warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--amber);
+    }
+
+    .details-btn {
+      min-height: 36px;
+      padding: 0 12px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--cyan);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .details-btn:hover {
+      background: rgba(56, 189, 248, 0.1);
+      border-color: var(--cyan);
+    }
+
+    /* Stage Insights */
+    .stage-insights {
+      padding: 20px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, rgba(56, 189, 248, 0.08), rgba(34, 197, 94, 0.06));
+      border: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .stage-insights h4 {
+      margin: 0 0 12px 0;
+      font-size: 16px;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .stage-insights ul {
+      margin: 0;
+      padding-left: 20px;
+      list-style: none;
+    }
+
+    .stage-insights li {
+      margin-bottom: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+      position: relative;
+      padding-left: 8px;
+    }
+
+    .stage-insights li::before {
+      content: "→";
+      position: absolute;
+      left: -12px;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .stage-insights strong {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .stage-insights p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    /* Single Version Demo */
+    .single-version-demo {
+      margin-bottom: 24px;
+    }
+
+    .version-card-large {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(16, 20, 24, 0.9);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .version-body-large {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .demo-section {
+      padding: 16px;
+      border-radius: 6px;
+      background: rgba(7, 10, 13, 0.9);
+      border: 1px solid rgba(56, 189, 248, 0.1);
+    }
+
+    .demo-section h5 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+      color: var(--cyan);
+      font-weight: 600;
+    }
+
+    .demo-section p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--muted);
+    }
+
+    .demo-section code {
+      padding: 2px 6px;
+      border-radius: 3px;
+      background: rgba(56, 189, 248, 0.1);
+      color: var(--cyan);
+      font: 500 12px var(--mono);
+    }
+
+    /* Placeholder Demo */
+    .placeholder-demo {
+      padding: 40px;
+      text-align: center;
+      border: 2px dashed var(--line);
+      border-radius: 8px;
+      background: rgba(7, 10, 13, 0.5);
+      margin-bottom: 24px;
+    }
+
+    .placeholder-demo p {
+      margin: 0 0 16px 0;
+      font-size: 16px;
+      color: var(--quiet);
+    }
+
+    @media (max-width: 1200px) {
+      .comparison-grid-3col {
+        grid-template-columns: 1fr;
+      }
+
+      .stage-nav {
+        flex-wrap: wrap;
+      }
+
+      .stage-btn {
+        min-width: calc(50% - 6px);
+      }
+    }
+
     .workspace-head {
       display: flex;
       justify-content: space-between;
@@ -3265,40 +3673,40 @@
           <div class="flow-detail-card">
             <div class="flow-detail-head">
               <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
-              <strong>记忆系统层级</strong>
+              <strong>记忆系统：为什么不让 LLM 重复问</strong>
             </div>
             <div class="flow-detail-body">
               <div class="flow-detail-row">
-                <span class="flow-detail-icon">💬</span>
+                <span class="flow-detail-icon">🎯</span>
                 <div class="flow-detail-text">
-                  <strong>对话历史</strong>
-                  <span>Session 内最近 20 轮对话（刷新页面可恢复）</span>
+                  <strong>核心价值</strong>
+                  <span>自动记住用户提供的信息，跨轮合并字段 → 用户说过一次 appid 就不用再问，避免重复收集</span>
                 </div>
               </div>
               <div class="flow-detail-row">
-                <span class="flow-detail-icon">📋</span>
+                <span class="flow-detail-icon">🧠</span>
                 <div class="flow-detail-text">
-                  <strong>任务上下文</strong>
-                  <span>当前任务类型 + 状态 + 缺失字段</span>
-                </div>
-              </div>
-              <div class="flow-detail-row">
-                <span class="flow-detail-icon">🔖</span>
-                <div class="flow-detail-text">
-                  <strong>字段累积</strong>
-                  <span>自动提取并记住 appid、error_code 等关键信息</span>
+                  <strong>结构化记忆 vs Prompt 拼接</strong>
+                  <span>代码存储字段（appid、error_code 等）并自动合并，比把历史对话全塞给 LLM 更精准且省 token</span>
                 </div>
               </div>
               <div class="flow-detail-row">
                 <span class="flow-detail-icon">📚</span>
                 <div class="flow-detail-text">
-                  <strong>历史案例库</strong>
-                  <span>类似问题自动检索，最多保留 100 个历史任务</span>
+                  <strong>短期 + 长期双层记忆</strong>
+                  <span>短期：Session 内累积字段（刷新可恢复）| 长期：TF-IDF 检索历史案例（类似问题自动参考解决方案）</span>
+                </div>
+              </div>
+              <div class="flow-detail-row">
+                <span class="flow-detail-icon">⚡</span>
+                <div class="flow-detail-text">
+                  <strong>增量补全</strong>
+                  <span>第 1 轮给 appid → 第 2 轮给 error_code → 自动合并 → 字段齐全后直接执行，无需用户重复提供</span>
                 </div>
               </div>
             </div>
             <div class="flow-detail-foot">
-              💾 localStorage 持久化，24 小时有效期
+              💾 短期记忆：20 轮对话 + 字段累积（24h localStorage）| 📚 长期记忆：100 个历史任务（TF-IDF 检索）
             </div>
           </div>
 
@@ -3306,40 +3714,40 @@
           <div class="flow-detail-card">
             <div class="flow-detail-head">
               <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
-              <strong>必填字段校验</strong>
+              <strong>Schema 校验：为什么不让 LLM 猜</strong>
             </div>
             <div class="flow-detail-body">
               <div class="flow-detail-row">
-                <span class="flow-detail-icon">🔐</span>
+                <span class="flow-detail-icon">🎯</span>
                 <div class="flow-detail-text">
-                  <strong>签名排查</strong>
-                  <span>需要提供接口路径、appid、签名原始串、错误码、时间</span>
+                  <strong>核心价值</strong>
+                  <span>用代码规则保证字段齐全，而不是让 LLM 猜测或事后补救 → 一次性收集完整信息，避免多轮试错</span>
                 </div>
               </div>
               <div class="flow-detail-row">
-                <span class="flow-detail-icon">📞</span>
+                <span class="flow-detail-icon">⚖️</span>
                 <div class="flow-detail-text">
-                  <strong>回调排查</strong>
-                  <span>需要提供回调地址、订单号、触发动作、请求时间</span>
+                  <strong>规则驱动 vs LLM 判断</strong>
+                  <span>代码检查"缺少 X、Y、Z"（快速、精确、零成本）比 LLM 判断"问题太模糊"（慢、主观、烧钱）更可靠</span>
                 </div>
               </div>
               <div class="flow-detail-row">
-                <span class="flow-detail-icon">❓</span>
+                <span class="flow-detail-icon">🔍</span>
                 <div class="flow-detail-text">
-                  <strong>字段问答</strong>
-                  <span>只需字段名（如 "info 是什么意思"）</span>
+                  <strong>精准追问</strong>
+                  <span>不问"能否更明确？"而问"还缺少：接口路径、签名前字符串、错误码" → 用户一次补全</span>
                 </div>
               </div>
               <div class="flow-detail-row">
-                <span class="flow-detail-icon">🚫</span>
+                <span class="flow-detail-icon">🛡️</span>
                 <div class="flow-detail-text">
-                  <strong>密钥申请</strong>
-                  <span>触发安全闸门，引导联系运营（不直接返回密钥）</span>
+                  <strong>执行保证 + 安全门控</strong>
+                  <span>字段不全 = 拒绝调用工具（防止报错）+ 敏感信息请求直接阻断（appsecret 查询拦截）</span>
                 </div>
               </div>
             </div>
             <div class="flow-detail-foot">
-              ✅ 字段齐全可执行 ⚠ 缺字段精准追问 🚫  超范围阻断
+              📋 签名排查 5 字段 | 📞 回调排查 4 字段 | ❓ 字段问答 1 字段 | 🚫 密钥申请触发人工闸门
             </div>
           </div>
 
@@ -3347,40 +3755,40 @@
           <div class="flow-detail-card">
             <div class="flow-detail-head">
               <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <strong>Skill 标准化 SOP</strong>
+              <strong>Skill SOP：为什么不让 LLM 现编</strong>
             </div>
             <div class="flow-detail-body">
               <div class="flow-detail-row">
-                <span class="flow-detail-icon">📝</span>
+                <span class="flow-detail-icon">🎯</span>
                 <div class="flow-detail-text">
-                  <strong>签名排查 SOP</strong>
-                  <span>15 步标准流程（参数排序 → timestamp → 签名算法）</span>
-                </div>
-              </div>
-              <div class="flow-detail-row">
-                <span class="flow-detail-icon">📝</span>
-                <div class="flow-detail-text">
-                  <strong>回调排查 SOP</strong>
-                  <span>9 步标准流程（地址可达性 → 超时 → 重试机制）</span>
+                  <strong>核心价值</strong>
+                  <span>把专家经验固化为标准 SOP 文档，注入 LLM Context → 保证回答质量一致，而不是每次现场发挥</span>
                 </div>
               </div>
               <div class="flow-detail-row">
                 <span class="flow-detail-icon">📖</span>
                 <div class="flow-detail-text">
-                  <strong>字段解释模板</strong>
-                  <span>从文档库检索字段含义、枚举值、使用场景</span>
+                  <strong>SOP 文档 vs 零样本推理</strong>
+                  <span>15 步签名排查 SOP（参数排序 → timestamp → 签名算法）比让 LLM 凭通用知识猜测更专业可靠</span>
                 </div>
               </div>
               <div class="flow-detail-row">
-                <span class="flow-detail-icon">📊</span>
+                <span class="flow-detail-icon">🔄</span>
                 <div class="flow-detail-text">
-                  <strong>数据分析工具</strong>
-                  <span>撤单趋势、原因分布、渠道对比、异常检测</span>
+                  <strong>持续迭代</strong>
+                  <span>SOP 文档可编辑、可版本管理 → 发现新问题立即更新 SOP，所有 Agent 回答自动升级（无需重新训练）</span>
+                </div>
+              </div>
+              <div class="flow-detail-row">
+                <span class="flow-detail-icon">⚖️</span>
+                <div class="flow-detail-text">
+                  <strong>质量保证</strong>
+                  <span>按 task_type 自动路由到对应 Skill → 签名问题必走签名 SOP、回调问题必走回调 SOP，避免答非所问</span>
                 </div>
               </div>
             </div>
             <div class="flow-detail-foot">
-              🎯 按 task_type 自动路由到对应 Skill
+              📝 签名排查 15 步 SOP | 📞 回调排查 9 步 SOP | 📖 字段解释模板 | 📊 数据分析工具
             </div>
           </div>
         </div>
@@ -3426,12 +3834,7 @@
     </section>
 
     <div class="layout" id="experienceLayout" style="display:none">
-      <aside class="sidebar" aria-label="版本导航">
-        <span class="pill">能力层验证</span>
-        <div class="version-list" role="tablist" aria-label="Agent 版本"></div>
-      </aside>
-
-      <main class="main" id="main">
+      <main class="main" id="main" style="grid-column: 1 / -1;">
         <section class="overview" aria-label="运行指标">
           <div class="metric">
             <span>当前版本</span>
@@ -3456,6 +3859,229 @@
         </section>
 
         <section class="workspace">
+          <!-- Stage-based Experience (NEW: 方案 A+C) -->
+          <div class="stage-experience-prototype">
+
+            <!-- Story Guide -->
+            <div class="story-guide">
+              <h2>🎯 Agent 能力演进：从黑盒到白盒</h2>
+              <p>同一个签名排查问题，不同版本如何处理？点击下方阶段，体验 Agent 的渐进式升级。</p>
+            </div>
+
+            <!-- Stage Navigation -->
+            <div class="stage-nav">
+              <button class="stage-btn active" data-stage="1">
+                <span class="stage-num">1</span>
+                <div class="stage-info">
+                  <strong>意图识别</strong>
+                  <small>V0/V1/V2 对比</small>
+                </div>
+              </button>
+              <button class="stage-btn" data-stage="2">
+                <span class="stage-num">2</span>
+                <div class="stage-info">
+                  <strong>Skill 路由</strong>
+                  <small>V3 演示</small>
+                </div>
+              </button>
+              <button class="stage-btn" data-stage="3">
+                <span class="stage-num">3</span>
+                <div class="stage-info">
+                  <strong>文档检索</strong>
+                  <small>V4 演示</small>
+                </div>
+              </button>
+              <button class="stage-btn" data-stage="4">
+                <span class="stage-num">4</span>
+                <div class="stage-info">
+                  <strong>工具调用</strong>
+                  <small>V5 演示</small>
+                </div>
+              </button>
+              <button class="stage-btn" data-stage="5">
+                <span class="stage-num">5</span>
+                <div class="stage-info">
+                  <strong>Agent Loop</strong>
+                  <small>V6 演示</small>
+                </div>
+              </button>
+              <button class="stage-btn" data-stage="6">
+                <span class="stage-num">6</span>
+                <div class="stage-info">
+                  <strong>安全边界</strong>
+                  <small>V7 演示</small>
+                </div>
+              </button>
+            </div>
+
+            <!-- Stage Content (Dynamic) -->
+            <div class="stage-content" id="stageContent">
+
+              <!-- Stage 1: V0/V1/V2 对比 -->
+              <div class="stage-panel active" data-stage="1">
+                <div class="stage-header">
+                  <h3>阶段 1：意图识别与字段校验</h3>
+                  <div class="stage-scenario">
+                    <strong>用户输入：</strong>
+                    <span>"你们接口一直签名失败，帮忙看下"</span>
+                  </div>
+                </div>
+
+                <div class="comparison-grid-3col">
+                  <div class="version-card-stage">
+                    <div class="version-header">
+                      <span class="version-badge v0">V0</span>
+                      <strong>普通问答</strong>
+                    </div>
+                    <div class="version-body">
+                      <p class="response-text">"请提供接口路径、appid、签名前字符串、错误码和请求时间，以便帮您排查问题。"</p>
+                      <div class="version-tags">
+                        <span class="tag-negative">❌ 泛泛要求</span>
+                        <span class="tag-negative">❌ 未结构化</span>
+                      </div>
+                    </div>
+                    <button class="details-btn" onclick="alert('V0 白盒细节：\n- 无任务识别\n- 无字段提取\n- 直接 LLM 回答')">查看细节 ▼</button>
+                  </div>
+
+                  <div class="version-card-stage">
+                    <div class="version-header">
+                      <span class="version-badge v1">V1</span>
+                      <strong>任务识别</strong>
+                    </div>
+                    <div class="version-body">
+                      <p class="response-text">"识别为：signature_debug<br>提取字段：{}（空）<br>需要补充：appid、error_code..."</p>
+                      <div class="version-tags">
+                        <span class="tag-positive">✅ 识别任务</span>
+                        <span class="tag-warning">⚠ 未校验字段</span>
+                      </div>
+                    </div>
+                    <button class="details-btn" onclick="alert('V1 白盒细节：\n- task_type: signature_debug\n- fields: {}\n- 但不知道缺什么')">查看细节 ▼</button>
+                  </div>
+
+                  <div class="version-card-stage">
+                    <div class="version-header">
+                      <span class="version-badge v2">V2</span>
+                      <strong>Schema 校验</strong>
+                    </div>
+                    <div class="version-body">
+                      <p class="response-text">"还缺少关键信息：<br>• api_path（接口路径）<br>• appid<br>• raw_sign_string<br>• error_code<br>• request_time"</p>
+                      <div class="version-tags">
+                        <span class="tag-positive">✅ 精准追问</span>
+                        <span class="tag-positive">✅ 列出必填项</span>
+                      </div>
+                    </div>
+                    <button class="details-btn" onclick="alert('V2 白盒细节：\n- status: needs_clarification\n- missing_fields: [api_path, appid, raw_sign_string, error_code, request_time]')">查看细节 ▼</button>
+                  </div>
+                </div>
+
+                <div class="stage-insights">
+                  <h4>💡 对比要点</h4>
+                  <ul>
+                    <li><strong>V0 → V1</strong>：从"黑盒回答"到"识别出这是签名排查任务"</li>
+                    <li><strong>V1 → V2</strong>：从"知道是什么任务"到"精准指出缺少哪 5 个字段"</li>
+                  </ul>
+                </div>
+              </div>
+
+              <!-- Stage 2: V3 Skill 路由 -->
+              <div class="stage-panel" data-stage="2">
+                <div class="stage-header">
+                  <h3>阶段 2：Skill 路由</h3>
+                  <div class="stage-scenario">
+                    <strong>前提：</strong>用户已补充所有必填字段
+                    <br><strong>输入：</strong>"appid=app_001, error_code=SIGN_INVALID, api_path=/open/order..."
+                  </div>
+                </div>
+
+                <div class="single-version-demo">
+                  <div class="version-card-large">
+                    <div class="version-header">
+                      <span class="version-badge v3">V3</span>
+                      <strong>Skill 路由</strong>
+                    </div>
+                    <div class="version-body-large">
+                      <div class="demo-section">
+                        <h5>🎯 路由逻辑</h5>
+                        <p>根据 <code>task_type = signature_debug</code> 自动命中 <strong>签名排查 Skill</strong></p>
+                      </div>
+                      <div class="demo-section">
+                        <h5>📖 加载 SOP</h5>
+                        <p>从 <code>signature_debug/SKILL.md</code> 加载 15 步排查 SOP：<br>
+                        1. 检查参数是否按字典序排序<br>
+                        2. 验证 timestamp 格式<br>
+                        3. 确认签名算法...</p>
+                      </div>
+                      <div class="demo-section">
+                        <h5>✅ 效果</h5>
+                        <p>Agent 回答遵循标准 SOP，不再凭空猜测</p>
+                      </div>
+                    </div>
+                    <button class="details-btn" onclick="alert('V3 白盒细节：\n- task_type: signature_debug\n- skill_path: signature_debug/SKILL.md\n- sop_steps: 15')">查看细节 ▼</button>
+                  </div>
+                </div>
+
+                <div class="stage-insights">
+                  <h4>💡 核心价值</h4>
+                  <p>把专家经验固化为 SOP 文档，保证回答质量一致，而不是每次让 LLM 现场发挥。</p>
+                </div>
+              </div>
+
+              <!-- Stage 3-6: 类似结构（暂时简化） -->
+              <div class="stage-panel" data-stage="3">
+                <div class="stage-header">
+                  <h3>阶段 3：文档检索（V4）</h3>
+                  <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">从知识库检索《签名规范》等文档，回答有据可查</p>
+                </div>
+                <div class="placeholder-demo">
+                  <p>🚧 V4 演示内容待完善...</p>
+                  <button class="details-btn" onclick="alert('V4 白盒细节：\n- 文档检索：3 个匹配\n- 来源：签名规范.md\n- 相关度：0.85')">查看细节 ▼</button>
+                </div>
+              </div>
+
+              <div class="stage-panel" data-stage="4">
+                <div class="stage-header">
+                  <h3>阶段 4：工具调用（V5）</h3>
+                  <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">调用签名检查工具验证参数排序、timestamp 等</p>
+                </div>
+                <div class="placeholder-demo">
+                  <p>🚧 V5 演示内容待完善...</p>
+                </div>
+              </div>
+
+              <div class="stage-panel" data-stage="5">
+                <div class="stage-header">
+                  <h3>阶段 5：Agent Loop（V6）</h3>
+                  <p style="color: var(--muted); font-size: 14px; margin-top: 8px;">Observe → Think → Act → Observe → Answer 完整闭环</p>
+                </div>
+                <div class="placeholder-demo">
+                  <p>🚧 V6 演示内容待完善...</p>
+                </div>
+              </div>
+
+              <div class="stage-panel" data-stage="6">
+                <div class="stage-header">
+                  <h3>阶段 6：安全边界（V7）</h3>
+                  <div class="stage-scenario">
+                    <strong>特殊输入：</strong>"我想要 appsecret"
+                  </div>
+                </div>
+                <div class="placeholder-demo">
+                  <p>🚧 V7 演示内容待完善...</p>
+                  <p style="color: var(--red); font-size: 13px; margin-top: 12px;">
+                    🛡️ 检测到敏感信息查询 → 触发人工闸门 → 拒绝执行
+                  </p>
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+
+          <hr style="margin: 40px 0; border: 1px dashed var(--line);">
+          <p style="text-align: center; color: var(--quiet); font-size: 14px; margin-bottom: 20px;">
+            ⬇️ 以下是原有的单版本详细视图（保留）
+          </p>
+
           <div class="workspace-head">
             <div class="workspace-title">
               <h2 id="versionName">真实 Agent 对话</h2>
@@ -7088,6 +7714,29 @@
     // Keep existing experience mode initialization ready
     renderVersionButtons();
     renderExampleButtons();
+
+    // === Stage-based Experience Interactions (方案 A+C) ===
+    const stageBtns = document.querySelectorAll('.stage-btn');
+    const stagePanels = document.querySelectorAll('.stage-panel');
+
+    stageBtns.forEach(btn => {
+      btn.addEventListener('click', function() {
+        const stageNum = this.dataset.stage;
+
+        // Update button active state
+        stageBtns.forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        // Update panel visibility
+        stagePanels.forEach(panel => {
+          if (panel.dataset.stage === stageNum) {
+            panel.classList.add('active');
+          } else {
+            panel.classList.remove('active');
+          }
+        });
+      });
+    });
 
     // === Badcase Feedback Functions ===
 
