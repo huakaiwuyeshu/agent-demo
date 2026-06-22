@@ -1342,6 +1342,239 @@
       font-weight: 700;
     }
 
+    .memory-action-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px;
+      height: 20px;
+      padding: 0;
+      border: none;
+      border-radius: 4px;
+      background: rgba(100, 116, 139, 0.1);
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .memory-action-btn:hover {
+      background: rgba(56, 189, 248, 0.15);
+      color: rgba(56, 189, 248, 0.9);
+    }
+
+    .memory-action-btn:active {
+      transform: scale(0.95);
+    }
+
+    .memory-action-btn svg {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .reset-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-radius: 6px;
+      background: rgba(245, 158, 11, 0.08);
+      color: var(--amber);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .reset-btn:hover {
+      border-color: rgba(245, 158, 11, 0.5);
+      background: rgba(245, 158, 11, 0.15);
+    }
+
+    .reset-btn svg {
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+    }
+
+    /* Badcase Feedback */
+    .message-feedback {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(64, 80, 98, 0.24);
+    }
+
+    .agent-msg.agent:hover .message-feedback {
+      display: flex;
+    }
+
+    .feedback-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-height: 28px;
+      padding: 0 10px;
+      border: 1px solid rgba(64, 80, 98, 0.4);
+      border-radius: 6px;
+      background: rgba(7, 10, 13, 0.6);
+      color: var(--muted);
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .feedback-btn:hover {
+      border-color: rgba(56, 189, 248, 0.5);
+      background: rgba(56, 189, 248, 0.08);
+      color: var(--cyan);
+    }
+
+    .feedback-btn svg {
+      width: 14px;
+      height: 14px;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 2;
+    }
+
+    .feedback-btn.positive:hover {
+      border-color: rgba(34, 197, 94, 0.5);
+      background: rgba(34, 197, 94, 0.08);
+      color: var(--accent);
+    }
+
+    .feedback-btn.negative:hover {
+      border-color: rgba(245, 158, 11, 0.5);
+      background: rgba(245, 158, 11, 0.08);
+      color: var(--amber);
+    }
+
+    .badcase-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9999;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .badcase-modal.visible {
+      display: flex;
+    }
+
+    .badcase-modal-content {
+      width: 90%;
+      max-width: 500px;
+      background: var(--panel-bg);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 12px;
+      padding: 24px;
+    }
+
+    .badcase-modal h3 {
+      margin: 0 0 16px 0;
+      color: var(--ink);
+      font-size: 18px;
+    }
+
+    .badcase-form-group {
+      margin-bottom: 16px;
+    }
+
+    .badcase-form-group label {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .badcase-form-group select,
+    .badcase-form-group textarea {
+      width: 100%;
+      padding: 8px 12px;
+      background: rgba(7, 10, 13, 0.6);
+      border: 1px solid rgba(64, 80, 98, 0.4);
+      border-radius: 6px;
+      color: var(--ink);
+      font-size: 13px;
+      font-family: var(--sans);
+    }
+
+    .badcase-form-group textarea {
+      min-height: 80px;
+      resize: vertical;
+    }
+
+    .badcase-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+
+    .badcase-actions button {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .badcase-actions .cancel-btn {
+      border: 1px solid rgba(64, 80, 98, 0.4);
+      background: rgba(7, 10, 13, 0.6);
+      color: var(--muted);
+    }
+
+    .badcase-actions .cancel-btn:hover {
+      border-color: rgba(64, 80, 98, 0.6);
+      background: rgba(7, 10, 13, 0.8);
+    }
+
+    .badcase-actions .submit-btn {
+      border: 1px solid rgba(56, 189, 248, 0.5);
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--cyan);
+    }
+
+    .badcase-actions .submit-btn:hover {
+      border-color: rgba(56, 189, 248, 0.7);
+      background: rgba(56, 189, 248, 0.25);
+    }
+
     .signal-flow {
       display: none;
       border: 1px solid rgba(56, 189, 248, 0.24);
@@ -2493,6 +2726,131 @@
       background: rgba(56, 189, 248, 0.02);
     }
 
+    /* Auxiliary systems bar */
+    .flow-auxiliary-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 12px 0;
+    }
+
+    .flow-auxiliary-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+      border-radius: 8px;
+      background: rgba(139, 92, 246, 0.04);
+    }
+
+    .flow-auxiliary-icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      background: rgba(139, 92, 246, 0.15);
+      color: rgba(167, 139, 250, 0.9);
+    }
+
+    .flow-auxiliary-icon svg {
+      width: 18px;
+      height: 18px;
+      stroke-width: 2;
+    }
+
+    .flow-auxiliary-content {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .flow-auxiliary-content strong {
+      font: 600 13px/1 "Space Grotesk", var(--sans);
+      color: rgba(167, 139, 250, 0.95);
+    }
+
+    .flow-auxiliary-content span {
+      font: 400 11px/1.4 var(--sans);
+      color: var(--muted);
+    }
+
+    /* Detailed explanation modules */
+    .flow-detail-modules {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 16px 0;
+    }
+
+    .flow-detail-card {
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, rgba(56, 189, 248, 0.06), rgba(34, 197, 94, 0.04)),
+        rgba(7, 10, 13, 0.6);
+      overflow: hidden;
+    }
+
+    .flow-detail-head {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: rgba(56, 189, 248, 0.08);
+      border-bottom: 1px solid rgba(56, 189, 248, 0.2);
+    }
+
+    .flow-detail-head svg {
+      width: 16px;
+      height: 16px;
+      color: var(--cyan);
+      stroke-width: 2;
+      flex-shrink: 0;
+    }
+
+    .flow-detail-head strong {
+      font: 600 12px/1 "Space Grotesk", var(--sans);
+      color: var(--cyan);
+    }
+
+    .flow-detail-body {
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .flow-detail-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 8px;
+      align-items: start;
+    }
+
+    .flow-detail-label {
+      font: 600 11px/1.4 var(--mono);
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .flow-detail-value {
+      font: 400 10px/1.4 var(--sans);
+      color: var(--muted);
+    }
+
+    .flow-detail-foot {
+      padding: 8px 12px;
+      background: rgba(56, 189, 248, 0.04);
+      border-top: 1px solid rgba(56, 189, 248, 0.1);
+      font: 500 10px/1 var(--sans);
+      color: var(--quiet);
+      text-align: center;
+    }
+
     /* Value bar */
     .flow-value-bar {
       display: grid;
@@ -2891,6 +3249,96 @@
 
         <!-- Feedback loop -->
         <div class="flow-feedback-bar">对话反馈 / SOP 迭代 / Skill 持续优化 / 知识库更新</div>
+
+        <!-- Detailed explanation modules (3-column grid) -->
+        <div class="flow-detail-modules">
+          <!-- Module A: Memory System Architecture -->
+          <div class="flow-detail-card">
+            <div class="flow-detail-head">
+              <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+              <strong>记忆系统层级</strong>
+            </div>
+            <div class="flow-detail-body">
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">Short-term Memory</span>
+                <span class="flow-detail-value">Session 内对话历史（最多 20 轮）</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">Task Context</span>
+                <span class="flow-detail-value">当前任务状态（type / status / missing）</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">Field Memory</span>
+                <span class="flow-detail-value">累积字段（appid / error_code 等）</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">Long-term Memory</span>
+                <span class="flow-detail-value">历史任务库（TF-IDF 检索，最多 100 个）</span>
+              </div>
+            </div>
+            <div class="flow-detail-foot">
+              持久化：localStorage（24h 时效）
+            </div>
+          </div>
+
+          <!-- Module B: Schema Validation Details -->
+          <div class="flow-detail-card">
+            <div class="flow-detail-head">
+              <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+              <strong>Schema 必填字段明细</strong>
+            </div>
+            <div class="flow-detail-body">
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">signature_debug</span>
+                <span class="flow-detail-value">api_path, appid, raw_sign_string, error_code, request_time</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">callback_debug</span>
+                <span class="flow-detail-value">callback_url, order_id, trigger_action, request_time</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">api_field_qa</span>
+                <span class="flow-detail-value">field_name（其他字段可选）</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">credential_request</span>
+                <span class="flow-detail-value">appid（触发人工闸门，不返回密钥）</span>
+              </div>
+            </div>
+            <div class="flow-detail-foot">
+              校验结果：executable / needs_clarification / blocked
+            </div>
+          </div>
+
+          <!-- Module C: Skill SOP Sources -->
+          <div class="flow-detail-card">
+            <div class="flow-detail-head">
+              <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              <strong>Skill SOP 来源</strong>
+            </div>
+            <div class="flow-detail-body">
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">signature_debug</span>
+                <span class="flow-detail-value">signature_debug/SKILL.md（15 步签名排查 SOP）</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">callback_debug</span>
+                <span class="flow-detail-value">callback_debug/SKILL.md（9 步回调排查 SOP）</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">api_field_qa</span>
+                <span class="flow-detail-value">api_field_qa/SKILL.md（字段解释模板）</span>
+              </div>
+              <div class="flow-detail-item">
+                <span class="flow-detail-label">volume_analysis</span>
+                <span class="flow-detail-value">内置数据分析工具（趋势 / 分布 / 异常检测）</span>
+              </div>
+            </div>
+            <div class="flow-detail-foot">
+              加载方式：字典映射 SKILL_SOPS[task_type]
+            </div>
+          </div>
+        </div>
 
         <!-- Core value bar -->
         <div class="flow-value-bar">
@@ -3350,7 +3798,7 @@
       const hits = {
         signature_debug: hitCount(message, ["签名", "验签", "SIGN_INVALID", "sign_invalid", "鉴权"]),
         callback_debug: hitCount(message, ["回调", "callback", "CALLBACK_TIMEOUT", "没有收到"]),
-        api_field_qa: hitCount(message, ["字段", "什么意思", "含义", "枚举"]),
+        api_field_qa: hitCount(message, ["字段", "什么意思", "含义", "枚举", "标识", "是什么"]),
         credential_request: hitCount(message, ["appid", "appsecret", "凭证", "密钥"])
       };
 
@@ -4161,7 +4609,8 @@
       "api", "接口", "接入", "联调", "appid", "appsecret", "签名", "验签",
       "回调", "callback", "错误码", "字段", "参数", "单量", "成功率", "失败率",
       "订单", "order_id", "timestamp", "SIGN_INVALID", "info", "detailinfo",
-      "撤单", "投诉", "退单", "数据", "分析", "趋势", "统计", "渠道"
+      "撤单", "投诉", "退单", "数据", "分析", "趋势", "统计", "渠道",
+      "应用标识", "标识"
     ];
 
     function evaluateInputGate(message) {
@@ -4638,20 +5087,135 @@
         intent: run.draft.task_type,
         status: run.session.taskState,
         missing: run.validation.missing_fields,
-        fields: compactFields(run.draft.fields)
+        fields: compactFields(run.draft.fields),
+        timestamp: Date.now()
       };
-      state.conversation.turns = state.conversation.turns.concat(turn).slice(-5);
+      state.conversation.turns = state.conversation.turns.concat(turn).slice(-20);
       state.conversation.memory = run.session.memory;
       state.conversation.activeTask = run.session.activeTask;
+      saveSession();
+    }
+
+    function saveSession() {
+      try {
+        const session = {
+          sessionId: state.conversation.sessionId,
+          createdAt: state.conversation.createdAt || Date.now(),
+          lastActiveAt: Date.now(),
+          turns: state.conversation.turns,
+          memory: state.conversation.memory,
+          activeTask: state.conversation.activeTask
+        };
+        localStorage.setItem('agent_demo_session', JSON.stringify(session));
+      } catch (e) {
+        console.warn('[Memory] Failed to save session:', e);
+      }
+    }
+
+    function loadSession() {
+      try {
+        const saved = localStorage.getItem('agent_demo_session');
+        if (!saved) return null;
+
+        const session = JSON.parse(saved);
+        const now = Date.now();
+        const age = now - (session.lastActiveAt || session.createdAt || 0);
+        const MAX_AGE = 24 * 60 * 60 * 1000; // 24 hours
+
+        if (age > MAX_AGE) {
+          console.info('[Memory] Session expired, clearing...');
+          localStorage.removeItem('agent_demo_session');
+          return null;
+        }
+
+        console.info(`[Memory] Session restored (age: ${Math.round(age / 1000 / 60)} min)`);
+        return session;
+      } catch (e) {
+        console.warn('[Memory] Failed to load session:', e);
+        return null;
+      }
     }
 
     function resetConversation() {
       state.conversation = {
         sessionId: `api-demo-${Date.now().toString(36)}`,
+        createdAt: Date.now(),
         turns: [],
         memory: {},
         activeTask: null
       };
+      localStorage.removeItem('agent_demo_session');
+      console.info('[Memory] Session reset');
+    }
+
+    function confirmResetSession() {
+      if (confirm('确认重置会话？\n\n这将清空所有对话历史、任务上下文和字段记忆。\n刷新页面也无法恢复。')) {
+        resetConversation();
+        sessionBoard.classList.remove('visible');
+        sessionBoard.innerHTML = '';
+        showToast('会话已重置', 'success');
+      }
+    }
+
+    function editField(fieldName) {
+      const currentValue = state.conversation.memory.fields?.[fieldName] || '';
+      const newValue = prompt(`编辑字段「${label(fieldName)}」：`, currentValue);
+
+      if (newValue !== null && newValue.trim() !== currentValue) {
+        if (newValue.trim() === '') {
+          deleteField(fieldName);
+        } else {
+          if (!state.conversation.memory.fields) {
+            state.conversation.memory.fields = {};
+          }
+          state.conversation.memory.fields[fieldName] = newValue.trim();
+          saveSession();
+          showToast(`已更新：${label(fieldName)}`, 'success');
+
+          // Refresh Session Board
+          if (state.lastRunResult) {
+            showSessionBoard(state.lastRunResult, state.selectedVersion);
+          }
+        }
+      }
+    }
+
+    function deleteField(fieldName) {
+      if (confirm(`确认删除字段「${label(fieldName)}」？`)) {
+        if (state.conversation.memory.fields) {
+          delete state.conversation.memory.fields[fieldName];
+          saveSession();
+          showToast(`已删除：${label(fieldName)}`, 'success');
+
+          // Refresh Session Board
+          if (state.lastRunResult) {
+            showSessionBoard(state.lastRunResult, state.selectedVersion);
+          }
+        }
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+      toast.textContent = message;
+      toast.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 12px 20px;
+        background: ${type === 'success' ? 'rgba(34, 197, 94, 0.9)' : 'rgba(56, 189, 248, 0.9)'};
+        color: white;
+        border-radius: 8px;
+        font-size: 14px;
+        z-index: 10000;
+        animation: slideIn 0.3s ease-out;
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => {
+        toast.style.animation = 'slideOut 0.3s ease-out';
+        setTimeout(() => toast.remove(), 300);
+      }, 2000);
     }
 
     function buildSignalFlow(draft, validation, docs, remoteDocs, remotePending) {
@@ -5033,20 +5597,24 @@
       };
       const lastTurn = state.conversation.turns[state.conversation.turns.length - 1];
       const shouldPreviewCurrent = !lastTurn || lastTurn.text !== currentTurn.text || lastTurn.status !== currentTurn.status;
-      const turns = (shouldPreviewCurrent ? state.conversation.turns.concat(currentTurn) : state.conversation.turns).slice(-4);
+      const turns = (shouldPreviewCurrent ? state.conversation.turns.concat(currentTurn) : state.conversation.turns).slice(-5);
 
       sessionBoard.classList.add("visible");
       sessionBoard.innerHTML = `
         <div class="session-head">
           <div class="session-title">
             <span class="signal-pulse" aria-hidden="true"></span>
-            <span>会话状态 / 任务状态</span>
+            <span>会话状态 / Session Board</span>
           </div>
           <div class="session-summary">${escapeHtml(versionId.toUpperCase())} 复用当前会话 · 第 ${session.turnCount} 轮 · ${escapeHtml(session.taskState)} · ${escapeHtml(session.contextUsed.used ? "已使用上下文" : "本轮独立识别")}</div>
+          <button class="reset-btn" onclick="confirmResetSession()" title="重置会话" type="button">
+            <svg viewBox="0 0 24 24" style="width: 16px; height: 16px;"><path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/><path d="M16 21h5v-5"/></svg>
+            重置会话
+          </button>
         </div>
         <div class="session-grid">
           <section class="session-card">
-            <h3>多轮会话</h3>
+            <h3>Short-term Memory（对话历史）</h3>
             <ul class="turn-list">
               ${turns.map((turn) => `
                 <li class="turn-item">
@@ -5057,22 +5625,39 @@
                 </li>
               `).join("")}
             </ul>
+            <div style="color: var(--muted); font-size: 11px; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
+              最近 5 轮（保留 20 轮）
+            </div>
           </section>
           <section class="session-card">
-            <h3>当前任务</h3>
+            <h3>Task Context（任务上下文）</h3>
             <ul class="task-state-list">
               <li><strong>任务类型</strong><span>${escapeHtml(activeTask ? taskLabel(activeTask.task_type) : "暂无")}</span></li>
               <li><strong>任务状态</strong><span>${escapeHtml(session.taskState)}</span></li>
               <li><strong>待补信息</strong><span>${escapeHtml(run.validation.missing_fields.map(label).join("、") || "无")}</span></li>
               <li><strong>上下文</strong><span>${escapeHtml(session.contextUsed.reason)}</span></li>
             </ul>
+            <div style="color: var(--muted); font-size: 11px; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
+              当前任务状态快照
+            </div>
           </section>
           <section class="session-card">
-            <h3>已记住字段</h3>
+            <h3>Field Memory（字段记忆）</h3>
             <div class="memory-chips">
               ${fieldEntries.length ? fieldEntries.map(([field, value]) => `
-                <span class="memory-chip"><strong>${escapeHtml(label(field))}</strong>${escapeHtml(value)}</span>
+                <span class="memory-chip">
+                  <strong>${escapeHtml(label(field))}</strong>${escapeHtml(value)}
+                  <button class="memory-action-btn" onclick="editField('${escapeHtml(field)}')" title="编辑" type="button">
+                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px;"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4Z"/></svg>
+                  </button>
+                  <button class="memory-action-btn" onclick="deleteField('${escapeHtml(field)}')" title="删除" type="button">
+                    <svg viewBox="0 0 24 24" style="width: 12px; height: 12px;"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                  </button>
+                </span>
               `).join("") : `<span class="memory-chip"><strong>暂无</strong>等待有效业务输入</span>`}
+            </div>
+            <div style="color: var(--muted); font-size: 11px; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
+              Session 内累积（支持编辑/删除）
             </div>
           </section>
         </div>
@@ -6098,12 +6683,30 @@
     }
 
     function renderAgentChatView() {
-      let html = state.agentMessages.map(msg => {
+      let html = state.agentMessages.map((msg, index) => {
         const roleLabel = msg.role === "user" ? "你" : "Agent";
-        return `<div class="agent-msg ${msg.role}">` +
+        let msgHtml = `<div class="agent-msg ${msg.role}">` +
           `<div class="agent-msg-role">${roleLabel}</div>` +
-          `<div class="agent-msg-bubble">${escapeHtml(msg.text)}</div>` +
-          `</div>`;
+          `<div class="agent-msg-bubble">${escapeHtml(msg.text)}</div>`;
+
+        // Add feedback buttons for agent messages
+        if (msg.role === "agent") {
+          msgHtml += `<div class="message-feedback">
+            <button class="feedback-btn positive" onclick="submitFeedback(${index}, 'positive')" title="有帮助">
+              <svg viewBox="0 0 24 24"><path d="M7 10v12"/><path d="M15 5.88 14 10h5.83a2 2 0 0 1 1.92 2.56l-2.33 8A2 2 0 0 1 17.5 22H4a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2h2.76a2 2 0 0 0 1.79-1.11L12 2h0a3.13 3.13 0 0 1 3 3.88Z"/></svg>
+            </button>
+            <button class="feedback-btn negative" onclick="submitFeedback(${index}, 'negative')" title="没帮助">
+              <svg viewBox="0 0 24 24"><path d="M17 14V2"/><path d="M9 18.12 10 14H4.17a2 2 0 0 1-1.92-2.56l2.33-8A2 2 0 0 1 6.5 2H20a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.76a2 2 0 0 0-1.79 1.11L14 22h0a3.13 3.13 0 0 1-3-3.88Z"/></svg>
+            </button>
+            <button class="feedback-btn" onclick="openBadcaseModal(${index})" title="报告问题">
+              <svg viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+              <span>报告问题</span>
+            </button>
+          </div>`;
+        }
+
+        msgHtml += `</div>`;
+        return msgHtml;
       }).join("");
       if (state.agentProcessing) {
         html += `<div class="agent-msg agent"><div class="agent-msg-role">Agent</div><div class="typing-dots"><span></span><span></span><span></span></div></div>`;
@@ -6155,6 +6758,10 @@
       if (sop) {
         prompt += `\n\n${sop}`;
       }
+
+      // Inject long-term memory (similar historical tasks)
+      const currentTask = { task_type: draft.task_type, fields: draft.fields };
+      prompt = injectLongTermMemoryToPrompt(prompt, currentTask);
 
       // Inject knowledge retrieval results
       if (docs.length) {
@@ -6388,6 +6995,18 @@
 
     // === Initialization ===
 
+    // Load session from localStorage
+    const savedSession = loadSession();
+    if (savedSession) {
+      state.conversation = {
+        sessionId: savedSession.sessionId,
+        createdAt: savedSession.createdAt,
+        turns: savedSession.turns || [],
+        memory: savedSession.memory || {},
+        activeTask: savedSession.activeTask || null
+      };
+    }
+
     const initialExample = demoExamples.find((item) => item.id === "complete") || demoExamples[0];
     state.scenario = initialExample.id;
     messageInput.value = initialExample.message;
@@ -6398,21 +7017,301 @@
     loadRemoteWikiDocs();
     loadCancellationData();
 
-    // Start in Agent mode with welcome message
-    appendAgentMsg("agent",
-      "你好，我是 API 接入 Agent。我可以帮你处理以下问题：\n\n" +
-      "1. 签名失败排查（如 SIGN_INVALID 错误）\n" +
-      "2. 回调异常排查（如回调超时、未送达）\n" +
-      "3. API 字段/错误码含义查询\n" +
-      "4. 新 API 接入流程咨询\n" +
-      "5. 接口单量分析\n\n" +
-      "请问有什么可以帮助你的？"
-    );
+    // Start in Agent mode with welcome message (only if no saved session)
+    if (!savedSession || savedSession.turns.length === 0) {
+      appendAgentMsg("agent",
+        "你好，我是 API 接入 Agent。我可以帮你处理以下问题：\n\n" +
+        "1. 签名失败排查（如 SIGN_INVALID 错误）\n" +
+        "2. 回调异常排查（如回调超时、未送达）\n" +
+        "3. API 字段/错误码含义查询\n" +
+        "4. 新 API 接入流程咨询\n" +
+        "5. 接口单量分析\n\n" +
+        "请问有什么可以帮助你的？"
+      );
+    } else {
+      // Restore previous conversation
+      savedSession.turns.forEach(turn => {
+        appendAgentMsg("user", turn.text);
+        // Show agent response if available (could be stored separately in the future)
+      });
+    }
     switchMode("agent");
 
     // Keep existing experience mode initialization ready
     renderVersionButtons();
     renderExampleButtons();
+
+    // === Badcase Feedback Functions ===
+
+    function submitFeedback(index, type) {
+      const feedback = {
+        id: `feedback-${Date.now()}`,
+        timestamp: Date.now(),
+        message_index: index,
+        message_text: state.agentMessages[index]?.text || '',
+        type: type, // 'positive' or 'negative'
+        context: state.lastRunResult ? {
+          task_type: state.lastRunResult.draft.task_type,
+          fields: state.lastRunResult.draft.fields,
+          status: state.lastRunResult.validation.status
+        } : null
+      };
+
+      saveBadcaseFeedback(feedback);
+      showToast(type === 'positive' ? '感谢你的反馈！' : '感谢反馈，我们会改进', 'success');
+    }
+
+    function openBadcaseModal(index) {
+      state.badcaseModalIndex = index;
+      document.getElementById('badcaseModal').classList.add('visible');
+    }
+
+    function closeBadcaseModal() {
+      document.getElementById('badcaseModal').classList.remove('visible');
+      document.getElementById('badcaseType').value = 'wrong_intent';
+      document.getElementById('badcaseComment').value = '';
+    }
+
+    function submitBadcaseReport() {
+      const index = state.badcaseModalIndex;
+      const type = document.getElementById('badcaseType').value;
+      const comment = document.getElementById('badcaseComment').value.trim();
+
+      if (!comment) {
+        alert('请填写问题描述');
+        return;
+      }
+
+      const badcase = {
+        id: `badcase-${Date.now()}`,
+        timestamp: Date.now(),
+        message_index: index,
+        message_text: state.agentMessages[index]?.text || '',
+        type: type,
+        comment: comment,
+        context: state.lastRunResult ? {
+          task_type: state.lastRunResult.draft.task_type,
+          fields: state.lastRunResult.draft.fields,
+          confidence: state.lastRunResult.draft.confidence || 0,
+          status: state.lastRunResult.validation.status,
+          missing_fields: state.lastRunResult.validation.missing_fields
+        } : null
+      };
+
+      saveBadcaseFeedback(badcase);
+      closeBadcaseModal();
+      showToast('问题已提交，感谢你的反馈！', 'success');
+    }
+
+    function saveBadcaseFeedback(feedback) {
+      try {
+        const key = 'agent_badcases';
+        const stored = localStorage.getItem(key);
+        const list = stored ? JSON.parse(stored) : [];
+        list.unshift(feedback);
+        localStorage.setItem(key, JSON.stringify(list.slice(0, 100))); // Keep max 100
+        console.info('[Badcase] Feedback saved:', feedback.type);
+      } catch (e) {
+        console.warn('[Badcase] Failed to save feedback:', e);
+      }
+    }
+
+    function loadBadcaseFeedbacks() {
+      try {
+        const stored = localStorage.getItem('agent_badcases');
+        return stored ? JSON.parse(stored) : [];
+      } catch (e) {
+        console.warn('[Badcase] Failed to load feedbacks:', e);
+        return [];
+      }
+    }
+
+    // Initialize badcase state
+    state.badcaseModalIndex = null;
+
+    // === Long-term Memory Functions ===
+
+    function loadLongTermMemory() {
+      try {
+        const stored = localStorage.getItem('agent_long_term_memory');
+        if (!stored) {
+          return {
+            userId: 'default_user',
+            createdAt: Date.now(),
+            lastUpdatedAt: Date.now(),
+            historicalTasks: [],
+            commonPatterns: {
+              frequent_tasks: [],
+              common_fields: {}
+            }
+          };
+        }
+        return JSON.parse(stored);
+      } catch (e) {
+        console.warn('[Long-term Memory] Failed to load:', e);
+        return { historicalTasks: [], commonPatterns: { frequent_tasks: [], common_fields: {} } };
+      }
+    }
+
+    function saveLongTermMemory(memory) {
+      try {
+        memory.lastUpdatedAt = Date.now();
+        localStorage.setItem('agent_long_term_memory', JSON.stringify(memory));
+        console.info('[Long-term Memory] Saved');
+      } catch (e) {
+        console.warn('[Long-term Memory] Failed to save:', e);
+      }
+    }
+
+    function addHistoricalTask(task_type, fields, resolution, notes) {
+      const memory = loadLongTermMemory();
+      const task = {
+        taskId: `task-${Date.now()}`,
+        task_type: task_type,
+        created_at: new Date().toISOString(),
+        fields: fields,
+        resolution: resolution || 'completed',
+        notes: notes || '',
+        session_count: 1
+      };
+
+      memory.historicalTasks.unshift(task);
+      memory.historicalTasks = memory.historicalTasks.slice(0, 100); // Keep max 100
+
+      // Update patterns
+      updateCommonPatterns(memory);
+      saveLongTermMemory(memory);
+
+      return task;
+    }
+
+    function updateCommonPatterns(memory) {
+      // Count task types
+      const taskCounts = {};
+      memory.historicalTasks.forEach(task => {
+        taskCounts[task.task_type] = (taskCounts[task.task_type] || 0) + 1;
+      });
+
+      memory.commonPatterns.frequent_tasks = Object.entries(taskCounts)
+        .map(([task_type, frequency]) => ({
+          task_type,
+          frequency,
+          last_seen: new Date().toISOString().split('T')[0]
+        }))
+        .sort((a, b) => b.frequency - a.frequency)
+        .slice(0, 5);
+
+      // Count common fields
+      const fieldCounts = {};
+      memory.historicalTasks.forEach(task => {
+        Object.keys(task.fields).forEach(field => {
+          fieldCounts[field] = (fieldCounts[field] || 0) + 1;
+        });
+      });
+      memory.commonPatterns.common_fields = fieldCounts;
+    }
+
+    function searchSimilarTasks(currentTask, limit = 3) {
+      const memory = loadLongTermMemory();
+      if (memory.historicalTasks.length === 0) return [];
+
+      const currentFields = Object.keys(currentTask.fields || {});
+      const currentText = JSON.stringify(currentTask.fields).toLowerCase();
+
+      const scored = memory.historicalTasks.map(task => {
+        let score = 0;
+
+        // Task type match: +50
+        if (task.task_type === currentTask.task_type) {
+          score += 50;
+        }
+
+        // Field overlap: +10 per field
+        const taskFields = Object.keys(task.fields);
+        const overlap = currentFields.filter(f => taskFields.includes(f)).length;
+        score += overlap * 10;
+
+        // Text similarity (simple token overlap)
+        const taskText = JSON.stringify(task.fields).toLowerCase();
+        const currentTokens = currentText.split(/\W+/).filter(t => t.length > 2);
+        const taskTokens = taskText.split(/\W+/).filter(t => t.length > 2);
+        const commonTokens = currentTokens.filter(t => taskTokens.includes(t)).length;
+        score += commonTokens * 5;
+
+        // Time decay (30 days half-life)
+        const ageDays = (Date.now() - new Date(task.created_at).getTime()) / (1000 * 60 * 60 * 24);
+        const decayFactor = Math.pow(0.5, ageDays / 30);
+        score *= decayFactor;
+
+        return { task, score };
+      });
+
+      return scored
+        .filter(s => s.score > 10)
+        .sort((a, b) => b.score - a.score)
+        .slice(0, limit);
+    }
+
+    function injectLongTermMemoryToPrompt(systemPrompt, currentTask) {
+      const similar = searchSimilarTasks(currentTask, 3);
+      if (similar.length === 0) return systemPrompt;
+
+      let memorySection = '\n\n## 历史相似案例参考\n';
+      similar.forEach((item, index) => {
+        const task = item.task;
+        memorySection += `${index + 1}. ${taskLabel(task.task_type)} (${task.created_at.split('T')[0]})\n`;
+        memorySection += `   字段: ${JSON.stringify(task.fields)}\n`;
+        if (task.notes) {
+          memorySection += `   解决方案: ${task.notes}\n`;
+        }
+      });
+
+      return systemPrompt + memorySection;
+    }
+
+    function exportLongTermMemory() {
+      const memory = loadLongTermMemory();
+      const blob = new Blob([JSON.stringify(memory, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `long-term-memory-${Date.now()}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('长期记忆已导出', 'success');
+    }
+
+    function clearLongTermMemory() {
+      if (confirm('确认清空长期记忆？\n\n这将删除所有历史任务和模式统计。')) {
+        localStorage.removeItem('agent_long_term_memory');
+        showToast('长期记忆已清空', 'success');
+      }
+    }
   </script>
+
+  <!-- Badcase Modal -->
+  <div id="badcaseModal" class="badcase-modal" onclick="if(event.target === this) closeBadcaseModal()">
+    <div class="badcase-modal-content">
+      <h3>🐛 报告问题</h3>
+      <div class="badcase-form-group">
+        <label for="badcaseType">问题类型</label>
+        <select id="badcaseType">
+          <option value="wrong_intent">意图识别错误</option>
+          <option value="missing_field">字段提取错误</option>
+          <option value="wrong_answer">回答不准确</option>
+          <option value="hallucination">编造信息</option>
+          <option value="other">其他问题</option>
+        </select>
+      </div>
+      <div class="badcase-form-group">
+        <label for="badcaseComment">问题描述 *</label>
+        <textarea id="badcaseComment" placeholder="请详细描述遇到的问题..."></textarea>
+      </div>
+      <div class="badcase-actions">
+        <button class="cancel-btn" onclick="closeBadcaseModal()">取消</button>
+        <button class="submit-btn" onclick="submitBadcaseReport()">提交反馈</button>
+      </div>
+    </div>
+  </div>
 </body>
 </html>

@@ -5,8 +5,8 @@ import urllib.request
 import os
 
 PORT = 8081
-LLM_ENDPOINT = "https://ai.youc.online/v1/chat/completions"
-LLM_KEY = "sk-6f6b746369741bf73f7484ccae1f4f12f6c4be05584797e568e992ad2f5c80cd"
+LLM_ENDPOINT = "https://dt.dofun.work/v1/chat/completions"
+LLM_KEY = "sk-HxV6DWBatruBgJcSMsK6PndoLz8xW3ZTpLqSawMO4SqSwR7R"
 
 
 class ProxyHandler(http.server.BaseHTTPRequestHandler):
