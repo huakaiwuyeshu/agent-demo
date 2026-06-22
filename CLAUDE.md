@@ -35,7 +35,9 @@ stop_services.bat
 
 ## Architecture
 
-### Memory System (Short-term)
+### Memory System
+
+#### Short-term Memory
 
 **Terminology** (critical - used consistently across code/UI/docs):
 - **Session**: User lifecycle from page open to close/reset (persisted to localStorage, 24h TTL)
@@ -50,6 +52,45 @@ stop_services.bat
 - `resetConversation()` - clear state + localStorage
 
 **UI Location**: Session Board (bottom panel in Agent Chat mode)
+
+#### Long-term Memory
+
+**Purpose**: Store and retrieve similar historical tasks to provide context for current queries.
+
+**Data Structure** (localStorage key: `agent_long_term_memory`):
+```javascript
+{
+  userId: "default_user",
+  historicalTasks: [  // Max 100 tasks
+    {
+      taskId: "task-1234567890",
+      task_type: "signature_debug",
+      created_at: "2026-06-22T14:30:00Z",
+      fields: { appid: "app_001", error_code: "SIGN_INVALID" },
+      resolution: "success",
+      notes: "参数未按字典序排序"
+    }
+  ],
+  commonPatterns: {
+    frequent_tasks: [{ task_type: "signature_debug", frequency: 12 }],
+    common_fields: { appid: "app_001" }
+  }
+}
+```
+
+**Core Functions**:
+- `addHistoricalTask()` - Save completed task to history
+- `searchSimilarTasks()` - TF-IDF semantic search for similar tasks (30-day decay factor)
+- `injectLongTermMemoryToPrompt()` - Append top 3 similar cases to System Prompt
+- `updateCommonPatterns()` - Track task type frequencies and common fields
+
+**Retrieval Algorithm**:
+1. Task type match: +50 points
+2. Field overlap: +10 points per shared field
+3. Text similarity: +5 points per common token (>2 chars)
+4. Time decay: score × 0.5^(days/30) (30-day half-life)
+
+**UI Actions**: Export/clear memory via Session Board
 
 ### Schema Validation & Skill Routing
 
@@ -86,7 +127,46 @@ Task type → Skill file path → Load SOP → Inject into LLM context
 **Field Extraction** (`extractTask()`): Regex patterns → structured fields
 **Schema Validation** → Check required fields
 **Skill Routing** → Load SOP for task_type
-**LLM Call** → System Prompt = Skill SOP + user fields → diagnosis
+**LLM Call** → System Prompt = Skill SOP + user fields + similar historical cases → diagnosis
+
+### Badcase Feedback System
+
+**Purpose**: Collect user feedback on Agent responses to track quality and identify improvement areas.
+
+**Data Structure** (localStorage key: `agent_badcases`):
+```javascript
+{
+  id: "badcase-1234567890",
+  timestamp: 1719000000000,
+  message_index: 3,
+  message_text: "我已识别为「签名排查」...",
+  type: "bug" | "positive" | "negative",
+  comment: "appid 没有提取出来",  // For bug reports
+  context: {
+    task_type: "signature_debug",
+    fields: { error_code: "SIGN_INVALID" },
+    status: "needs_clarification"
+  }
+}
+```
+
+**UI Components**:
+- **Feedback buttons** (hover on Agent messages): 👍 有帮助 / 👎 没帮助 / 🐛 报告问题
+- **Badcase modal**: Problem type selection + detailed description
+- **Storage**: Max 100 feedback entries in localStorage
+
+**Core Functions**:
+- `submitFeedback(index, type)` - Quick positive/negative feedback
+- `openBadcaseModal(index)` / `closeBadcaseModal()` - Modal management
+- `submitBadcaseReport()` - Submit detailed bug report with context snapshot
+- `saveBadcaseFeedback()` / `loadBadcaseFeedbacks()` - Persistence
+
+**Problem Types**:
+- `wrong_intent` - Intent recognition error
+- `missing_field` - Field extraction error
+- `wrong_answer` - Inaccurate response
+- `hallucination` - Fabricated information
+- `other` - Other issues
 
 ### Version Evolution (V0-V7)
 
@@ -105,19 +185,22 @@ All versions embedded in `web/index.html` via `versions` array:
 ## Code Structure
 
 ```
-web/index.html    - Single-file SPA (~6500 lines)
+web/index.html    - Single-file SPA (~7300 lines)
 ├─ Styles         - CSS-in-HTML, dark theme, responsive
 ├─ HTML           - Tabs: Agent Chat / Version Experience / Agent Flow / Data Analytics
 ├─ JavaScript     - Core Agent logic
 │  ├─ State management (conversation, turns, memory)
 │  ├─ Intent recognition & field extraction
 │  ├─ Schema validation & Skill routing
+│  ├─ Short-term memory (Session/Turn/Field Memory)
+│  ├─ Long-term memory (TF-IDF similarity search)
+│  ├─ Badcase feedback (👍👎🐛 buttons)
 │  ├─ Version implementations (V0-V7)
 │  ├─ UI rendering (chat, session board, flow diagram)
 │  └─ LLM integration (via proxy)
 web/proxy.py      - CORS-bypassing proxy for LLM API
 web/knowledge.js  - Embedded API documentation knowledge base
-docs/             - Design documentation
+docs/             - Design documentation (~17 files)
 ├─ memory-system-design.md        - Short-term memory architecture
 ├─ schema-skill-design.md         - Schema validation & Skill routing
 ├─ phase1-completion-summary.md   - localStorage persistence implementation
@@ -261,12 +344,31 @@ Use precise terms defined in `docs/memory-system-design.md`:
    - "appid=app_001，错误码=SIGN_INVALID，接口=/open/order，签名前字符串=xxx，时间=2026-06-15 10:00" (should be executable)
    - "我想要 appsecret" (should trigger blocked status)
 4. Check Session Board for memory persistence (refresh page, verify restoration)
-5. Use browser DevTools Console for `[Memory]` logs
+5. Test Badcase feedback: hover on Agent messages, click 👍👎🐛 buttons
+6. Test Long-term memory: complete a task, ask a similar question, verify historical cases appear in System Prompt
+7. Use browser DevTools Console for `[Memory]` / `[Badcase]` / `[Long-term Memory]` logs
+
+## Current Feature Status (Post-Restoration)
+
+✅ **Fully Implemented**:
+- localStorage persistence (24h TTL, 20-turn history)
+- Session Board optimization (terminology: Short-term Memory, Task Context, Field Memory)
+- Field editing/deletion buttons (✏️ 🗑️)
+- Reset session button
+- Badcase feedback system (👍👎🐛 buttons, modal with 5 problem types, max 100 entries)
+- Long-term memory (TF-IDF similarity search, max 100 historical tasks, 30-day decay)
+- Architecture diagram detailed explanation modules (3 cards: Memory System / Schema Validation / Skill SOP)
+- Toast notifications for user actions
 
 ## Documentation
 
 Detailed design docs in `docs/`:
 - **memory-system-design.md**: Short-term memory architecture, terminology, data structures
+- **long-term-memory-design.md**: TF-IDF similarity search, historical task storage (max 100)
+- **simple-long-term-memory-implementation.md**: Long-term memory implementation details
+- **badcase-handling-design.md**: Feedback collection design and data structure
+- **badcase-implementation-summary.md**: Badcase UI components (👍👎🐛 buttons, modal)
 - **schema-skill-design.md**: Why Schema validation exists, how Skill routing works, source of Skills
 - **phase1-completion-summary.md**: localStorage implementation, field editing, session reset
 - **flow-diagram-update-summary.md**: Agent implementation flow diagram updates
+- **flow-diagram-optimization-implementation.md**: Flow diagram terminology and layout optimization
