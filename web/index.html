@@ -3790,11 +3790,11 @@
               </div>
               <div class="flow-col-item" style="border-color: rgba(56,189,248,0.4); background: rgba(56,189,248,0.05); padding: 10px;">
                 <div style="font-size:11px; font-weight:700; color:var(--cyan); margin-bottom:6px;">四层意图识别（逐层降级）</div>
-                <div style="display:flex; flex-direction:column; gap:4px; font-size:11px; color:var(--muted);">
-                  <span>L1 关键词+正则 → 0 token, 确定性</span>
-                  <span>L2 向量相似度 → 0 token, 语义匹配</span>
-                  <span>L3 LLM Hints → 0 token, 模式兜底</span>
-                  <span style="color:var(--accent)">L4 ReAct 循环 → 5-10k tokens, 自主推理</span>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:4px 12px; font-size:11px; color:var(--muted);">
+                  <span>L1 关键词+正则 · 0 token</span>
+                  <span>L2 向量相似度 · 0 token</span>
+                  <span>L3 LLM Hints · 0 token</span>
+                  <span style="color:var(--accent)">L4 ReAct · 5-10k tokens</span>
                 </div>
               </div>
               <div class="flow-col-divider"></div>
