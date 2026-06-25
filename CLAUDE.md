@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **API 接入 Agent 演示系统** - A progressive demonstration of Agent capabilities from simple Q&A (V0) to a full business Agent (V7) with multi-turn conversations, document retrieval, and tool calling. Uses API troubleshooting scenarios (signature failures, callback issues) to showcase Agent architecture evolution.
 
-**Core Implementation**: Single-page web application (`web/index.html`, 8232 lines) with embedded JavaScript. No framework dependencies—pure hand-written Agent implementation for educational transparency.
+**Core Implementation**: Single-page web application (`web/index.html`, ~9500 lines) with embedded JavaScript. No framework dependencies—pure hand-written Agent implementation for educational transparency.
 
 ## Running the Demo
 
@@ -240,6 +240,8 @@ finalScore = score × 0.5^(days/30)  // 30-day half-life
 signature_debug: ["api_path", "appid", "raw_sign_string", "error_code", "request_time"]
 callback_debug: ["callback_url", "order_id", "trigger_action", "request_time"]
 api_field_qa: ["field_name"]
+volume_analysis: ["analysis_dimension", "analysis_scope"]
+api_onboarding: ["target_api"]
 ```
 
 **Validation States**:
@@ -469,3 +471,69 @@ Key design docs in `docs/`:
 - Production-like: single deployment artifact
 
 Use CLI for technical training, Web for product demos and real usage.
+
+## Context Compression
+
+When `agentMessages > 10`, a two-layer compression system activates:
+
+**Layer 1 (Always, 0 tokens)**: Local rule extraction from expired messages:
+- Intent chain: `签名排查(第1-3轮) → 回调排查(第4-6轮)`
+- Accumulated fields snapshot
+- Agent conclusions (last 3, 80 chars each)
+- User supplements containing field values
+
+**Layer 2 (Optional, ~500 tokens)**: LLM refinement triggered when:
+- `state.conversation.turns.length > 20` (auto)
+- User enables "深度记忆" toggle in Session Board
+
+Functions: `compressConversationContext()`, `compressWithLLM()`, `extractIntentChain()`
+
+## Observability Tab
+
+A dedicated "可观测性" tab records full decision traces for each user message:
+- Each trace entry shows: timestamp, user input, final status, error summary
+- Each step expands to: Input (full params), Output (full results), Reasoning, Decision
+- ReAct iterations appear as `react-1`, `react-2`, etc.
+
+Functions: `renderObservePanel()`, `renderObserveStep()`, `buildErrorSummary()`
+
+## Knowledge Pipeline
+
+Knowledge flows from llm-wiki → agent:
+
+```bash
+# In llm-wiki/projects/api-infra:
+python notes/ingest/parse_api_endpoints.py      # Extract per-endpoint docs from 119-page PDF markdown
+python notes/ingest/build_curated_outputs.py    # Build export package (merges detailed docs)
+
+# In agent/:
+python sync_knowledge.py                         # Sync to data/knowledge/ + web/knowledge.js
+```
+
+`parse_api_endpoints.py` extracts: endpoint path, description, request parameters (name/type/required/description), response examples.
+
+`knowledge.js` structure: `window.AGENT_DEMO_KNOWLEDGE = { api_docs, faq, error_codes, sops }`
+
+Knowledge retrieval uses `queryTerms()` which splits API paths into segments for fuzzy matching (e.g., `/api/zhwaihub/hao/search` → also searches `hao`, `search`, `hao/search`).
+
+## Data Analysis Limitations
+
+`volume_analysis` task type uses static Excel data (not real-time). The system:
+- Requires `analysis_scope` field (time trend / channel / game / all) to prevent vague queries
+- Injects `volume_analysis` SOP into system prompt warning LLM about static data
+- Uses "数据集内" phrasing instead of "最近" when describing time ranges
+
+## Deployment
+
+**Netlify** (configured via `netlify.toml`):
+- Publish directory: `web/`
+- No build step required (static SPA)
+- Auto-deploys on push to `main`
+
+## Common Editing Pitfall
+
+**Curly quote corruption**: The Edit tool sometimes converts ASCII `"` (U+0022) to Unicode curly quotes `"` (U+201C) / `"` (U+201D) when editing strings containing Chinese text. This breaks JavaScript parsing silently. After any edit involving Chinese-quoted strings, verify with:
+```bash
+node -e "const vm=require('vm'); const html=require('fs').readFileSync('web/index.html','utf-8'); const s=html.match(/<script(?![^>]*src)[^>]*>([\s\S]*?)<\/script>/g).pop().replace(/<\/?script[^>]*>/g,''); new vm.Script(s)"
+```
+If it fails, use PowerShell byte-level replacement to fix curly quotes back to ASCII in the affected function block.
