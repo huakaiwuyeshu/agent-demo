@@ -1,11 +1,59 @@
 # API 接入 Agent 多版本演进 Demo
 
-这个目录是一套用于讲解和实战演示的 Agent 框架。它用同一个 API 接入场景，演示系统如何从“普通问答”逐步演进为“可追问、可查文档、可调工具、可复盘”的业务 Agent。
+在线演示：**https://agent-demo.netlify.app** (部署后更新此链接)
+
+这个项目展示了 API 接入智能助手的完整实现，包含从规则匹配到 LLM 兜底的多层架构设计。
 
 核心演示问题：
 
 ```text
 你们接口一直签名失败，帮忙看下
+```
+
+## 功能特性
+
+- **Agent 实现流程**：可视化展示意图识别、字段提取、Schema 校验、知识检索等完整流程
+- **Agent 对话**：实时对话体验，包含思维链展示和多轮会话管理
+- **版本体验**：对比 v0-v8 共 9 个版本的架构演进
+- **可观测性**：完整的决策链路 trace，包含每步的 input/output/reasoning/decision
+
+## 快速开始
+
+### 🌐 在线访问（推荐）
+
+直接访问部署好的演示站点：**https://agent-demo.netlify.app**
+
+无需安装任何依赖，浏览器中即可体验完整功能。
+
+### 💻 本地运行
+
+**方式 1：直接打开 HTML（最简单）**
+
+```bash
+# 在浏览器中打开
+open web/index.html
+# 或者在 Windows 中
+start web/index.html
+```
+
+**方式 2：使用 Python 简易服务器**
+
+```bash
+cd web
+python -m http.server 8080
+# 访问 http://localhost:8080
+```
+
+**方式 3：使用完整 Python 应用（CLI 版本对比）**
+
+```bash
+# 对比不同版本的能力差异
+python app.py --version v0 --scenario brief  # V0: 黑盒回答
+python app.py --version v2 --scenario brief  # V2: Schema 校验
+python app.py --version v6 --scenario brief  # V6: Agent Loop
+
+# 运行所有版本（看完整演进）
+python app.py --version all --scenario complete
 ```
 
 ## 版本设计
@@ -160,3 +208,63 @@ python app.py --version v7 --scenario secret    # V7: 安全边界阻断
 - `src/versions/v6_agent_loop.py`（3.0KB，Agent Loop 实现）
 - `src/common/mock_llm.py`（意图识别正则实现）
 - `src/common/rag.py`（三层检索逻辑）
+
+## 部署
+
+### Netlify（推荐）
+
+**自动部署**：
+1. Fork 这个仓库到你的 GitHub
+2. 登录 [Netlify](https://app.netlify.com/)
+3. 点击 "Add new site" → "Import an existing project"
+4. 选择 GitHub，授权后选择 fork 的仓库
+5. 构建设置会自动从 `netlify.toml` 读取
+6. 点击 "Deploy" 即可
+
+**或使用 Netlify CLI**：
+
+```bash
+npm install -g netlify-cli
+netlify login
+netlify deploy --prod
+```
+
+### Vercel
+
+```bash
+npm install -g vercel
+vercel --prod
+```
+
+### GitHub Pages
+
+```bash
+# 推送 web 目录到 gh-pages 分支
+git subtree push --prefix web origin gh-pages
+```
+
+## 知识库更新
+
+知识库数据来源于 [llm-wiki](https://github.com/huakaiwuyeshu/llm-wiki) 项目：
+
+```bash
+# 在 llm-wiki/projects/api-infra 中
+python notes/ingest/parse_api_endpoints.py      # 提取 API 接口细节
+python notes/ingest/build_curated_outputs.py    # 构建知识包
+
+# 在 agent-demo 中
+python sync_knowledge.py                         # 同步到 web/knowledge.js
+```
+
+更新后推送到 GitHub，Netlify 会自动重新部署。
+
+## 技术栈
+
+- 纯 JavaScript（无框架依赖，单文件 SPA）
+- CSS Grid + Flexbox
+- Google Fonts (Fira Code, Fira Sans, Space Grotesk, DM Sans)
+- 远程知识库：GitHub raw CDN
+
+## License
+
+MIT
