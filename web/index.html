@@ -6092,7 +6092,15 @@
 
     function applyConversationContext(draft) {
       const activeTask = state.conversation.activeTask;
-      if (!activeTask || activeTask.status !== "waiting_for_user") return draft;
+      // Inherit fields when task is in progress OR was recently answered (same intent continuation)
+      const hasActiveTask = activeTask && (
+        activeTask.status === "waiting_for_user" ||
+        activeTask.status === "ready_with_evidence" ||
+        activeTask.status === "ready_without_evidence" ||
+        activeTask.status === "finished" ||
+        activeTask.status === "completed"
+      );
+      if (!hasActiveTask) return draft;
 
       const currentFields = compactFields(draft.fields);
       const fieldNames = Object.keys(currentFields);
@@ -8225,6 +8233,15 @@
         prompt += `\n\n${contextSummary}`;
       }
 
+      // Inject recent turns context (within window) so LLM explicitly references history
+      const recentTurns = state.conversation.turns.slice(-5);
+      if (recentTurns.length > 0) {
+        const turnsText = recentTurns.map(t =>
+          `- 第${t.index}轮：${taskLabel(t.intent)}｜${t.status === "executable" ? "已执行" : t.status === "needs_clarification" ? "追问中" : t.status}${Object.keys(t.fields || {}).length ? `｜字段：${Object.entries(t.fields).map(([k,v]) => `${label(k)}=${v}`).join("、")}` : ""}`
+        ).join("\n");
+        prompt += `\n\n## 本次会话上下文（最近 ${recentTurns.length} 轮）\n${turnsText}\n注意：回答时请结合以上会话历史，不要重复询问已知信息，可以主动引用上轮结论。`;
+      }
+
       // Inject relevant Skill SOP
       const sop = SKILL_SOPS[draft.task_type];
       if (sop) {
@@ -8484,6 +8501,17 @@
           finalStatus: validation.status,
           steps: observeSteps
         });
+
+        // Write to long-term memory after executable or clarification turns
+        if (validation.status === "executable" || validation.status === "needs_clarification") {
+          const fields = compactFields(contextualDraft.fields);
+          if (Object.keys(fields).length > 0 || validation.status === "executable") {
+            const resolution = validation.status === "executable" ? "completed" : "needs_clarification";
+            const notes = reply ? reply.slice(0, 200) : "";
+            addHistoricalTask(contextualDraft.task_type, fields, resolution, notes);
+            console.info("[Long-term Memory] Task recorded:", contextualDraft.task_type);
+          }
+        }
 
         appendAgentMsg("agent", reply, thinkingChain);
       } catch (err) {
