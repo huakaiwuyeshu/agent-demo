@@ -6343,16 +6343,16 @@
     }
 
     function clarify(draft, validation) {
-      if (validation.status === “out_of_scope”) {
-        return “这句话不属于当前 API 接入 Agent 的有效输入。\n当前 Agent 只处理：签名失败、回调异常、字段/错误码问答、凭证请求、新 API 接入、单量分析。\n你可以换成类似”/open/order/create 签名失败，错误码=SIGN_INVALID”的问题。”;
+      if (validation.status === "out_of_scope") {
+        return "这句话不属于当前 API 接入 Agent 的有效输入。\n当前 Agent 只处理：签名失败、回调异常、字段/错误码问答、凭证请求、新 API 接入、单量分析。\n你可以换成类似 /open/order/create 签名失败，错误码=SIGN_INVALID 的问题。";
       }
-      if (validation.status === “blocked”) {
-        return `这个请求触发了安全边界：${validation.blocked_reasons.join(“；”)}`;
+      if (validation.status === "blocked") {
+        return `这个请求触发了安全边界：${validation.blocked_reasons.join("；")}`;
       }
 
       // Special clarification for volume_analysis
-      if (draft.task_type === “volume_analysis” && validation.missing_fields.includes(“analysis_scope”)) {
-        return `你想看「${draft.fields.analysis_dimension || “数据”}」的哪个细分维度？
+      if (draft.task_type === "volume_analysis" && validation.missing_fields.includes("analysis_scope")) {
+        return `你想看「${draft.fields.analysis_dimension || "数据"}」的哪个细分维度？
 
 请选择（可多选）：
 1️⃣ 时间趋势 — 最近 7 天每日变化
@@ -6360,10 +6360,10 @@
 3️⃣ 游戏维度 — 按游戏品类分布
 4️⃣ 全部维度 — 一次性查看所有
 
-**示例**：”时间趋势” 或 “渠道对比 + 游戏维度” 或 “全部维度”`;
+**示例**："时间趋势" 或 "渠道对比 + 游戏维度" 或 "全部维度"`;
       }
 
-      return `我已识别为「${taskLabel(draft.task_type)}」，但还缺少阻塞信息：${validation.missing_fields.map(label).join(“、”)}。\n请补充这些信息后我再继续排查。不要发送 appsecret、密钥或完整敏感凭证。`;
+      return `我已识别为「${taskLabel(draft.task_type)}」，但还缺少阻塞信息：${validation.missing_fields.map(label).join("、")}。\n请补充这些信息后我再继续排查。不要发送 appsecret、密钥或完整敏感凭证。`;
     }
 
     function buildSessionSnapshot(draft, validation, docs, remoteDocs) {
