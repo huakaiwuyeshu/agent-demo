@@ -8401,7 +8401,43 @@
         if (validation.status === "blocked") {
           reply = "检测到您的输入中包含 appsecret 等敏感凭证。为了安全，我无法处理此请求。\n\n请移除敏感信息后重新提交，只保留 appid、接口路径、错误码等非敏感字段即可。";
         } else if (validation.status === "out_of_scope") {
-          reply = "这个问题不在我的处理范围内。我目前可以帮助处理：\n\n1. 签名失败排查\n2. 回调异常排查\n3. API 字段/错误码问答\n4. 新 API 接入流程\n5. 撤单数据分析\n\n请输入 API 接入相关问题。";
+          // Layer 4 fallback: if there's strongBusinessSignal but rules failed, try ReAct
+          const strongBusinessSignal = draft.input_gate.scope_hits?.length > 0 ||
+            /(?:^|[\s，,])((?:\/[A-Za-z0-9_-]+){2,})/.test(text) ||
+            /https?:\/\/[^\s]+\/[A-Za-z0-9_\-/]{3,}/.test(text) ||
+            /\{\s*"(?:code|msg|error|status)"/.test(text);
+
+          if (strongBusinessSignal) {
+            thinkingChain.push({
+              type: 'react',
+              title: 'ReAct 兜底',
+              badge: 'Layer 4',
+              status: 'success',
+              detail: '规则层未识别，启动 LLM 自主推理循环'
+            });
+
+            try {
+              const reactResult = await runReActLoop(text, contextualDraft, docs);
+              reply = reactResult.answer;
+
+              // Add ReAct trace to observability
+              reactResult.trace.forEach((step, i) => {
+                observeSteps.push({
+                  stage: `react-${i+1}`,
+                  title: `ReAct 第${i+1}轮`,
+                  status: step.finalAnswer ? "success" : step.observation ? "success" : "warning",
+                  input: { thought: step.thought },
+                  output: { action: step.action, actionInput: step.actionInput, observation: step.observation, finalAnswer: step.finalAnswer },
+                  reasoning: step.thought,
+                  decision: step.finalAnswer ? "得出最终答案" : step.action ? `调用工具: ${step.action}` : "等待下一轮"
+                });
+              });
+            } catch (err) {
+              reply = `ReAct 模式执行失败：${err.message}\n\n请换个问法重试，或联系技术支持。`;
+            }
+          } else {
+            reply = "这个问题不在我的处理范围内。我目前可以帮助处理：\n\n1. 签名失败排查\n2. 回调异常排查\n3. API 字段/错误码问答\n4. 新 API 接入流程\n5. 撤单数据分析\n\n请输入 API 接入相关问题。";
+          }
         } else {
           // Step 7: LLM Call
           thinkingChain.push({
@@ -8957,6 +8993,202 @@
       });
 
       return systemPrompt + memorySection;
+    }
+
+    // ========== ReAct Layer 4: LLM-driven autonomous loop ==========
+
+    function defineReActTools() {
+      return [
+        {
+          name: "search_knowledge",
+          description: "在知识库中搜索 API 文档、FAQ、错误码、SOP。用于查询接口定义、参数说明、常见问题解决方案。",
+          parameters: {
+            type: "object",
+            properties: {
+              query: {
+                type: "string",
+                description: "搜索关键词，可以是接口路径（如 /api/platformXYZ/hao/search）、错误码（如 SIGN_INVALID）、字段名（如 detailinfo）、或问题描述"
+              }
+            },
+            required: ["query"]
+          }
+        },
+        {
+          name: "extract_fields",
+          description: "从用户输入中提取结构化字段，如 appid、接口路径、错误码、时间戳等。用于识别用户消息中的关键技术信息。",
+          parameters: {
+            type: "object",
+            properties: {
+              message: { type: "string", description: "待提取的原始文本" }
+            },
+            required: ["message"]
+          }
+        },
+        {
+          name: "check_signature_order",
+          description: "检查签名参数排序是否符合 ASCII 升序规则。传入参数对象，返回正确排序和实际排序的对比。",
+          parameters: {
+            type: "object",
+            properties: {
+              params: {
+                type: "object",
+                description: "参数键值对（不包含 sign 本身）",
+                additionalProperties: true
+              }
+            },
+            required: ["params"]
+          }
+        }
+      ];
+    }
+
+    async function executeReActTool(toolName, args) {
+      try {
+        switch (toolName) {
+          case "search_knowledge": {
+            const keywords = queryTerms(args.query);
+            const docs = searchDocs(keywords, 5);
+            return {
+              success: true,
+              result: docs.length > 0
+                ? docs.map(d => `[${d.kind}] ${d.title}：${d.text.slice(0, 150)}...（来源：${d.source}）`).join("\n\n")
+                : "未找到相关文档。尝试用不同关键词或更具体的接口路径。"
+            };
+          }
+
+          case "extract_fields": {
+            const draft = extractTask(args.message);
+            const fields = compactFields(draft.fields);
+            return {
+              success: true,
+              result: Object.keys(fields).length > 0
+                ? `提取到字段：${Object.entries(fields).map(([k,v]) => `${label(k)}=${v}`).join("、")}`
+                : "未提取到结构化字段。"
+            };
+          }
+
+          case "check_signature_order": {
+            const sortedKeys = Object.keys(args.params).sort();
+            const correctOrder = sortedKeys.map(k => `${k}=${args.params[k]}`).join("&");
+            return {
+              success: true,
+              result: `正确的参数排序（ASCII升序）：\n${correctOrder}\n\n排序规则：参数名按 ASCII 码升序，然后用 & 连接。`
+            };
+          }
+
+          default:
+            return { success: false, error: `未知工具：${toolName}` };
+        }
+      } catch (err) {
+        return { success: false, error: err.message };
+      }
+    }
+
+    async function runReActLoop(userInput, draft, initialDocs) {
+      const MAX_ITERATIONS = 5;
+      const tools = defineReActTools();
+      const toolsSpec = tools.map(t => `${t.name}: ${t.description}\n参数: ${JSON.stringify(t.parameters.properties, null, 2)}`).join("\n\n");
+
+      const systemPrompt = `你是 API 技术支持 Agent，使用 ReAct (Reasoning + Acting) 模式解决问题。
+
+## 可用工具
+${toolsSpec}
+
+## ReAct 循环格式
+每一轮输出必须严格遵循以下格式：
+
+Thought: [你的推理过程，分析当前状态和下一步]
+Action: [工具名]
+Action Input: [JSON格式的参数]
+
+或者当你有了最终答案时：
+
+Thought: [总结推理过程]
+Final Answer: [给用户的最终回复]
+
+## 规则
+1. 每次只能调用一个工具
+2. 必须先 Thought 再 Action，不能跳过
+3. Action Input 必须是合法 JSON
+4. 最多 ${MAX_ITERATIONS} 轮，之后必须给出 Final Answer
+5. 如果工具返回足够信息，立即给出 Final Answer，不要无意义循环
+
+## 当前用户问题
+${userInput}
+
+开始推理：`;
+
+      const messages = [{ role: "system", content: systemPrompt }];
+      const trace = [];
+      let finalAnswer = null;
+
+      for (let i = 0; i < MAX_ITERATIONS; i++) {
+        messages.push({ role: "user", content: i === 0 ? "请开始推理并调用工具。" : "继续。" });
+
+        let response;
+        try {
+          response = await callLLM(messages);
+        } catch (err) {
+          finalAnswer = `ReAct 循环出错：${err.message}`;
+          break;
+        }
+
+        // Parse Thought / Action / Final Answer
+        const thoughtMatch = response.match(/Thought:\s*(.+?)(?=\nAction:|\nFinal Answer:|$)/s);
+        const actionMatch = response.match(/Action:\s*(.+?)(?=\n|$)/);
+        const actionInputMatch = response.match(/Action Input:\s*(\{[\s\S]*?\}|\[[\s\S]*?\])/);
+        const finalMatch = response.match(/Final Answer:\s*([\s\S]+)/);
+
+        const thought = thoughtMatch ? thoughtMatch[1].trim() : "";
+        const action = actionMatch ? actionMatch[1].trim() : null;
+        const actionInputRaw = actionInputMatch ? actionInputMatch[1].trim() : null;
+
+        trace.push({
+          iteration: i + 1,
+          thought,
+          action,
+          actionInput: actionInputRaw,
+          observation: null
+        });
+
+        if (finalMatch) {
+          finalAnswer = finalMatch[1].trim();
+          trace[trace.length - 1].finalAnswer = finalAnswer;
+          break;
+        }
+
+        if (!action || !actionInputRaw) {
+          finalAnswer = `ReAct 格式错误（第 ${i+1} 轮）：缺少 Action 或 Action Input。\n\n${response}`;
+          break;
+        }
+
+        // Execute tool
+        let actionInput;
+        try {
+          actionInput = JSON.parse(actionInputRaw);
+        } catch (e) {
+          const observation = `Action Input 解析失败：${e.message}`;
+          trace[trace.length - 1].observation = observation;
+          messages.push({ role: "assistant", content: response });
+          messages.push({ role: "user", content: `Observation: ${observation}` });
+          continue;
+        }
+
+        const toolResult = await executeReActTool(action, actionInput);
+        const observation = toolResult.success
+          ? toolResult.result
+          : `工具执行失败：${toolResult.error}`;
+
+        trace[trace.length - 1].observation = observation;
+        messages.push({ role: "assistant", content: response });
+        messages.push({ role: "user", content: `Observation: ${observation}` });
+      }
+
+      if (!finalAnswer) {
+        finalAnswer = `ReAct 循环达到最大轮次（${MAX_ITERATIONS}），未能得出结论。\n\n已尝试的步骤：\n${trace.map((t, i) => `${i+1}. ${t.thought}`).join("\n")}`;
+      }
+
+      return { answer: finalAnswer, trace, messages };
     }
 
     function exportLongTermMemory() {
