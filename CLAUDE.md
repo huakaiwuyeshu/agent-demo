@@ -338,15 +338,17 @@ check_signature_order: fail - 当前顺序错误
 ## Code Structure
 
 ```
-web/index.html (9220 lines, single-file SPA)
-├─ Lines 5508-5771: evaluateInputGate (三层意图识别)
+web/index.html (~9450 lines, single-file SPA)
+├─ Lines 5508-5771: evaluateInputGate (四层意图识别)
 ├─ Lines 5783-5850: extractTask (字段提取)
 ├─ Lines 3516-3544: validate (Schema 校验)
-├─ Lines 7632-7697: buildSystemPrompt (动态 Prompt 组装)
-├─ Lines 8354-8540: sendAgentMessage (主对话流程)
+├─ Lines 8190-8260: buildSystemPrompt (动态 Prompt 组装)
+├─ Lines 8354-8540: sendAgentMessage (主对话流程 + ReAct 集成)
 ├─ Lines 4400-5100: Memory system (Session, Field Memory, Long-term)
+├─ Lines 7864-7996: Context Compression (compressConversationContext, compressWithLLM)
+├─ Lines 7795-7844: Observability Panel (renderObservePanel, renderObserveStep)
 ├─ Lines 8998-9086: ReAct Layer 4 (defineReActTools, executeReActTool)
-└─ Lines 9087-9220: runReActLoop (LLM autonomous loop)
+└─ Lines 9087-9230: runReActLoop (LLM autonomous loop)
 
 web/proxy.py: CORS proxy (LLM_ENDPOINT, LLM_KEY)
 web/knowledge.js: Embedded API docs for RAG
