@@ -174,6 +174,127 @@ window.AGENT_DEMO_KNOWLEDGE = {
       "title": "防御检测接口",
       "content": "防御接口用于三方平台在下单、上号前接入风控能力。检测接口包括 /api/platformXYZ/defense/detect，回调接口包括 /api/platformXYZ/defense/callback；调用时至少存在一种检测类型，否则无实际作用。",
       "source": "wiki/concepts/defense-api.md"
+    },
+    {
+      "id": "platform-game-all",
+      "category": "shelf-sharing",
+      "title": "号池游戏推送",
+      "content": "号池内所有游戏通过接口将所有支持的游戏进行推送。 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1签名 | size(string, 必填): 每⻚输出的游戏数据量 | offset(string, 必填): 过滤几条数据 | status(int, 必填): 状态 | msg(string, 必填): 消息提示 | data(string, 必填): game_id:游戏信息",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "all",
+        "game"
+      ]
+    },
+    {
+      "id": "platform-hao-searchFilter",
+      "category": "shelf-sharing",
+      "title": "账号搜索条件",
+      "content": "第三方平台根据此接口从租号应用获取账号筛选信息,支持PC和移动端的基础筛选和高级筛选功 能,具体⻅下方接口描述。 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1签名 | timestamp(int64, 必填): 公共参数,时间戳 | game_id(int, 可选): 游戏ID | status(int, 必填): 状态 | msg(string, 必填): 消息提示 | data(string, 必填): game_id:游戏信息",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "searchFilter",
+        "hao"
+      ]
+    },
+    {
+      "id": "platform-hao-search",
+      "category": "shelf-sharing",
+      "title": "搜索返回货架列表",
+      "content": "第三方平台根据此接口从租号应用获取货架列表信息,是否存储到第三方平台自身由第三方自行操 作。货架从该接口返回给第三方后,如果货架信息发生变化,会在后台将这些变动信息推送给第三 方,因此第三方需要提供接口接收变动信息(具体回调接口)。 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1鉴权方法 | timestamp(int64, 必填): 公共参数,时间戳 | game_id(int, 必填): 端游id | zone_id(int, 可选): 游戏大区编号 | server_id(int, 可选): 游戏服务器编号 | price_min(float, 可选): 价格区间,最小价格 | price_max(float, 可选): 价格区间,最大价格 | szq(int, 可选): 起租时⻓ | qrf_allow(int, 可选): 是否可排位,1=允许 | game_data(string, 可选): 游戏装备,装备编号用英文逗号 | page(int, 必填): ⻚码 | page_size(int, 可选): 每⻚数量 | keywords(string, 可选): 关键词匹配,分词匹配,根据关 | order_way(string, 必填): 排序方式 | order_type(string, 必填): t:发布时间 | maintenance_(int, 可选): 游戏维护状态 | phone_type(string, 可选): 适配系统:安卓:android,苹 | pc_quick_type(string, 可选): 端游上号方式: | eq_num_1(string, 可选): 提供范围值(使用 装备数量(游戏对应关系): | eq_num_2(string, 可选): 装备数量(游戏对应关系): | eq_num_3(string, 可选): 装备数量(游戏对应关系): | eq_num_4(string, 可选): 装备数量(游戏对应关系): | eq_num_5(string, 可选): 装备数量(游戏对应关系): | status(int, 必填): 状态 | msg(string, 必填): 消息提示 | data(string, 必填): count:账号总数",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "search",
+        "hao"
+      ]
+    },
+    {
+      "id": "platform-hao-info",
+      "category": "shelf-sharing",
+      "title": "账号详情",
+      "content": "第三方平台根据此接口从租号应用获取货架详情信息。 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1签名 | timestamp(int64, 必填): 公共参数,时间戳 | hao_id(int, 必填): 货架id | status(int, 必填): 状态 | msg(string, 必填): 消息提示 | data(string, 必填): \"id\":",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "info",
+        "hao"
+      ]
+    },
+    {
+      "id": "platform-order-placeOrder",
+      "category": "shelf-sharing",
+      "title": "下单接口",
+      "content": "第三方通过此接口在租号应用平台下单操作 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1签名 | timestamp(int64, 必填): 公共参数,时间戳 | hao_id(int, 必填): 账号id | rent_hours(int, 必填): 租赁时⻓ | pay_id(string, 必填): 用戶支付id | rent_type(int, 可选): 1:时租,8:包夜,10:10小 | pay_amount(float, 可选): 租赁金额 | hf_money(float, 可选): 三⻆洲哈夫币预付款金额 | status(int, 必填): 状态0失败,1成功 | msg(string, 必填): 消息提示 | data(string, 必填): 数组格式:返回订单id,",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "placeOrder",
+        "order"
+      ]
+    },
+    {
+      "id": "platform-order-relet",
+      "category": "shelf-sharing",
+      "title": "订单续租",
+      "content": "## Page 61 第三方通过此接口在租号应用平台进行订单续租操作。 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1签名 | timestamp(int64, 必填): 公共参数,时间戳 | oid(int64, 必填): 订单id | relet_hours(int, 必填): 续租小时数 | status(int, 必填): 状态0失败,1成功 | msg(string, 必填): 消息提示 | data(string, 必填): 数组格式:返回续租时⻓",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "relet",
+        "order"
+      ]
+    },
+    {
+      "id": "platform-order-info",
+      "category": "shelf-sharing",
+      "title": "订单详情",
+      "content": "此接口用于获取订单信息包含订单被投诉后的订单状态和投诉信息。 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1签名 | timestamp(int64, 必填): 公共参数,时间戳 | oid(int64, 必填): 订单id | status(int, 必填): 状态 | msg(string, 必填): 消息提示 | data(string, 可选): 对象类型",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "info",
+        "order"
+      ]
+    },
+    {
+      "id": "platform-ts-getType",
+      "category": "shelf-sharing",
+      "title": "获取租号应用平台投诉类型",
+      "content": "此接口从租号应用平台获取所有投诉类型,是进行订单投诉的前一步骤。 这个请求获取的是平台全部投诉类型,可以拉取到本地后做投诉类型的多对一的映射、归类处理 投诉撤单的对应类型,请⻅附1 游戏对应投诉类型 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1签名 | timestamp(int64, 必填): 公共参数,时间戳 | status(int, 必填): 状态 | msg(string, 必填): 消息提示 | data(string, 必填): 对象类型",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "getType",
+        "ts"
+      ]
+    },
+    {
+      "id": "platform-report-payid",
+      "category": "shelf-sharing",
+      "title": "第三方平台上报手游支付id/用戶id",
+      "content": "此接口用于第三方平台将订单对应的用戶id和支付id进行上报。",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "payid",
+        "report"
+      ]
+    },
+    {
+      "id": "platform-ts-add",
+      "category": "shelf-sharing",
+      "title": "第三方平台发起投诉",
+      "content": "此接口用于第三方平台发起订单投诉,投诉类型⻅上接口说明。 请求参数: status(int, 必填): 状态1成功,0失败 | msg(string, 必填): 消息提示 | data(string, 可选): 对象类型",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "add",
+        "ts"
+      ]
+    },
+    {
+      "id": "platform-order-placeOrder",
+      "category": "shelf-sharing",
+      "title": "新版续租(订单拆分展示、处理)",
+      "content": "新版续租(订单拆分展示、处理) 请求参数: app_id(string, 必填): 公共参数,应用ID | sign(string, 必填): 公共参数,通过2.1签名 | timestamp(int64, 必填): 公共参数,时间戳 | hao_id(int, 必填): 账号id | rent_hours(int, 必填): 租赁时⻓ | pay_id(string, 必填): 用戶支付id | rent_type(int, 可选): 1,8,10,24,168#请输入租 | pay_amount(float, 可选): 租赁金额 | main_did(int64, 可选): 新续租使用(主订单id) | hf_money(float, 可选): 三⻆洲哈夫币预付款金额 | status(int, 必填): 状态0失败,1成功 | msg(string, 必填): 消息提示 | data(string, 必填): 数组格式:返回订单id,",
+      "source": "货架共享第三方API接口文档",
+      "keywords": [
+        "placeOrder",
+        "order"
+      ]
     }
   ],
   "faq": [

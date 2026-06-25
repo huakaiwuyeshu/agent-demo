@@ -1245,6 +1245,188 @@
       white-space: nowrap;
     }
 
+    /* Thinking Chain Styles */
+    .thinking-chain {
+      margin-top: 12px;
+      padding: 12px;
+      border: 1px solid rgba(56, 189, 248, 0.2);
+      border-radius: 6px;
+      background: rgba(56, 189, 248, 0.05);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .thinking-chain-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      color: var(--cyan);
+      font-weight: 600;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .thinking-chain-header svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      transition: transform 0.2s ease;
+    }
+
+    .thinking-chain-header.collapsed svg {
+      transform: rotate(-90deg);
+    }
+
+    .thinking-chain-content {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .thinking-chain-content.hidden {
+      display: none;
+    }
+
+    .thinking-step {
+      display: flex;
+      gap: 8px;
+      padding: 8px;
+      border-radius: 4px;
+      background: rgba(16, 20, 24, 0.5);
+    }
+
+    .thinking-step-icon {
+      flex: 0 0 auto;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .thinking-step-icon.intent {
+      background: rgba(34, 197, 94, 0.2);
+      color: var(--accent);
+    }
+
+    .thinking-step-icon.field {
+      background: rgba(56, 189, 248, 0.2);
+      color: var(--cyan);
+    }
+
+    .thinking-step-icon.validation {
+      background: rgba(245, 158, 11, 0.2);
+      color: var(--amber);
+    }
+
+    .thinking-step-icon.skill {
+      background: rgba(168, 85, 247, 0.2);
+      color: #a78bfa;
+    }
+
+    .thinking-step-icon.knowledge {
+      background: rgba(236, 72, 153, 0.2);
+      color: #f472b6;
+    }
+
+    .thinking-step-icon.tool {
+      background: rgba(251, 146, 60, 0.2);
+      color: #fb923c;
+    }
+
+    .thinking-step-icon.llm {
+      background: rgba(59, 130, 246, 0.2);
+      color: #60a5fa;
+    }
+
+    .thinking-step-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .thinking-step-title {
+      color: var(--ink);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .thinking-step-detail {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .thinking-step-badge {
+      display: inline-block;
+      padding: 2px 6px;
+      margin-right: 4px;
+      border-radius: 3px;
+      background: rgba(56, 189, 248, 0.15);
+      color: var(--cyan);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .thinking-step-badge.success {
+      background: rgba(34, 197, 94, 0.15);
+      color: var(--accent);
+    }
+
+    .thinking-step-badge.warning {
+      background: rgba(245, 158, 11, 0.15);
+      color: var(--amber);
+    }
+
+    .thinking-step-badge.error {
+      background: rgba(239, 68, 68, 0.15);
+      color: var(--red);
+    }
+
+    /* Observability Panel */
+    .observe-panel {
+      flex-direction: column;
+      padding: 24px;
+      overflow-y: auto;
+      gap: 16px;
+      height: calc(100vh - 80px);
+    }
+    .observe-header { margin-bottom: 8px; }
+    .observe-header h2 { font-size: 18px; font-weight: 700; color: var(--text); margin: 0; }
+    .observe-subtitle { font-size: 12px; color: var(--muted); }
+    .observe-timeline { display: flex; flex-direction: column; gap: 12px; }
+    .observe-entry { background: var(--card); border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.06); }
+    .observe-entry-header { cursor: pointer; display: flex; align-items: center; gap: 12px; }
+    .observe-entry-header:hover { opacity: 0.85; }
+    .observe-entry-time { font-size: 11px; color: var(--muted); font-family: 'Fira Code', monospace; min-width: 70px; }
+    .observe-entry-input { flex: 1; font-size: 13px; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .observe-entry-status { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+    .observe-entry-status.success { background: rgba(34,197,94,0.15); color: var(--accent); }
+    .observe-entry-status.warning { background: rgba(245,158,11,0.15); color: var(--amber); }
+    .observe-entry-status.error { background: rgba(239,68,68,0.15); color: var(--red); }
+    .observe-steps { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+    .observe-steps.expanded { display: block; }
+    .observe-step { border-left: 2px solid var(--accent); margin-left: 12px; padding: 8px 0 8px 16px; margin-bottom: 4px; }
+    .observe-step.warning { border-left-color: var(--amber); }
+    .observe-step.error { border-left-color: var(--red); }
+    .observe-step-title { font-size: 12px; font-weight: 600; color: var(--text); margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+    .observe-step-title .badge { font-size: 10px; padding: 1px 6px; border-radius: 3px; background: rgba(56,189,248,0.15); color: var(--cyan); }
+    .observe-step-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 6px; }
+    .observe-step-section { background: rgba(0,0,0,0.3); border-radius: 8px; padding: 10px; }
+    .observe-step-section h4 { font-size: 10px; text-transform: uppercase; color: var(--muted); margin: 0 0 4px; letter-spacing: 0.5px; }
+    .observe-step-section pre { font-family: 'Fira Code', monospace; font-size: 11px; color: var(--text); white-space: pre-wrap; word-break: break-all; margin: 0; max-height: 200px; overflow-y: auto; line-height: 1.5; }
+    .observe-empty { text-align: center; padding: 60px 24px; color: var(--muted); font-size: 14px; }
+    .observe-error-summary { margin-top: 10px; padding: 10px 12px; background: rgba(239,68,68,0.06); border-radius: 8px; border: 1px solid rgba(239,68,68,0.15); }
+    .observe-issue { font-size: 12px; line-height: 1.6; display: flex; align-items: flex-start; gap: 6px; }
+    .observe-issue.error { color: var(--red); }
+    .observe-issue.warning { color: var(--amber); }
+    .observe-issue-icon { font-weight: 700; flex-shrink: 0; }
+
     .detail-head {
       min-height: 54px;
       display: flex;
@@ -3473,6 +3655,7 @@
         <button class="mode-tab" data-mode="flow" type="button">Agent 实现流程</button>
         <button class="mode-tab active" data-mode="agent" type="button">Agent 对话</button>
         <button class="mode-tab" data-mode="experience" type="button">版本体验</button>
+        <button class="mode-tab" data-mode="observe" type="button">可观测性</button>
       </div>
       <div class="top-actions">
         <span class="pill"><span class="status-dot" aria-hidden="true"></span>Live Demo</span>
@@ -4358,6 +4541,13 @@
         </section>
       </main>
     </div>
+    <section id="observePanel" class="observe-panel" style="display:none">
+      <div class="observe-header">
+        <h2>Observability Trace</h2>
+        <span class="observe-subtitle">Agent 决策全链路可观测日志</span>
+      </div>
+      <div class="observe-timeline" id="observeTimeline"></div>
+    </section>
   </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite">
@@ -4500,6 +4690,8 @@
       callback_debug: ["callback_url", "order_id", "trigger_action", "request_time"],
       api_field_qa: ["field_name"],
       credential_request: ["appid"],
+      volume_analysis: ["analysis_dimension"],
+      api_onboarding: ["target_api"],
       unknown: []
     };
 
@@ -4513,7 +4705,9 @@
       order_id: "订单号",
       trigger_action: "触发动作",
       field_name: "字段名",
-      task_type: "任务类型"
+      task_type: "任务类型",
+      analysis_dimension: "分析维度",
+      target_api: "目标接口"
     };
 
     const skills = {
@@ -4730,7 +4924,9 @@
         callback_url: firstMatch(/(https:\/\/[A-Za-z0-9_\-./?=&%]+)/i, message),
         order_id: firstMatch(/(?:order_id|订单号)\s*[=:：]\s*([A-Za-z0-9_\-]+)/i, message),
         trigger_action: firstMatch(/(?:触发动作|action)\s*[=:：]\s*([^，。\n]+)/i, message),
-        field_name: detectFieldName(message)
+        field_name: detectFieldName(message),
+        analysis_dimension: detectAnalysisDimension(message),
+        target_api: firstMatch(/(?:接口|api)\s*[=:：]?\s*(\/[A-Za-z0-9_\-/]+)/i, message)
       };
 
       const security_flags = [];
@@ -4749,6 +4945,8 @@
         { field: "callback_url", rule: "匹配 https:// 回调地址", value: fields.callback_url },
         { field: "order_id", rule: "匹配 订单号=xxx 或 order_id=xxx", value: fields.order_id },
         { field: "trigger_action", rule: "匹配 触发动作=xxx", value: fields.trigger_action },
+        { field: "analysis_dimension", rule: "识别分析维度关键词", value: fields.analysis_dimension },
+        { field: "target_api", rule: "匹配目标接口路径", value: fields.target_api },
         { field: "field_name", rule: "在问题中寻找常见字段名", value: fields.field_name }
       ];
 
@@ -4770,7 +4968,31 @@
       for (const field of ["detailinfo", "info", "error_code", "appid", "order_id", "timestamp", "sign", "appsecret"]) {
         if (lower.includes(field)) return field;
       }
+      const jsonMsgMatch = message.match(/"msg"\s*:\s*"([^"]+)"/);
+      if (jsonMsgMatch) return jsonMsgMatch[1];
+      const jsonCodeMatch = message.match(/"(?:code|error_code|status)"\s*:\s*(\d+|"[^"]+")/);
+      if (jsonCodeMatch) return `code=${jsonCodeMatch[1].replace(/"/g, "")}`;
+      const urlPathMatch = message.match(/https?:\/\/[^\s]+?(\/api\/[A-Za-z0-9_\-/]+)/i);
+      if (urlPathMatch) return urlPathMatch[1];
+      const barePathMatch = message.match(/(?:^|[\s，,])(\/api\/[A-Za-z0-9_\-/]+)/);
+      if (barePathMatch) return barePathMatch[1];
       return null;
+    }
+
+    function detectAnalysisDimension(message) {
+      const dimensions = [
+        { pattern: /撤单/, value: "撤单" },
+        { pattern: /成功率/, value: "成功率" },
+        { pattern: /失败率/, value: "失败率" },
+        { pattern: /单量/, value: "单量" },
+        { pattern: /投诉/, value: "投诉" },
+        { pattern: /退单|退款/, value: "退单" },
+        { pattern: /趋势/, value: "趋势" },
+        { pattern: /渠道/, value: "渠道对比" },
+        { pattern: /游戏/, value: "游戏维度" }
+      ];
+      const matched = dimensions.filter(d => d.pattern.test(message));
+      return matched.length ? matched.map(d => d.value).join("+") : null;
     }
 
     function validate(draft) {
@@ -4784,7 +5006,7 @@
       if (draft.task_type === "unknown") {
         return { status: "needs_clarification", missing_fields: ["task_type"], blocked_reasons: [] };
       }
-      const missing = requiredFields[draft.task_type].filter((field) => !draft.fields[field]);
+      const missing = (requiredFields[draft.task_type] || []).filter((field) => !draft.fields[field]);
       return missing.length
         ? { status: "needs_clarification", missing_fields: missing, blocked_reasons: [] }
         : { status: "executable", missing_fields: [], blocked_reasons: [] };
@@ -4912,9 +5134,18 @@
     }
 
     function queryTerms(text) {
-      return (text.match(/\/[A-Za-z0-9_\-/]+|[A-Za-z0-9_:\-.]{2,}|[\u4e00-\u9fff]{2,}/g) || [])
+      const raw = (text.match(/\/[A-Za-z0-9_\-/]+|[A-Za-z0-9_:\-.]{2,}|[一-鿿]{2,}/g) || [])
         .map((item) => item.replace(/^[，。；：、,.!?()[\]{}"']+|[，。；：、,.!?()[\]{}"']+$/g, ""))
         .filter(Boolean);
+      const extra = [];
+      raw.forEach(term => {
+        if (term.startsWith("/") && term.split("/").length > 3) {
+          const segments = term.split("/").filter(Boolean);
+          segments.forEach(seg => { if (seg.length > 2) extra.push(seg); });
+          if (segments.length >= 2) extra.push(segments.slice(-2).join("/"));
+        }
+      });
+      return raw.concat(extra);
     }
 
     function unique(values) {
@@ -5377,7 +5608,16 @@
           { word: "错误码", weight: 2 },
           { word: "detailinfo", weight: 3 },
           { word: "info", weight: 2 },
-          { word: "参数", weight: 1 }
+          { word: "参数", weight: 1 },
+          { word: "不存在", weight: 2 },
+          { word: "msg", weight: 2 },
+          { word: "code", weight: 1 },
+          { word: "干啥", weight: 3 },
+          { word: "干什么", weight: 3 },
+          { word: "做什么", weight: 3 },
+          { word: "是什么", weight: 2 },
+          { word: "用途", weight: 3 },
+          { word: "作用", weight: 3 }
         ]
       },
       credential_request: {
@@ -5440,7 +5680,10 @@
         "接口字段是什么意思",
         "detailinfo 和 info 有什么区别",
         "错误码含义和处理建议是什么",
-        "参数枚举值有哪些"
+        "参数枚举值有哪些",
+        "返回 code 0 msg 平台不存在",
+        "接口返回 HTTP 200 但业务报错",
+        "响应里的 code 和 msg 是什么意思"
       ],
       credential_request: [
         "怎么申请 appid 和密钥",
@@ -5482,8 +5725,8 @@
       },
       {
         intent: "api_field_qa",
-        patterns: ["这个参数", "这个值", "为什么是", "代表什么", "怎么理解"],
-        reason: "LLM 兜底把“参数解释 / 值含义”归并为 API 字段问答。"
+        patterns: ["这个参数", "这个值", "为什么是", "代表什么", "怎么理解", "不存在", "无效", "非法", "干啥", "干什么", "做什么", "是什么接口", "用途", "作用"],
+        reason: "LLM 兜底把“参数解释 / 值含义 / 错误提示”归并为 API 字段问答。"
       },
       {
         intent: "api_onboarding",
@@ -5493,7 +5736,7 @@
       {
         intent: "volume_analysis",
         patterns: ["数据怎么样", "表现怎么样", "有没有下降", "波动", "撤单怎么样", "撤了多少", "退了多少单", "退款多少"],
-        reason: "LLM 兆底把「数据表现 / 撤单 / 波动」归并为数据分析。"
+        reason: "LLM 兜底把「数据表现 / 撤单 / 波动」归并为数据分析。"
       }
     ];
 
@@ -5502,7 +5745,9 @@
       "回调", "callback", "错误码", "字段", "参数", "单量", "成功率", "失败率",
       "订单", "order_id", "timestamp", "SIGN_INVALID", "info", "detailinfo",
       "撤单", "投诉", "退单", "数据", "分析", "趋势", "统计", "渠道",
-      "应用标识", "标识"
+      "应用标识", "标识",
+      "HTTP/1", "200 OK", "code", "msg", "平台", "不存在", "请求失败",
+      "response", "status_code", "error_msg", "success"
     ];
 
     function evaluateInputGate(message) {
@@ -5534,11 +5779,12 @@
         return item;
       }).sort((a, b) => b.score - a.score);
 
-      const hasPath = /(?:^|[\s，,])((?:\/[A-Za-z0-9_-]+){2,})/.test(normalized);
+      const hasPath = /(?:^|[\s，,])((?:\/[A-Za-z0-9_-]+){2,})/.test(normalized) || /https?:\/\/[^\s]+\/[A-Za-z0-9_\-/]{3,}/.test(normalized);
       const hasErrorCode = /(?:错误码|error_code)\s*[=:：]\s*([A-Z0-9_\-]+)/i.test(normalized);
-      const strongBusinessSignal = scopeHits.length > 0 || hasPath || hasErrorCode;
+      const hasApiResponse = /\{\s*"(?:code|msg|message|error|status|data|result)"/.test(normalized) || /^HTTP\/\d/.test(normalized);
+      const strongBusinessSignal = scopeHits.length > 0 || hasPath || hasErrorCode || hasApiResponse;
       const vectorScores = rankSemanticIntents(normalized);
-      const llmDecision = simulateLlmFallback(normalized, scopeHits, hasPath, hasErrorCode, ruleScores, vectorScores);
+      const llmDecision = simulateLlmFallback(normalized, scopeHits, hasPath, hasErrorCode, hasApiResponse, ruleScores, vectorScores);
       const decision = chooseIntentLayer(ruleScores, vectorScores, llmDecision, strongBusinessSignal);
       const best = decision.selected;
       const second = decision.candidates[1];
@@ -5730,7 +5976,7 @@
       return new Set(tokens.concat(chars).filter(Boolean));
     }
 
-    function simulateLlmFallback(message, scopeHits, hasPath, hasErrorCode, ruleScores, vectorScores) {
+    function simulateLlmFallback(message, scopeHits, hasPath, hasErrorCode, hasApiResponse, ruleScores, vectorScores) {
       const lower = message.toLowerCase();
       const hint = llmFallbackHints.find((item) => item.patterns.some((pattern) => lower.includes(pattern.toLowerCase())));
       if (hint) {
@@ -5738,6 +5984,15 @@
           intent: hint.intent,
           confidence: 0.66,
           reason: hint.reason
+        };
+      }
+      if (hasApiResponse) {
+        const bestRule = ruleScores[0];
+        const targetIntent = (bestRule && bestRule.score >= 2) ? bestRule.intent : "api_field_qa";
+        return {
+          intent: targetIntent,
+          confidence: 0.62,
+          reason: `LLM 兜底识别到 API 响应报文/JSON 结构，归并为${taskLabel(targetIntent)}。`
         };
       }
       const bestRule = ruleScores[0];
@@ -5791,7 +6046,9 @@
         callback_url: firstMatch(/(https:\/\/[A-Za-z0-9_\-./?=&%]+)/i, message),
         order_id: firstMatch(/(?:order_id|订单号)\s*[=:：]\s*([A-Za-z0-9_\-]+)/i, message),
         trigger_action: firstMatch(/(?:触发动作|action)\s*[=:：]\s*([^，。\n]+)/i, message),
-        field_name: detectFieldName(message)
+        field_name: detectFieldName(message),
+        analysis_dimension: detectAnalysisDimension(message),
+        target_api: firstMatch(/(?:接口|api)\s*[=:：]?\s*(\/[A-Za-z0-9_\-/]+)/i, message)
       };
 
       const security_flags = [];
@@ -5810,7 +6067,9 @@
         { field: "callback_url", rule: "匹配 https:// 回调地址", value: fields.callback_url },
         { field: "order_id", rule: "匹配 订单号=xxx 或 order_id=xxx", value: fields.order_id },
         { field: "trigger_action", rule: "匹配 触发动作=xxx", value: fields.trigger_action },
-        { field: "field_name", rule: "在问题中寻找常见字段名", value: fields.field_name }
+        { field: "field_name", rule: "在问题中寻找常见字段名", value: fields.field_name },
+        { field: "analysis_dimension", rule: "识别分析维度关键词", value: fields.analysis_dimension },
+        { field: "target_api", rule: "匹配目标接口路径", value: fields.target_api }
       ];
 
       return {
@@ -6036,6 +6295,8 @@
         memory: {},
         activeTask: null
       };
+      state.agentMessages = [];
+      state.contextSummaryCache = { text: null, lastCompressedIndex: 0, llmSummary: null };
       localStorage.removeItem('agent_demo_session');
       console.info('[Memory] Session reset');
     }
@@ -6046,6 +6307,14 @@
         sessionBoard.classList.remove('visible');
         sessionBoard.innerHTML = '';
         showToast('会话已重置', 'success');
+      }
+    }
+
+    function toggleDeepMemory(enabled) {
+      state.deepMemoryEnabled = enabled;
+      console.log("[ContextCompress] Deep memory mode:", enabled ? "ON" : "OFF");
+      if (enabled && state.agentMessages.length > 10) {
+        compressWithLLM().catch(() => {});
       }
     }
 
@@ -6550,6 +6819,22 @@
             </div>
             <div style="color: var(--muted); font-size: 11px; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
               Session 内累积（支持编辑/删除）
+            </div>
+          </section>
+          <section class="session-card">
+            <h3>Context Compression（上下文压缩）</h3>
+            <ul class="task-state-list">
+              <li><strong>消息总数</strong><span>${state.agentMessages.length}</span></li>
+              <li><strong>滑动窗口</strong><span>最近 10 条</span></li>
+              <li><strong>已压缩</strong><span>${state.agentMessages.length > 10 ? state.agentMessages.length - 10 + " 条" : "无需压缩"}</span></li>
+              <li><strong>压缩层级</strong><span>${state.contextSummaryCache.llmSummary ? "Layer 2 (LLM)" : state.contextSummaryCache.text ? "Layer 1 (规则)" : "未启动"}</span></li>
+            </ul>
+            <label style="display: flex; align-items: center; gap: 8px; margin-top: 10px; cursor: pointer; font-size: 12px; color: var(--text);">
+              <input type="checkbox" id="deepMemoryToggle" ${state.deepMemoryEnabled ? "checked" : ""} onchange="toggleDeepMemory(this.checked)" style="accent-color: var(--accent);">
+              深度记忆模式（启用 LLM 压缩精炼）
+            </label>
+            <div style="color: var(--muted); font-size: 11px; margin-top: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.05);">
+              ${state.deepMemoryEnabled ? "已开启：超出窗口的历史将用 LLM 精炼摘要" : "默认关闭：仅用本地规则压缩（零 token 开销）"}
             </div>
           </section>
         </div>
@@ -7520,6 +7805,9 @@
     state.experienceAutoPlayTimer = null;
     state.experienceVersionCache = {};
     state.experienceMessage = "";
+    state.contextSummaryCache = { text: null, lastCompressedIndex: 0, llmSummary: null };
+    state.deepMemoryEnabled = false;
+    state.observeTrace = [];
 
     const agentChatEl = document.getElementById("agentChat");
     const agentChatView = document.getElementById("agentChatView");
@@ -7527,6 +7815,75 @@
     const agentSendBtn = document.getElementById("agentSendBtn");
     const experienceLayoutEl = document.getElementById("experienceLayout");
     const agentFlowEl = document.getElementById("agentFlow");
+    const observePanelEl = document.getElementById("observePanel");
+
+    // === Observability Panel ===
+
+    function renderObservePanel() {
+      const timeline = document.getElementById("observeTimeline");
+      if (!state.observeTrace.length) {
+        timeline.innerHTML = '<div class="observe-empty">暂无 trace 记录。<br>在「Agent 对话」Tab 中发送消息后，完整决策链路将记录在这里。</div>';
+        return;
+      }
+      timeline.innerHTML = state.observeTrace.map((entry, idx) => {
+        const time = new Date(entry.timestamp).toLocaleTimeString("zh-CN", { hour12: false });
+        const statusClass = entry.finalStatus === "executable" ? "success" : entry.finalStatus === "error" || entry.finalStatus === "blocked" ? "error" : "warning";
+        const statusText = entry.finalStatus === "executable" ? "已执行" : entry.finalStatus === "error" ? "异常" : entry.finalStatus === "blocked" ? "已阻断" : entry.finalStatus === "out_of_scope" ? "范围外" : "需追问";
+        const errorSummary = buildErrorSummary(entry);
+        return `<div class="observe-entry">
+          <div class="observe-entry-header" onclick="toggleObserveEntry(${idx})">
+            <span class="observe-entry-time">${time}</span>
+            <span class="observe-entry-input">${escapeHtml(entry.userInput.slice(0, 80))}</span>
+            <span class="observe-entry-status ${statusClass}">${statusText}</span>
+          </div>
+          ${errorSummary}
+          <div class="observe-steps" id="observe-steps-${idx}">
+            ${entry.steps.map(step => renderObserveStep(step)).join("")}
+          </div>
+        </div>`;
+      }).reverse().join("");
+    }
+
+    function buildErrorSummary(entry) {
+      const issues = [];
+      if (entry.error) {
+        issues.push({ level: "error", msg: entry.error });
+      }
+      entry.steps.forEach(step => {
+        if (step.status === "error") {
+          issues.push({ level: "error", msg: `[${step.stage}] ${step.decision || step.reasoning}` });
+        } else if (step.status === "warning" && step.stage !== "knowledge") {
+          issues.push({ level: "warning", msg: `[${step.stage}] ${step.decision || step.reasoning}` });
+        }
+      });
+      if (!issues.length) return "";
+      return `<div class="observe-error-summary">${issues.map(i =>
+        `<div class="observe-issue ${i.level}"><span class="observe-issue-icon">${i.level === "error" ? "✗" : "⚠"}</span>${escapeHtml(i.msg)}</div>`
+      ).join("")}</div>`;
+    }
+
+    function renderObserveStep(step) {
+      const borderClass = step.status === "error" ? "error" : step.status === "warning" ? "warning" : "";
+      const inputStr = typeof step.input === "object" ? JSON.stringify(step.input, null, 2) : String(step.input || "");
+      const outputStr = typeof step.output === "object" ? JSON.stringify(step.output, null, 2) : String(step.output || "");
+      return `<div class="observe-step ${borderClass}">
+        <div class="observe-step-title">
+          <span class="badge">${escapeHtml(step.stage)}</span>
+          ${escapeHtml(step.title)}
+        </div>
+        <div class="observe-step-sections">
+          <div class="observe-step-section"><h4>Input</h4><pre>${escapeHtml(inputStr.slice(0, 2000))}</pre></div>
+          <div class="observe-step-section"><h4>Output</h4><pre>${escapeHtml(outputStr.slice(0, 2000))}</pre></div>
+          <div class="observe-step-section"><h4>Reasoning</h4><pre>${escapeHtml(step.reasoning || "")}</pre></div>
+          <div class="observe-step-section"><h4>Decision</h4><pre>${escapeHtml(step.decision || "")}</pre></div>
+        </div>
+      </div>`;
+    }
+
+    function toggleObserveEntry(idx) {
+      const el = document.getElementById("observe-steps-" + idx);
+      if (el) el.classList.toggle("expanded");
+    }
 
     function switchMode(mode) {
       state.mode = mode;
@@ -7536,12 +7893,16 @@
       agentChatEl.style.display = "none";
       experienceLayoutEl.style.display = "none";
       agentFlowEl.style.display = "none";
+      observePanelEl.style.display = "none";
       if (mode === "agent") {
         agentChatEl.style.display = "flex";
         renderAgentChatView();
         agentInputEl.focus();
       } else if (mode === "flow") {
         agentFlowEl.style.display = "flex";
+      } else if (mode === "observe") {
+        observePanelEl.style.display = "flex";
+        renderObservePanel();
       } else {
         experienceLayoutEl.style.display = "grid";
         if (!state.experienceMessage) {
@@ -7570,8 +7931,8 @@
       api_field_qa: `## API 字段问答\n适用：询问字段含义、枚举值、传参规则、错误码含义。\n原则：\n1. 优先用知识库检索结果回答\n2. 找到依据后引用来源\n3. 未找到依据说明"当前文档未覆盖"，不要编造`
     };
 
-    function appendAgentMsg(role, text) {
-      state.agentMessages.push({ role, text, ts: Date.now() });
+    function appendAgentMsg(role, text, thinkingChain = null) {
+      state.agentMessages.push({ role, text, ts: Date.now(), thinkingChain });
     }
 
     function renderAgentChatView() {
@@ -7580,6 +7941,11 @@
         let msgHtml = `<div class="agent-msg ${msg.role}">` +
           `<div class="agent-msg-role">${roleLabel}</div>` +
           `<div class="agent-msg-bubble">${escapeHtml(msg.text)}</div>`;
+
+        // Add thinking chain for agent messages
+        if (msg.role === "agent" && msg.thinkingChain && msg.thinkingChain.length > 0) {
+          msgHtml += renderThinkingChain(msg.thinkingChain, index);
+        }
 
         // Add feedback buttons for agent messages
         if (msg.role === "agent") {
@@ -7607,6 +7973,64 @@
       agentChatView.scrollTop = agentChatView.scrollHeight;
     }
 
+    function renderThinkingChain(steps, msgIndex) {
+      const chainId = `thinking-chain-${msgIndex}`;
+      let html = `<div class="thinking-chain">
+        <div class="thinking-chain-header" onclick="toggleThinkingChain('${chainId}')">
+          <svg viewBox="0 0 24 24">
+            <polyline points="6 9 12 15 18 9"></polyline>
+          </svg>
+          <span>思维链 (${steps.length} 步)</span>
+        </div>
+        <div class="thinking-chain-content" id="${chainId}">`;
+
+      steps.forEach(step => {
+        const iconClass = step.type || 'intent';
+        const badgeClass = step.status === 'success' ? 'success' :
+                          step.status === 'warning' ? 'warning' :
+                          step.status === 'error' ? 'error' : '';
+
+        html += `<div class="thinking-step">
+          <div class="thinking-step-icon ${iconClass}">${getStepIcon(step.type)}</div>
+          <div class="thinking-step-content">
+            <div class="thinking-step-title">
+              ${step.badge ? `<span class="thinking-step-badge ${badgeClass}">${step.badge}</span>` : ''}
+              ${escapeHtml(step.title)}
+            </div>
+            <div class="thinking-step-detail">${escapeHtml(step.detail)}</div>
+          </div>
+        </div>`;
+      });
+
+      html += `</div></div>`;
+      return html;
+    }
+
+    function getStepIcon(type) {
+      const icons = {
+        intent: '🎯',
+        field: '📝',
+        validation: '✓',
+        skill: '📋',
+        knowledge: '📚',
+        tool: '🔧',
+        llm: '🤖'
+      };
+      return icons[type] || '•';
+    }
+
+    function toggleThinkingChain(chainId) {
+      const element = document.getElementById(chainId);
+      const header = element.previousElementSibling;
+      if (element.classList.contains('hidden')) {
+        element.classList.remove('hidden');
+        header.classList.remove('collapsed');
+      } else {
+        element.classList.add('hidden');
+        header.classList.add('collapsed');
+      }
+    }
+
     async function callLLM(messages) {
       const response = await fetch(LLM_CONFIG.endpoint, {
         method: "POST",
@@ -7629,21 +8053,177 @@
       return data.choices?.[0]?.message?.content || "(无回复)";
     }
 
+    // === Context Compression: Hybrid Two-Layer Architecture ===
+
+    function extractIntentChain() {
+      const turns = state.conversation.turns;
+      if (!turns.length) return "";
+      const segments = [];
+      let currentIntent = null;
+      let startIdx = 0;
+      turns.forEach((turn, i) => {
+        if (turn.intent !== currentIntent) {
+          if (currentIntent) {
+            segments.push({ intent: currentIntent, from: startIdx + 1, to: i });
+          }
+          currentIntent = turn.intent;
+          startIdx = i;
+        }
+      });
+      if (currentIntent) {
+        segments.push({ intent: currentIntent, from: startIdx + 1, to: turns.length });
+      }
+      return segments
+        .map(s => s.from === s.to
+          ? `${taskLabel(s.intent)}(第${s.from}轮)`
+          : `${taskLabel(s.intent)}(第${s.from}-${s.to}轮)`)
+        .join(" → ");
+    }
+
+    function extractConclusions(expiredMessages) {
+      return expiredMessages
+        .filter(msg => msg.role === "agent" && msg.text && msg.text.length > 20)
+        .slice(-3)
+        .map((msg, i) => {
+          const idx = state.agentMessages.indexOf(msg);
+          const turnNum = Math.ceil((idx + 1) / 2);
+          const text = msg.text.replace(/\n+/g, " ").slice(0, 80);
+          return `${text}（第${turnNum}轮）`;
+        });
+    }
+
+    function extractUserSupplements(expiredMessages) {
+      const fieldPattern = /(?:appid|app_id|错误码|error_code|接口|api_path|回调|callback|订单|order_id|签名前字符串|raw_sign_string|请求时间|request_time)\s*[=:：]/i;
+      return expiredMessages
+        .filter(msg => msg.role === "user" && fieldPattern.test(msg.text))
+        .slice(-3)
+        .map((msg, i) => {
+          const idx = state.agentMessages.indexOf(msg);
+          const turnNum = Math.ceil((idx + 1) / 2);
+          return `"${msg.text.slice(0, 60)}"（第${turnNum}轮）`;
+        });
+    }
+
+    function formatContextSummary(summary) {
+      const lines = [`## 会话上下文摘要（前 ${summary.expiredCount} 条消息压缩）`];
+      if (summary.intentChain) {
+        lines.push(`- 意图链：${summary.intentChain}`);
+      }
+      const fieldEntries = Object.entries(summary.fields).filter(([, v]) => v);
+      if (fieldEntries.length) {
+        lines.push(`- 累积字段：${fieldEntries.map(([k, v]) => `${label(k)}=${v}`).join(", ")}`);
+      }
+      if (summary.conclusions.length) {
+        lines.push("- 早期结论：");
+        summary.conclusions.forEach(c => lines.push(`  · ${c}`));
+      }
+      if (summary.userSupplements.length) {
+        lines.push("- 用户补充：");
+        summary.userSupplements.forEach(s => lines.push(`  · ${s}`));
+      }
+      return lines.join("\n");
+    }
+
+    function compressConversationContext() {
+      const messages = state.agentMessages;
+      const WINDOW_SIZE = 10;
+      if (messages.length <= WINDOW_SIZE) return null;
+
+      const windowStart = messages.length - WINDOW_SIZE;
+      const expired = messages.slice(0, windowStart);
+
+      if (state.contextSummaryCache.llmSummary && state.contextSummaryCache.lastCompressedIndex === windowStart) {
+        console.log("[ContextCompress] Using cached LLM summary");
+        return state.contextSummaryCache.llmSummary;
+      }
+      if (state.contextSummaryCache.text && state.contextSummaryCache.lastCompressedIndex === windowStart) {
+        console.log("[ContextCompress] Using cached Layer 1 summary");
+        return state.contextSummaryCache.text;
+      }
+
+      const summary = {
+        expiredCount: expired.length,
+        intentChain: extractIntentChain(),
+        fields: compactFields(state.conversation.memory.fields || {}),
+        conclusions: extractConclusions(expired),
+        userSupplements: extractUserSupplements(expired)
+      };
+
+      const text = formatContextSummary(summary);
+      state.contextSummaryCache.text = text;
+      state.contextSummaryCache.lastCompressedIndex = windowStart;
+      console.log("[ContextCompress] Layer 1 summary generated:", text.slice(0, 100) + "...");
+      return text;
+    }
+
+    async function compressWithLLM() {
+      const messages = state.agentMessages;
+      const WINDOW_SIZE = 10;
+      if (messages.length <= 20) return;
+
+      const windowStart = messages.length - WINDOW_SIZE;
+
+      if (state.contextSummaryCache.llmSummary && state.contextSummaryCache.lastCompressedIndex === windowStart) {
+        return;
+      }
+
+      const expired = messages.slice(0, windowStart);
+      const localSummary = compressConversationContext();
+      const historyText = expired.map(m => `[${m.role}] ${m.text.slice(0, 150)}`).join("\n");
+
+      const compressPrompt = [
+        { role: "system", content: "你是一个对话摘要助手。将以下对话历史压缩为 200 字以内的结构化摘要，保留：关键结论、未解决问题、用户核心诉求。用中文输出。" },
+        { role: "user", content: `本地规则摘要：\n${localSummary}\n\n原始对话（${expired.length} 条）：\n${historyText}` }
+      ];
+
+      try {
+        const condensed = await callLLM(compressPrompt);
+        const llmSummary = `## 会话上下文摘要（LLM 精炼）\n${condensed}`;
+        state.contextSummaryCache.llmSummary = llmSummary;
+        state.contextSummaryCache.lastCompressedIndex = windowStart;
+        console.log("[ContextCompress] Layer 2 LLM summary generated:", condensed.slice(0, 100) + "...");
+      } catch (e) {
+        console.warn("[ContextCompress] Layer 2 failed, falling back to Layer 1:", e.message);
+      }
+    }
+
     function buildSystemPrompt(draft, validation, docs, tools, analysisResult) {
-      let prompt = `你是一个 API 接入技术支持 Agent。你的职责是帮助第三方开发者排查 API 接入问题和分析业务数据，回答简洁专业。
+      let prompt = `你是 API 技术支持 Agent，负责排查接入问题和分析业务数据。
 
-## 能力范围
-- 签名失败排查（SIGN_INVALID、验签错误）
-- 回调异常排查（回调超时、未送达）
-- API 字段/错误码含义查询
-- 新 API 接入流程咨询
-- 撤单数据分析（趋势、原因分布、渠道对比、异常检测）
+## 当前任务
+- 类型：${taskLabel(draft.task_type)}
+- 状态：${validation.status}
+- 已有字段：${Object.entries(compactFields(draft.fields)).map(([k,v]) => `${label(k)}=${v}`).join("、") || "无"}
+- 缺失字段：${validation.missing_fields.map(label).join("、") || "无"}
 
-## 当前任务状态
-- 任务类型：${taskLabel(draft.task_type)}
-- 校验状态：${validation.status}
-- 已收集字段：${Object.entries(compactFields(draft.fields)).map(([k,v]) => `${label(k)}=${v}`).join("、") || "无"}
-- 缺失字段：${validation.missing_fields.map(label).join("、") || "无"}`;
+## 执行流程`;
+
+      // Dynamic execution instructions based on validation status
+      if (validation.status === "needs_clarification") {
+        prompt += `
+1. 分析缺失字段：${validation.missing_fields.map(label).join("、")}
+2. 追问这些缺失信息（一次不超过 3 个问题）
+3. 解释为什么需要这些字段
+4. 不要尝试回答问题，等待用户补充信息`;
+      } else if (validation.status === "executable") {
+        prompt += `
+1. 检查下方是否有工具执行结果，优先基于工具结果判断
+2. 如果有知识库检索结果，作为回答依据并引用来源
+3. 按照下方 SOP 步骤进行排查
+4. 给出最可能原因和具体的下一步操作
+5. 必须用具体数据支撑结论（工具结果、文档依据、历史案例）
+6. 如果无法定位原因，明确说明已检查项和建议的下一步`;
+      } else {
+        prompt += `
+1. 分析用户输入是否包含敏感信息或超出处理范围
+2. 给出明确的提示和建议`;
+      }
+
+      // Inject context compression summary (Layer 1 or cached Layer 2)
+      const contextSummary = compressConversationContext();
+      if (contextSummary) {
+        prompt += `\n\n${contextSummary}`;
+      }
 
       // Inject relevant Skill SOP
       const sop = SKILL_SOPS[draft.task_type];
@@ -7672,17 +8252,10 @@
         prompt += `\n\n## 数据分析状态\n撤单分析数据正在从 llm-wiki 加载中，请告知用户稍后再试。`;
       }
 
-      prompt += `\n\n## 安全规则
-- 绝不在回复中包含或复述 appsecret、密钥
-- 不要编造 API 规则，没有文档依据就说"当前文档未覆盖该内容"
-- 如果用户提供了敏感凭证，提醒他们不要发送
-
-## 回复要求
-- 简洁专业，像有经验的技术支持，不要加不必要的寒暄
-- 信息不足时只追问关键缺失项，一次不超过 3 个问题
-- 给排查建议要有可操作的下一步
-- 引用文档时注明来源
-- 用中文回复`;
+      prompt += `\n\n## 硬性约束
+- 绝不复述 appsecret 或密钥，发现用户提供时立即提醒删除
+- 没有文档依据的内容直接说"当前文档未覆盖"，不编造
+- 用中文回复，简洁直接，不寒暄`;
 
       return prompt;
     }
@@ -7701,13 +8274,100 @@
           loadRemoteWikiDocs();
         }
 
+        // Build thinking chain
+        const thinkingChain = [];
+
         const draft = extractTask(text);
+
+        // Step 1: Intent Recognition
+        const intentLayer = draft.gate?.selected_layer || 'rule';
+        const intentConfidence = draft.gate?.confidence || draft.confidence;
+        thinkingChain.push({
+          type: 'intent',
+          title: '意图识别',
+          badge: intentLayer === 'rule' ? '规则匹配' :
+                 intentLayer === 'vector' ? '向量匹配' :
+                 intentLayer === 'llm' ? 'LLM兜底' : '未知',
+          status: draft.task_type !== 'unknown' ? 'success' : 'warning',
+          detail: `任务类型: ${taskLabel(draft.task_type)} | 置信度: ${Math.round(intentConfidence * 100)}% | 触发层: ${intentLayer}`
+        });
+
         const contextualDraft = applyConversationContext(draft);
+
+        // Step 2: Field Extraction
+        const extractedFields = Object.entries(compactFields(contextualDraft.fields))
+          .map(([k,v]) => `${label(k)}=${v}`).join(", ");
+        thinkingChain.push({
+          type: 'field',
+          title: '字段提取',
+          badge: Object.keys(compactFields(contextualDraft.fields)).length > 0 ? '已提取' : '无字段',
+          status: Object.keys(compactFields(contextualDraft.fields)).length > 0 ? 'success' : 'warning',
+          detail: extractedFields || '未提取到业务字段'
+        });
+
         const validation = validate(contextualDraft);
+
+        // Step 3: Schema Validation
+        thinkingChain.push({
+          type: 'validation',
+          title: 'Schema 校验',
+          badge: validation.status === 'executable' ? '可执行' :
+                 validation.status === 'needs_clarification' ? '需补充' :
+                 validation.status === 'blocked' ? '已阻断' : '超出范围',
+          status: validation.status === 'executable' ? 'success' :
+                  validation.status === 'blocked' ? 'error' : 'warning',
+          detail: validation.status === 'needs_clarification'
+            ? `缺失字段: ${validation.missing_fields.map(label).join(", ")}`
+            : validation.status === 'blocked'
+            ? `阻断原因: ${validation.blocked_reasons.join("; ")}`
+            : validation.status === 'executable'
+            ? '所有必填字段已齐全'
+            : '任务超出处理范围'
+        });
+
         const localDocs = searchDocs(contextualDraft);
         const remoteDocs = remoteWikiDocs ? searchRemoteDocs(contextualDraft) : [];
         const docs = localDocs.length ? localDocs : remoteDocs;
+
+        // Step 4: Knowledge Retrieval (if applicable)
+        if (validation.status === 'executable' || validation.status === 'needs_clarification') {
+          thinkingChain.push({
+            type: 'knowledge',
+            title: '知识检索',
+            badge: docs.length > 0 ? `${docs.length} 条` : '无结果',
+            status: docs.length > 0 ? 'success' : 'warning',
+            detail: docs.length > 0
+              ? `检索到 ${docs.length} 条相关文档 (${localDocs.length > 0 ? '本地知识库' : '远程 Wiki'})`
+              : '未检索到相关文档'
+          });
+        }
+
         const tools = validation.status === "executable" ? runTools(contextualDraft) : [];
+
+        // Step 5: Tool Execution (if applicable)
+        if (tools.length > 0) {
+          const executedTools = tools.filter(t => t.status !== 'skipped');
+          const failedTools = executedTools.filter(t => t.status === 'fail');
+          thinkingChain.push({
+            type: 'tool',
+            title: '工具调用',
+            badge: `${executedTools.length} 个工具`,
+            status: failedTools.length > 0 ? 'warning' : executedTools.length > 0 ? 'success' : 'warning',
+            detail: executedTools.map(t => `${t.name}: ${t.status}`).join(" | ") || '无工具执行'
+          });
+        }
+
+        // Step 6: Skill Routing (if applicable)
+        if (validation.status === 'executable' && contextualDraft.task_type !== 'unknown') {
+          const skillPath = skills[contextualDraft.task_type];
+          thinkingChain.push({
+            type: 'skill',
+            title: 'Skill 路由',
+            badge: skillPath ? '已加载' : '无 Skill',
+            status: skillPath ? 'success' : 'warning',
+            detail: skillPath ? `已加载 SOP: ${skillPath}` : '该任务类型无对应 Skill'
+          });
+        }
 
         let reply;
 
@@ -7724,6 +8384,15 @@
         } else if (validation.status === "out_of_scope") {
           reply = "这个问题不在我的处理范围内。我目前可以帮助处理：\n\n1. 签名失败排查\n2. 回调异常排查\n3. API 字段/错误码问答\n4. 新 API 接入流程\n5. 撤单数据分析\n\n请输入 API 接入相关问题。";
         } else {
+          // Step 7: LLM Call
+          thinkingChain.push({
+            type: 'llm',
+            title: 'LLM 生成',
+            badge: '调用中',
+            status: 'success',
+            detail: '基于上下文生成回复 (理解 + 表达)'
+          });
+
           // Call real LLM for understanding and expression
           const systemPrompt = buildSystemPrompt(contextualDraft, validation, docs, tools, analysisResult);
           const messages = [{ role: "system", content: systemPrompt }];
@@ -7733,6 +8402,11 @@
             messages.push({ role: msg.role === "user" ? "user" : "assistant", content: msg.text });
           });
           reply = await callLLM(messages);
+
+          // Trigger Layer 2 compression async (for next turn, non-blocking)
+          if (state.deepMemoryEnabled || state.conversation.turns.length > 20) {
+            compressWithLLM().catch(() => {});
+          }
         }
 
         // Commit conversation state
@@ -7747,8 +8421,79 @@
         state.conversation.memory = session.memory;
         state.conversation.activeTask = session.activeTask;
 
-        appendAgentMsg("agent", reply);
+        // Build observability trace entry
+        const observeSteps = [
+          {
+            stage: "intent", title: "意图识别",
+            status: draft.task_type !== "unknown" ? "success" : "warning",
+            input: { userInput: text, normalized: text.trim() },
+            output: { task_type: draft.task_type, confidence: draft.confidence, gate: draft.input_gate },
+            reasoning: `触发层: ${intentLayer} | 得分: ${JSON.stringify(draft.input_gate?.scores?.slice(0, 3)?.map(s => s.intent + ":" + s.score))}`,
+            decision: draft.task_type !== "unknown" ? `选定意图: ${taskLabel(draft.task_type)}` : "未识别，标记为 unknown"
+          },
+          {
+            stage: "field", title: "字段提取",
+            status: Object.keys(compactFields(contextualDraft.fields)).length > 0 ? "success" : "warning",
+            input: { message: text, task_type: contextualDraft.task_type },
+            output: { fields: contextualDraft.fields, extraction: contextualDraft.extraction },
+            reasoning: contextualDraft.extraction?.filter(e => e.value).map(e => `${e.field}: "${e.value}" (${e.rule})`).join("; ") || "无字段命中",
+            decision: `提取到 ${Object.keys(compactFields(contextualDraft.fields)).length} 个字段`
+          },
+          {
+            stage: "validation", title: "Schema 校验",
+            status: validation.status === "executable" ? "success" : validation.status === "blocked" ? "error" : "warning",
+            input: { fields: compactFields(contextualDraft.fields), required: requiredFields[contextualDraft.task_type] || [] },
+            output: validation,
+            reasoning: validation.status === "needs_clarification" ? `缺失: ${validation.missing_fields.map(label).join(", ")}` : validation.status === "blocked" ? validation.blocked_reasons.join("; ") : "所有必填字段齐全",
+            decision: `状态: ${validation.status}`
+          }
+        ];
+        if (docs.length || validation.status === "executable") {
+          observeSteps.push({
+            stage: "knowledge", title: "知识检索",
+            status: docs.length > 0 ? "success" : "warning",
+            input: { keywords: keywordsFor(contextualDraft) },
+            output: { localHits: localDocs.length, remoteHits: remoteDocs.length, docs: docs.slice(0, 3) },
+            reasoning: docs.length ? `命中 ${docs.length} 条 (${localDocs.length ? "本地" : "远程"})` : "未命中任何文档",
+            decision: docs.length ? `注入 ${Math.min(docs.length, 5)} 条到 prompt` : "无文档注入"
+          });
+        }
+        if (tools.length) {
+          observeSteps.push({
+            stage: "tool", title: "工具调用",
+            status: tools.some(t => t.status === "fail") ? "error" : tools.some(t => t.status !== "skipped") ? "success" : "warning",
+            input: { task_type: contextualDraft.task_type, fields: compactFields(contextualDraft.fields) },
+            output: tools,
+            reasoning: tools.map(t => `${t.name}: ${t.status} - ${t.detail}`).join("\n"),
+            decision: tools.some(t => t.status === "fail") ? "存在失败工具，需重点分析" : tools.every(t => t.status === "skipped") ? "全部跳过" : "工具执行完成"
+          });
+        }
+        if (reply) {
+          observeSteps.push({
+            stage: "llm", title: "LLM 生成",
+            status: "success",
+            input: { systemPromptLength: (typeof systemPrompt !== "undefined" ? systemPrompt.length : 0), historyCount: state.agentMessages.length, model: LLM_CONFIG.model },
+            output: { reply: reply.slice(0, 500), fullLength: reply.length },
+            reasoning: validation.status === "blocked" || validation.status === "out_of_scope" ? "由代码直接生成回复，未调用 LLM" : "模型基于 system prompt + 历史上下文生成回复",
+            decision: "输出给用户"
+          });
+        }
+        state.observeTrace.push({
+          timestamp: Date.now(),
+          userInput: text,
+          finalStatus: validation.status,
+          steps: observeSteps
+        });
+
+        appendAgentMsg("agent", reply, thinkingChain);
       } catch (err) {
+        state.observeTrace.push({
+          timestamp: Date.now(),
+          userInput: text,
+          finalStatus: "error",
+          error: err.message,
+          steps: []
+        });
         appendAgentMsg("agent", `抱歉，处理时遇到错误：${err.message}\n\n请稍后重试。`);
       }
 
