@@ -9089,29 +9089,56 @@
       const tools = defineReActTools();
       const toolsSpec = tools.map(t => `${t.name}: ${t.description}\n参数: ${JSON.stringify(t.parameters.properties, null, 2)}`).join("\n\n");
 
-      const systemPrompt = `你是 API 技术支持 Agent，使用 ReAct (Reasoning + Acting) 模式解决问题。
+      const systemPrompt = `你是 API 技术支持 Agent，使用 ReAct (Reasoning + Acting) 模式自主解决问题。
+
+## 你的工作流程
+
+1. **思考 (Thought)**：分析当前状态，判断缺少什么信息，计划下一步
+2. **行动 (Action)**：选择一个工具获取信息
+3. **观察 (Observation)**：系统返回工具执行结果
+4. 重复以上步骤直到能给出最终答案
 
 ## 可用工具
+
 ${toolsSpec}
 
-## ReAct 循环格式
-每一轮输出必须严格遵循以下格式：
+## 输出格式
 
-Thought: [你的推理过程，分析当前状态和下一步]
-Action: [工具名]
-Action Input: [JSON格式的参数]
+每一轮严格遵循：
 
-或者当你有了最终答案时：
+Thought: [分析当前状态和下一步计划]
+Action: [工具名，必须是上面列出的工具之一]
+Action Input: [JSON格式参数]
 
-Thought: [总结推理过程]
-Final Answer: [给用户的最终回复]
+当你有了足够信息时：
 
-## 规则
-1. 每次只能调用一个工具
-2. 必须先 Thought 再 Action，不能跳过
-3. Action Input 必须是合法 JSON
+Thought: [总结所有发现]
+Final Answer: [给用户的最终回复，要具体、有依据]
+
+## 示例
+
+用户问: "/api/zhwaihub/hao/search 这个接口返回数据不全"
+
+Thought: 用户反馈接口返回数据不全，我需要先了解这个接口的文档定义，看看它的预期行为和参数要求。
+Action: search_knowledge
+Action Input: {"query": "/api/zhwaihub/hao/search"}
+
+Observation: [FAQ] hao/search 接口说明：支持按游戏名搜索，需传入 keyword 参数...
+
+Thought: 找到了接口文档。接口需要 keyword 参数，可能是用户传参不完整导致返回不全。我有足够信息回答了。
+Final Answer: /api/zhwaihub/hao/search 接口用于按关键词搜索游戏账号，必须传入 keyword 参数。如果返回数据不全，请检查：
+1. keyword 是否过于宽泛（建议用具体游戏名）
+2. 是否有分页参数 page/pageSize 未传（默认只返回前 10 条）
+3. 接口文档来源：xxx
+
+## 重要规则
+
+1. 每次只执行一个 Action
+2. 不要对同一个工具用相同参数调用超过 2 次
+3. 如果 2 次搜索都没找到相关信息，直接给出 Final Answer 说明情况
 4. 最多 ${MAX_ITERATIONS} 轮，之后必须给出 Final Answer
-5. 如果工具返回足够信息，立即给出 Final Answer，不要无意义循环
+5. Final Answer 必须具体：引用工具返回的数据，不要编造
+6. 如果知识库中没有相关文档，诚实说明并建议用户联系对应团队
 
 ## 当前用户问题
 ${userInput}
@@ -9120,6 +9147,7 @@ ${userInput}
 
       const messages = [{ role: "system", content: systemPrompt }];
       const trace = [];
+      const toolCallHistory = []; // Track tool calls to prevent excessive repetition
       let finalAnswer = null;
 
       for (let i = 0; i < MAX_ITERATIONS; i++) {
@@ -9173,6 +9201,18 @@ ${userInput}
           messages.push({ role: "user", content: `Observation: ${observation}` });
           continue;
         }
+
+        // Check for excessive repetition
+        const callSignature = `${action}:${JSON.stringify(actionInput)}`;
+        const duplicateCount = toolCallHistory.filter(sig => sig === callSignature).length;
+        if (duplicateCount >= 2) {
+          const observation = `警告：你已经用相同参数调用 ${action} 超过 2 次。请尝试不同的工具或参数，或直接给出 Final Answer。`;
+          trace[trace.length - 1].observation = observation;
+          messages.push({ role: "assistant", content: response });
+          messages.push({ role: "user", content: `Observation: ${observation}` });
+          continue;
+        }
+        toolCallHistory.push(callSignature);
 
         const toolResult = await executeReActTool(action, actionInput);
         const observation = toolResult.success
