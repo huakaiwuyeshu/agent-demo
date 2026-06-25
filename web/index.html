@@ -4176,6 +4176,63 @@
           </div>
         </div>
 
+        <!-- Intent Recognition Detail Module -->
+        <div class="flow-detail-modules" style="grid-template-columns: 1fr;">
+          <div class="flow-detail-card">
+            <div class="flow-detail-head">
+              <svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/></svg>
+              <strong>四层意图识别：为什么不直接让 LLM 判断意图</strong>
+            </div>
+            <div class="flow-detail-body">
+              <div style="display:grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 12px;">
+                <div style="padding:10px; border-radius:8px; background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2);">
+                  <div style="font-weight:700; color:var(--cyan); font-size:12px; margin-bottom:6px;">Layer 1: 规则匹配</div>
+                  <div style="font-size:11px; color:var(--muted); line-height:1.6;">
+                    <strong style="color:var(--ink)">关键词 + 权重打分</strong><br>
+                    "签名"(2) + "SIGN_INVALID"(3) = 5 分<br>
+                    得分 ≥ 3 即命中<br>
+                    <span style="color:var(--accent)">Cost: 0 token · <10ms</span>
+                  </div>
+                </div>
+                <div style="padding:10px; border-radius:8px; background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2);">
+                  <div style="font-weight:700; color:var(--cyan); font-size:12px; margin-bottom:6px;">Layer 2: 向量相似度</div>
+                  <div style="font-size:11px; color:var(--muted); line-height:1.6;">
+                    <strong style="color:var(--ink)">Token overlap 语义匹配</strong><br>
+                    对比预设示例句子<br>
+                    相似度 ≥ 42% 即命中<br>
+                    <span style="color:var(--accent)">Cost: 0 token · 本地计算</span>
+                  </div>
+                </div>
+                <div style="padding:10px; border-radius:8px; background:rgba(56,189,248,0.06); border:1px solid rgba(56,189,248,0.2);">
+                  <div style="font-weight:700; color:var(--cyan); font-size:12px; margin-bottom:6px;">Layer 3: LLM Hints</div>
+                  <div style="font-size:11px; color:var(--muted); line-height:1.6;">
+                    <strong style="color:var(--ink)">Pattern 启发式归并</strong><br>
+                    "怎么开始" → api_onboarding<br>
+                    有业务信号时兜底<br>
+                    <span style="color:var(--accent)">Cost: 0 token · 模拟 LLM</span>
+                  </div>
+                </div>
+                <div style="padding:10px; border-radius:8px; background:rgba(34,197,94,0.06); border:1px solid rgba(34,197,94,0.3);">
+                  <div style="font-weight:700; color:var(--accent); font-size:12px; margin-bottom:6px;">Layer 4: ReAct 循环</div>
+                  <div style="font-size:11px; color:var(--muted); line-height:1.6;">
+                    <strong style="color:var(--ink)">LLM 自主 Thought→Action</strong><br>
+                    规则全失败 + 有 API 信号<br>
+                    最多 5 轮迭代<br>
+                    <span style="color:var(--amber)">Cost: 5-10k tokens · ~5% 触发</span>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:12px; padding:10px; background:rgba(100,116,139,0.08); border-radius:8px; font-size:11px; color:var(--muted);">
+                <strong style="color:var(--ink)">流转机制：</strong>
+                Layer 1 命中 → 直接输出 ｜ Layer 1 失败 → 降级到 Layer 2 ｜ Layer 2 失败 → 降级到 Layer 3 ｜ Layer 3 失败 + 有业务信号 → Layer 4 ReAct 救援 ｜ 无业务信号 → 拒绝
+              </div>
+            </div>
+            <div class="flow-detail-foot">
+              🎯 设计目标：90%+ 请求在 Layer 1-2 零成本解决 ｜ Layer 4 仅处理边缘 case ｜ 总体意图识别 token 消耗趋近于 0
+            </div>
+          </div>
+        </div>
+
         <!-- Feedback loop -->
         <div class="flow-feedback-bar">对话反馈 / SOP 迭代 / Skill 持续优化 / 知识库更新</div>
 
