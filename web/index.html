@@ -3777,7 +3777,7 @@
               <span class="flow-col-num">2</span>
               <div>
                 <span class="flow-col-title">安全门控 + 意图识别</span>
-                <span class="flow-col-subtitle">（规则优先 / 向量补位 / LLM 兜底）</span>
+                <span class="flow-col-subtitle">（规则优先 / 向量补位 / LLM 兜底 / ReAct 救援）</span>
               </div>
             </div>
             <div class="flow-col-items">
@@ -3791,11 +3791,15 @@
               </div>
               <div class="flow-col-item">
                 <svg viewBox="0 0 24 24"><path d="M4 7h16"/><path d="M4 12h10"/><path d="M4 17h7"/></svg>
-                <span><strong>关键词 + 正则</strong>提取字段</span>
+                <span><strong>Layer 1: 关键词 + 正则</strong>（0 token, 确定性）</span>
               </div>
               <div class="flow-col-item">
                 <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 0 0-3 3v1a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10H5a2 2 0 0 0-2 2v1a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-1a2 2 0 0 0-2-2Z"/></svg>
-                <span><strong>语义兜底</strong>（向量 + LLM 模糊识别）</span>
+                <span><strong>Layer 2-3: 向量 + LLM Hints</strong>（0 token）</span>
+              </div>
+              <div class="flow-col-item" style="border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.05);">
+                <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.22-8.56"/><path d="M21 3v5h-5"/></svg>
+                <span><strong>Layer 4: ReAct 自主循环</strong>（兜底, 5-10k tokens）</span>
               </div>
               <div class="flow-col-divider"></div>
               <div class="flow-col-note">输出：task_type + 字段草稿 + 置信度</div>
@@ -3825,22 +3829,36 @@
               <div class="flow-llm-step">
                 <span class="flow-llm-step-num">2</span>
                 <div>
-                  <strong>上下文补全</strong>
-                  <span>从多轮对话记忆中自动补充已提供字段</span>
+                  <strong>短期记忆补全</strong>
+                  <span>从 Field Memory 继承已知字段（跨轮累积）</span>
                 </div>
               </div>
               <div class="flow-llm-step">
                 <span class="flow-llm-step-num">3</span>
+                <div>
+                  <strong>长期记忆检索</strong>
+                  <span>TF-IDF + 时间衰减，注入 Top 3 相似案例</span>
+                </div>
+              </div>
+              <div class="flow-llm-step">
+                <span class="flow-llm-step-num">4</span>
                 <div>
                   <strong>Skill 路由</strong>
                   <span>按 task_type 命中对应排查 SOP</span>
                 </div>
               </div>
               <div class="flow-llm-step">
-                <span class="flow-llm-step-num">4</span>
+                <span class="flow-llm-step-num">5</span>
+                <div>
+                  <strong>上下文压缩</strong>
+                  <span>超出窗口的历史 → 结构化摘要注入 Prompt</span>
+                </div>
+              </div>
+              <div class="flow-llm-step">
+                <span class="flow-llm-step-num">6</span>
                 <div>
                   <strong>结果编排</strong>
-                  <span>文档 + 工具结果 + 上下文 → 生成回复</span>
+                  <span>文档 + 工具 + 记忆 + 上下文 → 生成回复</span>
                 </div>
               </div>
 
@@ -3917,10 +3935,14 @@
               </div>
               <div class="flow-col-item">
                 <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-                <span><strong>数据分析工具</strong>（撤单趋势 / 分布）</span>
+                <span><strong>数据分析工具</strong>（撤单趋势 / 渠道 / 游戏）</span>
+              </div>
+              <div class="flow-col-item" style="border-color: rgba(34,197,94,0.4); background: rgba(34,197,94,0.05);">
+                <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                <span><strong>长期记忆检索</strong>（Top 3 相似案例 → Prompt）</span>
               </div>
               <div class="flow-col-divider"></div>
-              <div class="flow-col-note">结构化结果供 LLM 解读生成</div>
+              <div class="flow-col-note">结构化结果供 LLM 解读生成<br/><em style="color:var(--amber);font-size:10px">⚠️ 数据分析：静态 Excel 快照，非实时</em></div>
             </div>
           </div>
 
@@ -3984,6 +4006,14 @@
                 <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
                 撤单分析数据
               </span>
+              <span class="flow-aux-chip" style="border-color: rgba(34,197,94,0.4); color: var(--accent);">
+                <svg viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                短期记忆 (localStorage)
+              </span>
+              <span class="flow-aux-chip" style="border-color: rgba(34,197,94,0.4); color: var(--accent);">
+                <svg viewBox="0 0 24 24"><path d="M12 2v4"/><path d="m16.24 7.76 2.83-2.83"/><path d="M22 12h-4"/><path d="m16.24 16.24 2.83 2.83"/><path d="M12 22v-4"/><path d="m7.76 16.24-2.83 2.83"/><path d="M2 12h4"/><path d="m7.76 7.76-2.83-2.83"/></svg>
+                长期记忆 (100条历史)
+              </span>
             </div>
           </div>
           <div class="flow-aux security">
@@ -4011,6 +4041,14 @@
               <span class="flow-aux-chip">
                 <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
                 人工闸门
+              </span>
+              <span class="flow-aux-chip" style="border-color: rgba(34,197,94,0.4); color: var(--accent);">
+                <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.22-8.56"/><path d="M21 3v5h-5"/></svg>
+                ReAct 兜底 (Layer 4)
+              </span>
+              <span class="flow-aux-chip" style="border-color: rgba(34,197,94,0.4); color: var(--accent);">
+                <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                上下文压缩
               </span>
             </div>
           </div>
