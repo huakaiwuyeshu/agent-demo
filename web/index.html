@@ -4776,7 +4776,7 @@
       callback_debug: ["callback_url", "order_id", "trigger_action", "request_time"],
       api_field_qa: ["field_name"],
       credential_request: ["appid"],
-      volume_analysis: ["analysis_dimension"],
+      volume_analysis: ["analysis_dimension", "analysis_scope"],
       api_onboarding: ["target_api"],
       unknown: []
     };
@@ -4793,6 +4793,7 @@
       field_name: "字段名",
       task_type: "任务类型",
       analysis_dimension: "分析维度",
+      analysis_scope: "分析范围",
       target_api: "目标接口"
     };
 
@@ -5012,6 +5013,7 @@
         trigger_action: firstMatch(/(?:触发动作|action)\s*[=:：]\s*([^，。\n]+)/i, message),
         field_name: detectFieldName(message),
         analysis_dimension: detectAnalysisDimension(message),
+        analysis_scope: detectAnalysisScope(message),
         target_api: firstMatch(/(?:接口|api)\s*[=:：]?\s*(\/[A-Za-z0-9_\-/]+)/i, message)
       };
 
@@ -5032,6 +5034,7 @@
         { field: "order_id", rule: "匹配 订单号=xxx 或 order_id=xxx", value: fields.order_id },
         { field: "trigger_action", rule: "匹配 触发动作=xxx", value: fields.trigger_action },
         { field: "analysis_dimension", rule: "识别分析维度关键词", value: fields.analysis_dimension },
+        { field: "analysis_scope", rule: "识别细分范围（时间/渠道/游戏/全部）", value: fields.analysis_scope },
         { field: "target_api", rule: "匹配目标接口路径", value: fields.target_api },
         { field: "field_name", rule: "在问题中寻找常见字段名", value: fields.field_name }
       ];
@@ -5081,6 +5084,17 @@
       return matched.length ? matched.map(d => d.value).join("+") : null;
     }
 
+    function detectAnalysisScope(message) {
+      const scopes = [
+        { pattern: /时间|趋势|每天|每周|最近|过去/, value: "时间趋势" },
+        { pattern: /渠道|平台|来源/, value: "渠道对比" },
+        { pattern: /游戏|品类/, value: "游戏维度" },
+        { pattern: /全部|所有|整体/, value: "全部维度" }
+      ];
+      const matched = scopes.filter(s => s.pattern.test(message));
+      return matched.length ? matched.map(s => s.value).join("+") : null;
+    }
+
     function validate(draft) {
       if (draft.security_flags.includes("contains_appsecret")) {
         return {
@@ -5105,6 +5119,20 @@
       if (validation.missing_fields.includes("task_type")) {
         return "我还不能判断这是哪类 API 接入问题。请补充：问题类型、相关接口、错误现象或错误码。";
       }
+
+      // Special clarification for volume_analysis
+      if (draft.task_type === "volume_analysis" && validation.missing_fields.includes("analysis_scope")) {
+        return `你想看「${draft.fields.analysis_dimension || "数据"}」的哪个细分维度？
+
+请选择（可多选）：
+1️⃣ 时间趋势 — 最近 7 天每日变化
+2️⃣ 渠道对比 — 各渠道占比和 TOP3
+3️⃣ 游戏维度 — 按游戏品类分布
+4️⃣ 全部维度 — 一次性查看所有
+
+**示例**："时间趋势" 或 "渠道对比 + 游戏维度" 或 "全部维度"`;
+      }
+
       return `我已识别为「${taskLabel(draft.task_type)}」，但还缺少阻塞信息：${validation.missing_fields.map(label).join("、")}。\n请补充这些信息后我再继续排查。不要发送 appsecret、密钥或完整敏感凭证。`;
     }
 
@@ -6136,6 +6164,7 @@
         trigger_action: firstMatch(/(?:触发动作|action)\s*[=:：]\s*([^，。\n]+)/i, message),
         field_name: detectFieldName(message),
         analysis_dimension: detectAnalysisDimension(message),
+        analysis_scope: detectAnalysisScope(message),
         target_api: firstMatch(/(?:接口|api)\s*[=:：]?\s*(\/[A-Za-z0-9_\-/]+)/i, message)
       };
 
@@ -6274,13 +6303,27 @@
     }
 
     function clarify(draft, validation) {
-      if (validation.status === "out_of_scope") {
-        return "这句话不属于当前 API 接入 Agent 的有效输入。\n当前 Agent 只处理：签名失败、回调异常、字段/错误码问答、凭证请求、新 API 接入、单量分析。\n你可以换成类似“/open/order/create 签名失败，错误码=SIGN_INVALID”的问题。";
+      if (validation.status === “out_of_scope”) {
+        return “这句话不属于当前 API 接入 Agent 的有效输入。\n当前 Agent 只处理：签名失败、回调异常、字段/错误码问答、凭证请求、新 API 接入、单量分析。\n你可以换成类似”/open/order/create 签名失败，错误码=SIGN_INVALID”的问题。”;
       }
-      if (validation.status === "blocked") {
-        return `这个请求触发了安全边界：${validation.blocked_reasons.join("；")}`;
+      if (validation.status === “blocked”) {
+        return `这个请求触发了安全边界：${validation.blocked_reasons.join(“；”)}`;
       }
-      return `我已识别为「${taskLabel(draft.task_type)}」，但还缺少阻塞信息：${validation.missing_fields.map(label).join("、")}。\n请补充这些信息后我再继续排查。不要发送 appsecret、密钥或完整敏感凭证。`;
+
+      // Special clarification for volume_analysis
+      if (draft.task_type === “volume_analysis” && validation.missing_fields.includes(“analysis_scope”)) {
+        return `你想看「${draft.fields.analysis_dimension || “数据”}」的哪个细分维度？
+
+请选择（可多选）：
+1️⃣ 时间趋势 — 最近 7 天每日变化
+2️⃣ 渠道对比 — 各渠道占比和 TOP3
+3️⃣ 游戏维度 — 按游戏品类分布
+4️⃣ 全部维度 — 一次性查看所有
+
+**示例**：”时间趋势” 或 “渠道对比 + 游戏维度” 或 “全部维度”`;
+      }
+
+      return `我已识别为「${taskLabel(draft.task_type)}」，但还缺少阻塞信息：${validation.missing_fields.map(label).join(“、”)}。\n请补充这些信息后我再继续排查。不要发送 appsecret、密钥或完整敏感凭证。`;
     }
 
     function buildSessionSnapshot(draft, validation, docs, remoteDocs) {
