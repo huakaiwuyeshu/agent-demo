@@ -39,9 +39,9 @@ python app.py --version v3 --message "你们 /open/order 接口签名失败，ap
 
 **LLM Configuration**: Edit `web/proxy.py` → `LLM_ENDPOINT`, `LLM_KEY`
 
-## Architecture: Three-Layer Hybrid Intent Recognition
+## Architecture: Hybrid Intent Recognition + ReAct Fallback
 
-The core innovation is **Rule + Vector + LLM fallback** for intent recognition, optimized for token efficiency and deterministic behavior.
+The core innovation is **Rule + Vector + LLM fallback** (Layers 1-3) for intent recognition, with **ReAct autonomous loop** (Layer 4) as final fallback. Optimized for token efficiency and deterministic behavior when possible.
 
 ### Layer 1: Rule-First (Deterministic)
 
@@ -95,13 +95,73 @@ llmFallbackHints = [
 - **Cost**: 0 tokens (simulated, but represents where real LLM would sit)
 - **Use case**: Ambiguous expressions with contextual clues
 
+### Layer 4: ReAct Autonomous Loop (NEW - Added 2026-06)
+
+**Location**: `web/index.html:8998-9220` (`runReActLoop`)
+
+```javascript
+// Triggered when out_of_scope BUT strongBusinessSignal detected
+if (validation.status === "out_of_scope" && strongBusinessSignal) {
+  const reactResult = await runReActLoop(text, draft, docs);
+  reply = reactResult.answer;
+}
+```
+
+**ReAct Tools** (`defineReActTools`):
+- `search_knowledge` - Query docs/FAQ/error codes
+- `extract_fields` - Parse structured data from user input
+- `check_signature_order` - Verify parameter sorting
+
+**Loop Structure**:
+```
+Max 5 iterations:
+  LLM → Thought: [reasoning]
+      → Action: [tool_name]
+      → Action Input: [JSON args]
+  System → Observation: [tool result]
+  
+  OR
+  
+  LLM → Thought: [summary]
+      → Final Answer: [response to user]
+```
+
+**Anti-loop Guards**:
+- Track `toolCallHistory` with `${tool}:${args}` signatures
+- If same call appears ≥2 times → inject warning observation, skip execution
+- Forces LLM to try different approach or admit failure
+
+**Cost Model**:
+- Fast path (Layers 1-3): 1 LLM call, ~1-2k tokens
+- ReAct fallback: 3-5 LLM calls, ~5-10k tokens
+- Triggers ~5-10% of time (edge cases only)
+
+**When It Fires**:
+- ✅ Mixed-intent queries: "/api/path 为啥接不到游戏账号" (API question + business issue)
+- ✅ New API patterns: "/api/unknown/endpoint 报错了" (not in rule base)
+- ✅ Unusual phrasing that bypasses rules but has clear business signal
+- ❌ Pure out-of-scope: "今天天气怎么样" (no API/path/error_code) → rejection message
+
 **Decision Flow**:
 ```javascript
 // web/index.html:5607-5617
+User Input
+  ↓
+Layer 1 (Rule) ────────┐ score ≥ 3 → Intent recognized
+  ↓ fail               │
+Layer 2 (Vector) ──────┤ similarity ≥ 0.42 → Intent recognized  
+  ↓ fail               │
+Layer 3 (LLM Hints) ───┤ matched pattern → Intent recognized
+  ↓ out_of_scope       │
+Check strongBusinessSignal?
+  ├─ Yes → Layer 4 (ReAct) → LLM autonomous loop → Final Answer
+  └─ No  → Rejection message
+
 if (layers[0].passed) return layers[0];      // Rule優先
 else if (layers[1].passed) return layers[1]; // Vector補位
 else if (layers[2].passed) return layers[2]; // LLM兜底
-else return "unknown";
+else if (strongBusinessSignal) runReActLoop(); // ReAct救援
+else return "out_of_scope";
 ```
 
 **Why This Design**:
@@ -276,13 +336,15 @@ check_signature_order: fail - 当前顺序错误
 ## Code Structure
 
 ```
-web/index.html (8232 lines, single-file SPA)
+web/index.html (9220 lines, single-file SPA)
 ├─ Lines 5508-5771: evaluateInputGate (三层意图识别)
 ├─ Lines 5783-5850: extractTask (字段提取)
 ├─ Lines 3516-3544: validate (Schema 校验)
 ├─ Lines 7632-7697: buildSystemPrompt (动态 Prompt 组装)
-├─ Lines 7690-7757: sendAgentMessage (主对话流程)
-└─ Lines 4400-5100: Memory system (Session, Field Memory, Long-term)
+├─ Lines 8354-8540: sendAgentMessage (主对话流程)
+├─ Lines 4400-5100: Memory system (Session, Field Memory, Long-term)
+├─ Lines 8998-9086: ReAct Layer 4 (defineReActTools, executeReActTool)
+└─ Lines 9087-9220: runReActLoop (LLM autonomous loop)
 
 web/proxy.py: CORS proxy (LLM_ENDPOINT, LLM_KEY)
 web/knowledge.js: Embedded API docs for RAG
