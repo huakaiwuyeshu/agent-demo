@@ -4885,7 +4885,8 @@
       task_type: "任务类型",
       analysis_dimension: "分析维度",
       analysis_scope: "分析范围",
-      target_api: "目标接口"
+      target_api: "目标接口",
+      onboarding_stage: "接入阶段"
     };
 
     const skills = {
@@ -5186,6 +5187,42 @@
       return matched.length ? matched.map(s => s.value).join("+") : null;
     }
 
+    function detectOnboardingStage(message, taskType) {
+      // Only extract stage for api_onboarding task
+      if (taskType !== "api_onboarding") return null;
+
+      const lower = message.toLowerCase();
+
+      // Rule 2: Debug guidance - 调试指导（优先判断，避免被流程咨询误吞）
+      if (/怎么调试|怎么测试|如何联调|postman|签名怎么生成|怎么验证|测试方法|调用示例|demo|怎么用/.test(message)) {
+        return "debug_guidance";
+      }
+
+      // Rule 3: Credential ready - 凭证就绪（已有 appid/appsecret）
+      if (/已经有appid|拿到密钥|已有凭证|凭证已|appid.*appsecret/.test(message)) {
+        return "credential_ready";
+      }
+
+      // If has appid field extracted, likely credential_ready
+      const hasAppid = /(?:appid|app_id)\s*[=:：]\s*([A-Za-z0-9_\-]+)/i.test(message);
+      if (hasAppid) {
+        return "credential_ready";
+      }
+
+      // Rule 1: Process inquiry - 流程咨询（宽匹配：新渠道/新平台 + 怎么/如何/该）
+      if (/对接流程|准备什么|怎么开始|需要哪些|申请流程|如何接入|怎么接入|接入步骤|从哪里开始|该怎么|怎么对接|如何对接/.test(message)) {
+        return "process_inquiry";
+      }
+
+      // Rule 1b: 新渠道/新平台/第一次 + 通用疑问 → 默认流程咨询
+      if (/新渠道|新平台|新接入|第一次接入|首次接入|刚接入/.test(message)) {
+        return "process_inquiry";
+      }
+
+      // Default: unclear, need clarification
+      return null;
+    }
+
     function validate(draft) {
       if (draft.security_flags.includes("contains_appsecret")) {
         return {
@@ -5334,10 +5371,26 @@
         callback_debug: ["回调", "callback", "重试", "500", "200", "HTTPS", "订单号", "触发动作", "投诉"],
         api_field_qa: [],
         credential_request: ["appsecret", "凭证", "密钥", "安全", "appid"],
-        api_onboarding: ["接入", "流程", "appid", "appsecret", "SHA-1", "白名单"],
+        api_onboarding: getOnboardingKeywords(draft),
         unknown: []
       }[draft.task_type] || [];
       return unique(intentKeywords.concat(queryTerms(draft.raw_message || "")));
+    }
+
+    function getOnboardingKeywords(draft) {
+      const stage = draft.fields?.onboarding_stage;
+
+      // Stage-specific keywords for better doc retrieval
+      if (stage === "process_inquiry") {
+        return ["对接流程", "接入流程", "准备材料", "申请appid", "接入步骤", "上线准备", "审核周期"];
+      } else if (stage === "debug_guidance") {
+        return ["调试", "测试", "Postman", "签名生成", "接口调试", "cURL", "示例代码", "Demo", "首次调用", "常见错误"];
+      } else if (stage === "credential_ready") {
+        return ["快速开始", "首次调用", "Demo代码", "示例", "配置", "环境", "沙箱", "生产"];
+      }
+
+      // Default keywords if stage not determined
+      return ["接入", "流程", "appid", "appsecret", "SHA-1", "白名单"];
     }
 
     function queryTerms(text) {
@@ -5420,22 +5473,32 @@
         {
           name: "check_signature_order",
           status: orderStatus,
-          detail: names.length ? `当前顺序：${names.join(", ")}；期望顺序：${expected.join(", ")}` : "没有拿到可解析的签名前字符串。"
+          detail: names.length
+            ? (orderStatus === "pass"
+              ? `参数排序正确（ASCII升序）：${names.join(", ")}。排除参数顺序问题，继续检查编码和时间戳。`
+              : `参数排序错误。当前顺序：${names.join(", ")}；正确顺序（ASCII升序）：${expected.join(", ")}。修复：按正确顺序重新拼接签名前字符串。`)
+            : "无法解析签名前字符串，可能是格式不正确。请确认签名前字符串格式为 key1=value1&key2=value2。"
         },
         {
           name: "check_timestamp_present",
           status: names.includes("timestamp") ? "pass" : "fail",
-          detail: names.includes("timestamp") ? "签名前字符串中包含 timestamp。" : "签名前字符串缺少 timestamp。"
+          detail: names.includes("timestamp")
+            ? "签名前字符串中包含 timestamp，排除缺失时间戳问题。"
+            : "签名前字符串缺少 timestamp 参数。大部分接口要求 timestamp 参与签名，缺少会导致验签失败。修复：在签名参数中添加当前时间戳。"
         },
         {
           name: "search_error_code",
           status: draft.fields.error_code ? "pass" : "skipped",
-          detail: draft.fields.error_code ? `${draft.fields.error_code}：签名校验失败，检查参数排序、编码、timestamp 和 appid 环境。` : "缺少错误码。"
+          detail: draft.fields.error_code
+            ? `${draft.fields.error_code}：签名校验失败。常见原因：参数排序错误、编码不一致（非UTF-8）、timestamp过期（超过5分钟）、appid与环境不匹配（沙箱/生产混用）。`
+            : "未提供错误码，跳过错误码查询。如果用户有具体错误码，可以提供更精确的排查方向。"
         },
         {
           name: "query_sandbox_log",
           status: log ? "pass" : "warn",
-          detail: log ? log.log_summary : "示例日志中没有匹配记录。"
+          detail: log
+            ? log.log_summary
+            : `未找到匹配的沙箱日志（appid=${draft.fields.appid || "未知"}, path=${draft.fields.api_path || "未知"}, time=${draft.fields.request_time || "未知"}）。可能原因：请求未到达服务端、appid/时间不精确、或该请求不在示例数据范围内。`
         }
       ];
     }
@@ -6258,7 +6321,8 @@
         field_name: detectFieldName(message),
         analysis_dimension: detectAnalysisDimension(message),
         analysis_scope: detectAnalysisScope(message),
-        target_api: firstMatch(/(?:接口|api)\s*[=:：]?\s*(\/[A-Za-z0-9_\-/]+)/i, message)
+        target_api: firstMatch(/(?:接口|api)\s*[=:：]?\s*(\/[A-Za-z0-9_\-/]+)/i, message),
+        onboarding_stage: detectOnboardingStage(message, intent.task_type)
       };
 
       const security_flags = [];
@@ -6279,7 +6343,8 @@
         { field: "trigger_action", rule: "匹配 触发动作=xxx", value: fields.trigger_action },
         { field: "field_name", rule: "在问题中寻找常见字段名", value: fields.field_name },
         { field: "analysis_dimension", rule: "识别分析维度关键词", value: fields.analysis_dimension },
-        { field: "target_api", rule: "匹配目标接口路径", value: fields.target_api }
+        { field: "target_api", rule: "匹配目标接口路径", value: fields.target_api },
+        { field: "onboarding_stage", rule: "识别接入阶段（流程咨询/调试指导/凭证就绪）", value: fields.onboarding_stage }
       ];
 
       return {
@@ -6388,6 +6453,29 @@
           blocked_reasons: ["输入中包含 appsecret，不能进入普通模型上下文或普通日志。"]
         };
       }
+
+      // Special handling for api_onboarding: stage-based required fields
+      if (draft.task_type === "api_onboarding") {
+        const stage = draft.fields.onboarding_stage;
+        if (!stage) {
+          // Stage unclear, need to clarify what user wants
+          return { status: "needs_clarification", missing_fields: ["onboarding_stage"], blocked_reasons: [] };
+        }
+
+        // Stage-specific required fields
+        const stageRequirements = {
+          process_inquiry: [],                    // No fields required for process inquiry
+          debug_guidance: ["target_api"],         // Need to know which API to debug
+          credential_ready: ["target_api"]        // Need to know which API to integrate
+        };
+
+        const needs = stageRequirements[stage] || [];
+        const missing = needs.filter((field) => !draft.fields[field]);
+        return missing.length
+          ? { status: "needs_clarification", missing_fields: missing, blocked_reasons: [] }
+          : { status: "executable", missing_fields: [], blocked_reasons: [] };
+      }
+
       const needs = requiredFields[draft.task_type] || [];
       const missing = needs.filter((field) => !draft.fields[field]);
       return missing.length
@@ -6401,6 +6489,17 @@
       }
       if (validation.status === "blocked") {
         return `这个请求触发了安全边界：${validation.blocked_reasons.join("；")}`;
+      }
+
+      // Special clarification for api_onboarding
+      if (draft.task_type === "api_onboarding" && validation.missing_fields.includes("onboarding_stage")) {
+        return `您想要接入 API，请问您目前处于哪个阶段？
+
+1️⃣ **了解对接流程** — 不清楚需要准备什么、具体步骤是什么
+2️⃣ **学习调试方法** — 已有 appid/appsecret，但不知道怎么调试接口、生成签名
+3️⃣ **直接开始对接** — 已准备好凭证和环境，想直接开始调用接口
+
+请告诉我您的情况，我会提供对应的指导。`;
       }
 
       // Special clarification for volume_analysis
@@ -8152,9 +8251,9 @@
     // === Mode 1: Agent Chat (with Real LLM) ===
 
     const LLM_CONFIG = {
-      endpoint: "http://127.0.0.1:8081/v1/chat/completions",
+      endpoint: "https://dt.dofun.work/v1/chat/completions",
       model: "gpt-5.5",
-      apiKey: "none"
+      apiKey: "sk-HxV6DWBatruBgJcSMsK6PndoLz8xW3ZTpLqSawMO4SqSwR7R"
     };
 
     const SKILL_SOPS = {
@@ -8476,6 +8575,59 @@
       // Inject long-term memory (similar historical tasks)
       const currentTask = { task_type: draft.task_type, fields: draft.fields };
       prompt = injectLongTermMemoryToPrompt(prompt, currentTask);
+
+      // Special handling for api_onboarding: inject stage-specific guidance
+      if (draft.task_type === "api_onboarding" && validation.status === "executable") {
+        const stage = draft.fields.onboarding_stage;
+        if (stage === "process_inquiry") {
+          prompt += `\n\n## 接入流程指导（当前阶段：流程咨询）
+用户想了解 API 对接的完整流程。请按以下结构回答：
+
+1. **准备阶段**：需要准备的材料（营业执照、技术联系人等）
+2. **申请凭证**：如何获取 appid/appsecret（联系商务或产品，不是 Agent 自动办理）
+3. **技术对接**：选择要接入的接口、阅读文档、本地调试
+4. **联调测试**：沙箱环境测试、签名验证、回调验证
+5. **上线准备**：生产环境配置、监控告警设置
+
+**重要提醒**：
+- appid/appsecret 申请需联系商务或产品团队，Agent 无法直接办理
+- 如果知识库有"对接流程"相关文档，必须引用
+- 给出预计时间（如审核周期 1-3 个工作日）`;
+        } else if (stage === "debug_guidance") {
+          prompt += `\n\n## 调试指导（当前阶段：调试方法学习）
+用户已有凭证，但不知道如何调试接口。请提供：
+
+1. **推荐工具**：Postman/cURL/接口调试助手
+2. **签名生成步骤**：
+   - 参数按 ASCII 升序排列
+   - 拼接成 key1=value1&key2=value2 格式
+   - 加上 appsecret 进行 MD5/SHA-256（根据文档）
+3. **首次调用示例**（从知识库检索）：
+   - 请求头设置（Content-Type, appid 等）
+   - 请求体示例
+   - 预期响应格式
+4. **常见调试错误**：
+   - 签名失败 SIGN_INVALID → 检查参数顺序、时间戳格式
+   - 401 未授权 → 检查 appid 是否正确、是否在白名单
+   - 超时 → 检查网络、回调地址可达性
+
+**知识库检索重点**：查找"${draft.fields.target_api || 'API'} 调试教程"、"签名生成示例"、"Postman 配置"`;
+        } else if (stage === "credential_ready") {
+          prompt += `\n\n## 快速开始指导（当前阶段：凭证就绪）
+用户已准备好 appid/appsecret 和环境，想直接开始调用。给出 3 步快速开始：
+
+1. **配置凭证**：将 appid/appsecret 配置到代码/配置文件中
+2. **调用测试接口**：先调用一个简单的测试接口（如 /ping 或查询接口）验证签名
+3. **验证响应**：检查返回的 code/msg，确认能正常通信
+
+**从知识库检索**："${draft.fields.target_api || 'API'} 快速开始"、"首次调用示例"、"Demo 代码"
+
+**注意事项**：
+- 沙箱环境 vs 生产环境的差异（endpoint、appid 可能不同）
+- 先测试查询类接口，再测试写入类接口
+- 保存好测试用的订单号/请求参数，便于后续排查`;
+        }
+      }
 
       // Inject knowledge retrieval results
       if (docs.length) {
@@ -9224,13 +9376,13 @@
       return [
         {
           name: "search_knowledge",
-          description: "在知识库中搜索 API 文档、FAQ、错误码、SOP。用于查询接口定义、参数说明、常见问题解决方案。",
+          description: "在知识库中搜索 API 文档、FAQ、错误码、SOP。输入：搜索关键词（接口路径如 /api/platformXYZ/hao/search、错误码如 SIGN_INVALID、字段名如 detailinfo、或中文问题描述）。输出：最多5条相关文档，格式为 [文档类型] 标题：内容摘要（来源）。注意：如果返回空结果，换用更具体的接口路径或更宽泛的关键词重试。",
           parameters: {
             type: "object",
             properties: {
               query: {
                 type: "string",
-                description: "搜索关键词，可以是接口路径（如 /api/platformXYZ/hao/search）、错误码（如 SIGN_INVALID）、字段名（如 detailinfo）、或问题描述"
+                description: "搜索关键词，可以是接口路径（如 /api/platformXYZ/hao/search）、错误码（如 SIGN_INVALID）、字段名（如 detailinfo）、或问题描述（如'签名失败怎么排查'）"
               }
             },
             required: ["query"]
@@ -9238,24 +9390,24 @@
         },
         {
           name: "extract_fields",
-          description: "从用户输入中提取结构化字段，如 appid、接口路径、错误码、时间戳等。用于识别用户消息中的关键技术信息。",
+          description: "从文本中提取结构化技术字段。输入：用户原始消息。输出：已提取的字段列表（格式：字段名=值）。可提取字段：appid、api_path（接口路径）、error_code（错误码）、request_time（请求时间）、callback_url（回调地址）、order_id（订单号）、raw_sign_string（签名前字符串）。注意：只能提取明确的技术参数，日常对话或模糊描述不会提取到任何字段，这是正常行为。",
           parameters: {
             type: "object",
             properties: {
-              message: { type: "string", description: "待提取的原始文本" }
+              message: { type: "string", description: "待提取的用户原始消息文本" }
             },
             required: ["message"]
           }
         },
         {
           name: "check_signature_order",
-          description: "检查签名参数排序是否符合 ASCII 升序规则。传入参数对象，返回正确排序和实际排序的对比。",
+          description: "验证签名参数排序是否符合 ASCII 升序规则。输入：参数键值对对象（不包含 sign 字段本身），例如 {\"appid\":\"app_001\",\"timestamp\":\"1234567890\"}。输出：按 ASCII 升序排列的正确签名字符串，格式为 key1=value1&key2=value2。用途：对比用户提供的签名前字符串与正确顺序的差异。",
           parameters: {
             type: "object",
             properties: {
               params: {
                 type: "object",
-                description: "参数键值对（不包含 sign 本身）",
+                description: "参与签名的参数键值对（不包含 sign 本身），例如 {\"appid\":\"app_001\",\"timestamp\":\"1234567890\",\"order_id\":\"order_123\"}",
                 additionalProperties: true
               }
             },
@@ -9269,41 +9421,50 @@
       try {
         switch (toolName) {
           case "search_knowledge": {
+            if (!args.query || !args.query.trim()) {
+              return { success: false, error: "query 参数为空。请提供搜索关键词，例如接口路径 /api/xxx 或错误码 SIGN_INVALID。" };
+            }
             const keywords = queryTerms(args.query);
             const docs = searchDocs(keywords, 5);
             return {
               success: true,
               result: docs.length > 0
                 ? docs.map(d => `[${d.kind}] ${d.title}：${d.text.slice(0, 150)}...（来源：${d.source}）`).join("\n\n")
-                : "未找到相关文档。尝试用不同关键词或更具体的接口路径。"
+                : `未找到与"${args.query}"相关的文档。建议：1) 如果是接口路径，尝试用完整路径如 /api/platformXYZ/hao/search；2) 如果是错误描述，换用更具体的错误码如 SIGN_INVALID；3) 如果关键词过于宽泛，缩小范围到具体字段或功能。`
             };
           }
 
           case "extract_fields": {
+            if (!args.message || !args.message.trim()) {
+              return { success: false, error: "message 参数为空。请传入用户的原始消息文本。" };
+            }
             const draft = extractTask(args.message);
             const fields = compactFields(draft.fields);
             return {
               success: true,
               result: Object.keys(fields).length > 0
                 ? `提取到字段：${Object.entries(fields).map(([k,v]) => `${label(k)}=${v}`).join("、")}`
-                : "未提取到结构化字段。"
+                : `未从"${args.message.slice(0, 50)}"中提取到结构化字段。这表示消息中没有明确的技术参数（如 appid=xxx、错误码=SIGN_INVALID、接口路径 /api/xxx）。如果用户描述模糊，应直接向用户追问具体的接口路径或错误码。`
             };
           }
 
           case "check_signature_order": {
+            if (!args.params || typeof args.params !== "object" || Object.keys(args.params).length === 0) {
+              return { success: false, error: "params 参数无效。需要传入参与签名的键值对对象（不含 sign），例如 {\"appid\":\"app_001\",\"timestamp\":\"1234567890\"}。" };
+            }
             const sortedKeys = Object.keys(args.params).sort();
             const correctOrder = sortedKeys.map(k => `${k}=${args.params[k]}`).join("&");
             return {
               success: true,
-              result: `正确的参数排序（ASCII升序）：\n${correctOrder}\n\n排序规则：参数名按 ASCII 码升序，然后用 & 连接。`
+              result: `正确的参数排序（ASCII升序）：\n${correctOrder}\n\n排序规则：参数名按 ASCII 码值逐字符比较升序排列，然后用 & 连接键值对。如果用户的签名前字符串与此顺序不一致，即为参数排序错误。`
             };
           }
 
           default:
-            return { success: false, error: `未知工具：${toolName}` };
+            return { success: false, error: `未知工具"${toolName}"。可用工具：search_knowledge（搜索知识库）、extract_fields（提取字段）、check_signature_order（检查参数排序）。` };
         }
       } catch (err) {
-        return { success: false, error: err.message };
+        return { success: false, error: `工具执行异常：${err.message}。建议：检查传入参数格式是否正确，或尝试其他工具。` };
       }
     }
 
